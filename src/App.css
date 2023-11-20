@@ -1,0 +1,31 @@
+@import url("./styles/map.css");
+@import url("./styles/units.css");
+
+#root {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/*---------------------------------*/
+/*---------------------------------*/
+/* CORE STYLES */
+/*---------------------------------*/
+/*---------------------------------*/
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.army-drawer-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
