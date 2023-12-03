@@ -1,7 +1,8 @@
-import { convertToPercentage } from "../utils";
-import { ArmyType } from "../data/types";
+import { convertToPercentage } from "../../utils";
+import { ArmyType } from "../../data/types";
 import { useEffect, Dispatch, SetStateAction, useRef } from "react";
-import { PathActive } from "./map/Map";
+import { PathActive } from "../map/Map";
+import styles from './style.module.css'
 
 interface Props {
   id: string;
@@ -100,7 +101,7 @@ export const Army = ({
 
   useEffect(() => {
     if (isMoveActive && path.length > 0) {
-      //moveDirectionHandler(path);
+      // moveDirectionHandler(path);
 
     }
   }, [isMoveActive]);
@@ -109,16 +110,16 @@ export const Army = ({
     const el = element.current
 
     if (el) {
-      el?.addEventListener('transitionend', moveDirectionHandler);
+      // el?.addEventListener('transitionend', moveDirectionHandler);
 
       return () => {
-        el.removeEventListener('transitionend', moveDirectionHandler);
+        // el.removeEventListener('transitionend', moveDirectionHandler);
       };
     }
   }, []);
   return (
     <div
-      className={`army army-${race}-${type}`}
+      className={`${styles.army} ${styles[`army-${race}-${type}`]}`}
       onClick={() => handleArmySelection()}
       id={`${type}-${y}-${x}`}
       ref={element}
