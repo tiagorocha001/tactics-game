@@ -6,7 +6,7 @@ import { Turn } from "../data/types";
 // Army initial state
 import { initialArmyState } from "../data/initialArmyState";
 // Components
-import { Map } from "./map/Map";
+import { Map } from "./Map";
 import { Header } from "./layout/Header";
 import { DrawerArmy } from "./layout/DrawerArmy";
 

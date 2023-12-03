@@ -5,6 +5,7 @@ import { calculateDistance } from "../../utils";
 import { Army, ArmyPropsWithoutSelect, ArmySelect } from "../Army";
 import { Base } from "../Base";
 import { MapRange } from "./MapRange";
+import styles from "./styles.module.css";
 
 interface Props {
   map: GridItem[];
@@ -205,7 +206,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   // -------------------------
 
   return (
-    <div className="main-container">
+    <div className={styles[`main-container`]}>
       Army Select: {JSON.stringify(armySelect)} <br />
       pathActive: {JSON.stringify(pathActive)} <br />
       path: {JSON.stringify(path)} <br />

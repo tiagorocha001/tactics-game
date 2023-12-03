@@ -1,8 +1,8 @@
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
 import { useEffect, Dispatch, SetStateAction, useRef } from "react";
-import { PathActive } from "../map/Map";
-import styles from "./style.module.css";
+import { PathActive } from "../Map";
+import styles from "./styles.module.css";
 
 interface Props {
   id: string;

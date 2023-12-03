@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, MouseEvent } from "react";
 import { ArmyPropsWithoutSelect, ArmySelect } from "../Army";
-import { PathActive } from "./Map";
+import { PathActive } from ".";
 import { GridItem } from "../../data/types";
 import { COREVALUES } from "../../data/consts";
 

@@ -1,6 +1,6 @@
 import { convertToPercentage } from '../../utils';
 import { BaseType } from '../../data/types';
-import styles from "./style.module.css";
+import styles from "./styles.module.css";
 
 interface Props {
   id: string;
