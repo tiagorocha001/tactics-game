@@ -1,5 +1,6 @@
 import { Drawer } from "@mantine/core";
 import { ArmyPropsWithoutSelect } from "../Army";
+import styles from "../Army/styles.module.css";
 
 export interface Props {
   opened: boolean;
@@ -22,7 +23,7 @@ export const DrawerArmy = ({ opened, close, armies }: Props) => {
           return (
             <div className="army-drawer-list">
               <div
-                className={`army-${item.race}-${item.type}`}
+                className={`unit ${styles.army} ${styles[`army-${item.race}-${item.type}`]}`}
                 style={{ height: "50px", width: "50px" }}
               ></div>
               <div>{item.race}</div>
