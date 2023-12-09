@@ -125,6 +125,14 @@ export const MapRange = ({
         }
       }
       setArmies([...newArmyList]);
+    } else {
+      setArmySelect({
+        y: 0,
+        x: 0,
+        active: false,
+        copy: null,
+      });
+      setPath([]);
     }
   };
 
