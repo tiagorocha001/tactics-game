@@ -32,7 +32,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
     ...armySelectInitialState,
   });
 
-  // Active Path
+  // Active path
   const [pathActive, setPathActive] = useState<PathActive>({
     y: null,
     x: null,
