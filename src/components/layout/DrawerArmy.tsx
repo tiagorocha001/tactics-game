@@ -23,7 +23,7 @@ export const DrawerArmy = ({ opened, close, armies }: Props) => {
           return (
             <div className="army-drawer-list">
               <div
-                className={`unit ${styles.army} ${styles[`army-${item.race}-${item.type}`]}`}
+                className={`unit ${styles[`army-${item.race}-${item.type}`]}`}
                 style={{ height: "50px", width: "50px" }}
               ></div>
               <div>{item.race}</div>

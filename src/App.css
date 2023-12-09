@@ -21,9 +21,9 @@
 }
 
 .army-drawer-list {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   align-items: center;
+  grid-template-columns: repeat(5, 1fr);
   gap: 5px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
