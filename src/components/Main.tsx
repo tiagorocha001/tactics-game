@@ -37,9 +37,9 @@ export const Main = () => {
   // Armies
   const [armies, setArmies] = useState(armyList);
 
-  console.log(map);
-  console.log("armies", armies);
-  console.log(armyPositions);
+  // console.log(map);
+  // console.log("armies", armies);
+  // console.log(armyPositions);
 
   // Bases
   // function initialValue() {

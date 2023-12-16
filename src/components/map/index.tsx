@@ -104,6 +104,8 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           grid[i].y
         );
         let terrainCost = 0;
+
+        // Terrain cost set
         if (
           (grid[i].terrain === "F" || grid[i].terrain === "M") &&
           armySelect.copy.index !== i
@@ -111,11 +113,16 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           terrainCost = 1;
         } else if (armySelect.copy.index !== i && grid[i].terrain === "W") {
           terrainCost = 2;
-        } else if (armySelect.copy.index !== i && grid[i].army.length) {
+        }
+        
+        // Unit/Base cost set
+        if (armySelect.copy.index !== i && grid[i].army.length) {
           terrainCost = 99;
-        } else if (grid[i].base.length) {
+        } 
+        if (grid[i].base.length) {
           terrainCost = 99;
         }
+
         grid[i].rangeValue = distance + terrainCost + (distance * terrainCost);
       }
 
