@@ -179,7 +179,8 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
 
         while (rangeValue >= 1 && loopErrorBlocker < 10_000) {
           loopErrorBlocker++;
-          bothLoops: for (let y = 0; y < newArray.length; y++) {
+          const smallerRange = [];
+          for (let y = 0; y < newArray.length; y++) {
             for (let x = 0; x < newArray[y].length; x++) {
               if (
                 calculateDistance(
@@ -191,16 +192,16 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
                 newArray[y][x].rangeValue < rangeValue &&
                 !newArray[y][x].pathActive
               ) {
-                currentY = y;
-                currentX = x;
-                rangeValue = newArray[y][x].rangeValue;
-                newArray[y][x].pathActive = true;
-                setPath((prev) => [...prev, { y, x }]);
-                // Save movement array **
-                break bothLoops;
+                smallerRange.push({y, x, rangeValue: newArray[y][x].rangeValue});
               }
             }
           }
+          const sortedArray = smallerRange.sort((a, b) => a.rangeValue - b.rangeValue);
+          currentY = sortedArray[0].y;
+          currentX = sortedArray[0].x;
+          rangeValue = sortedArray[0].rangeValue;
+          newArray[sortedArray[0].y][sortedArray[0].x].pathActive = true;
+          setPath((prev) => [...prev, { y: sortedArray[0].y, x: sortedArray[0].x }]);
         }
         setPath((prev) => [pathActive, ...prev]);
       }
