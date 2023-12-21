@@ -196,6 +196,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
               }
             }
           }
+          // Ensure that the smaller rangeValue is taken
           const sortedArray = smallerRange.sort((a, b) => a.rangeValue - b.rangeValue);
           currentY = sortedArray[0].y;
           currentX = sortedArray[0].x;
