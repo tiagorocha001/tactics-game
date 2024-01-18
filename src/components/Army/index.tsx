@@ -1,6 +1,6 @@
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
-import { useEffect, Dispatch, SetStateAction, useRef } from "react";
+import { useEffect, Dispatch, SetStateAction, useRef, useState } from "react";
 import { PathActive } from "../Map";
 import styles from "./styles.module.css";
 
@@ -25,11 +25,17 @@ interface Props {
     }>
   >;
   path: PathActive[];
+  moveDirection: "top" | "right" | "bottom" | "left" | "none";
+  setIsMoveAnimationActive: Dispatch<SetStateAction<boolean>>;
 }
 
 export type ArmyPropsWithoutSelect = Omit<
   Props,
-  "setArmySelect" | "isMoveActive" | "path"
+  | "setArmySelect"
+  | "isMoveActive"
+  | "path"
+  | "moveDirection"
+  | "setIsMoveAnimationActive"
 >;
 
 export interface ArmySelect {
@@ -53,8 +59,12 @@ export const Army = ({
   isMoveActive,
   setArmySelect,
   path,
+  moveDirection,
+  setIsMoveAnimationActive,
 }: Props) => {
   const element = useRef<HTMLDivElement | null>(null);
+  const [yAnimation, setYAnimation] = useState(0);
+  const [xAnimation, setXAnimation] = useState(0);
 
   const currentLife = convertToPercentage(lifeRef, life);
 
@@ -79,49 +89,52 @@ export const Army = ({
     });
   };
 
-  // Move direction
-  const moveDirectionHandler = (path: PathActive[]) => {
-    const tempPath = [...path];
-    while (tempPath.length > 0) {
-      const finalLocation = tempPath[tempPath.length - 1];
-      if (finalLocation.y && finalLocation.y > y) {
-        console.log("move up");
-      }
-      if (finalLocation.y && finalLocation.y < y) {
-        console.log("move up");
-      }
-      if (finalLocation.x && finalLocation.x > x) {
-        console.log("move right");
-      }
-      if (finalLocation.x && finalLocation.x < x) {
-        console.log("move left");
-      }
-    }
-  };
-
   useEffect(() => {
-    if (isMoveActive && path.length > 0) {
-      // moveDirectionHandler(path);
-    }
-  }, [isMoveActive]);
+    const moveDirectionHandler = () => {
+      setIsMoveAnimationActive(false);
+    };
 
-  useEffect(() => {
     const el = element.current;
 
     if (el) {
-      // el?.addEventListener('transitionend', moveDirectionHandler);
+      el?.addEventListener("transitionend", moveDirectionHandler);
 
       return () => {
-        // el.removeEventListener('transitionend', moveDirectionHandler);
+        el.removeEventListener("transitionend", moveDirectionHandler);
       };
     }
-  }, []);
+
+    if (moveDirection === "top") {
+      setYAnimation((prev) => prev - 54);
+    }
+    if (moveDirection === "right") {
+      setXAnimation((prev) => prev + 54);
+    }
+    if (moveDirection === "bottom") {
+      setYAnimation((prev) => prev + 54);
+    }
+    if (moveDirection === "left") {
+      setXAnimation((prev) => prev - 54);
+    }
+  }, [moveDirection, setIsMoveAnimationActive]);
+
+  // Handle direction
+  const translateDirection = () => {
+    if (moveDirection === "top" || moveDirection === "bottom") {
+      return `translateY(${yAnimation}px)`
+    }
+    if (moveDirection === "right" || moveDirection === "left") {
+      return `translateX(${xAnimation}px)`
+    }
+  };
+
   return (
     <div
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
       onClick={() => handleArmySelection()}
       id={`${type}-${y}-${x}`}
       ref={element}
+      style={{ transform: translateDirection() }}
     >
       <div
         style={{

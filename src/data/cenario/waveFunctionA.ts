@@ -87,7 +87,7 @@ tile_objects_01[3] = map_data({
 
 tile_objects_01[4] = map_data({
   type: "M",
-  frequency: 12,
+  frequency: 4,
   u: ["G", "F", "M"],
   l: ["G", "F", "M"],
   r: ["G", "F", "M"],

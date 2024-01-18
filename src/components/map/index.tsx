@@ -1,6 +1,6 @@
 import { useState, useMemo, Dispatch, SetStateAction } from "react";
 import { COREVALUES } from "../../data/consts";
-import { GridItem } from '../../data/types';
+import { GridItem } from "../../data/types";
 import { calculateDistance } from "../../utils";
 import { Army, ArmyPropsWithoutSelect, ArmySelect } from "../Army";
 import { Base } from "../Base";
@@ -41,6 +41,10 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   // Path data
   const [path, setPath] = useState<PathActive[]>([]);
   const [isMoveActive, setIsMoveActive] = useState(false);
+  const [isMoveAnimationActive, setIsMoveAnimationActive] = useState(false);
+  const [moveDirection, setMoveDirection] = useState<
+    "top" | "right" | "bottom" | "left" | "none"
+  >("none");
 
   // Current base selected data
   const [baseSelect, setBaseSelect] = useState({ y: 0, x: 0, active: false });
@@ -61,7 +65,6 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   const placeArmy = (armyRef: string, index: number) => {
     if (armyRef.length > 0) {
       const data = findObjectById(armyRef, armies);
-      console.log(armyRef);
       if (!data) {
         return null;
       }
@@ -72,6 +75,8 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           setArmySelect={setArmySelect}
           isMoveActive={isMoveActive}
           path={path}
+          moveDirection={moveDirection}
+          setIsMoveAnimationActive={setIsMoveAnimationActive}
         />
       );
     } else {
@@ -114,16 +119,16 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
         } else if (armySelect.copy.index !== i && grid[i].terrain === "W") {
           terrainCost = 2;
         }
-        
+
         // Unit/Base cost set
         if (armySelect.copy.index !== i && grid[i].army.length) {
           terrainCost = 99;
-        } 
+        }
         if (grid[i].base.length) {
           terrainCost = 99;
         }
 
-        grid[i].rangeValue = distance + terrainCost + (distance * terrainCost);
+        grid[i].rangeValue = distance + terrainCost + distance * terrainCost;
       }
 
       // Convert array in order to make easy transform its values
@@ -192,17 +197,26 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
                 newArray[y][x].rangeValue < rangeValue &&
                 !newArray[y][x].pathActive
               ) {
-                smallerRange.push({y, x, rangeValue: newArray[y][x].rangeValue});
+                smallerRange.push({
+                  y,
+                  x,
+                  rangeValue: newArray[y][x].rangeValue,
+                });
               }
             }
           }
           // Ensure that the smaller rangeValue is taken
-          const sortedArray = smallerRange.sort((a, b) => a.rangeValue - b.rangeValue);
+          const sortedArray = smallerRange.sort(
+            (a, b) => a.rangeValue - b.rangeValue
+          );
           currentY = sortedArray[0].y;
           currentX = sortedArray[0].x;
           rangeValue = sortedArray[0].rangeValue;
           newArray[sortedArray[0].y][sortedArray[0].x].pathActive = true;
-          setPath((prev) => [...prev, { y: sortedArray[0].y, x: sortedArray[0].x }]);
+          setPath((prev) => [
+            ...prev,
+            { y: sortedArray[0].y, x: sortedArray[0].x },
+          ]);
         }
         setPath((prev) => [pathActive, ...prev]);
       }
@@ -232,6 +246,9 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           setPath={setPath}
           path={path}
           setIsMoveActive={setIsMoveActive}
+          setIsMoveAnimationActive={setIsMoveAnimationActive}
+          isMoveAnimationActive={isMoveAnimationActive}
+          setMoveDirection={setMoveDirection}
           armies={armies}
           setArmies={setArmies}
         />
@@ -249,10 +266,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
               {placeArmy(cell.army, index)}
               {/* Base render */}
               {cell.base.length > 0 && (
-                <Base
-                  {...cell.base[0]}
-                  setBaseSelect={setBaseSelect}
-                />
+                <Base {...cell.base[0]} setBaseSelect={setBaseSelect} />
               )}
             </div>
           ))}

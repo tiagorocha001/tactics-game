@@ -14,6 +14,9 @@ interface Props {
   setPath: Dispatch<SetStateAction<PathActive[]>>;
   path: PathActive[];
   setIsMoveActive: Dispatch<SetStateAction<boolean>>;
+  setIsMoveAnimationActive: Dispatch<SetStateAction<boolean>>;
+  isMoveAnimationActive: boolean;
+  setMoveDirection: Dispatch<SetStateAction<"top" | "right" | "bottom" | "left" | "none">>;
   armies: ArmyPropsWithoutSelect[][];
   setArmies: Dispatch<SetStateAction<ArmyPropsWithoutSelect[][]>>;
 }
@@ -28,6 +31,9 @@ export const MapRange = ({
   setPath,
   path,
   setIsMoveActive,
+  setIsMoveAnimationActive,
+  isMoveAnimationActive,
+  setMoveDirection,
   setArmies,
   armies,
 }: Props) => {
@@ -113,6 +119,31 @@ export const MapRange = ({
         active: false,
         copy: null,
       });
+
+      // Animation
+      const animationPath = [...path];
+      const refPosition = animationPath[animationPath.length-1];
+      animationPath.pop();
+      while(animationPath.length > 0){
+        setIsMoveAnimationActive(true);
+        const pathPosition = animationPath[animationPath.length-1];
+        if (pathPosition.y && refPosition.y && pathPosition.y < refPosition.y){
+          setMoveDirection("top");
+        }
+        if (pathPosition.x && refPosition.x && pathPosition.x > refPosition.x){
+          setMoveDirection("right");
+        }
+        if (pathPosition.y && refPosition.y && pathPosition.y > refPosition.y){
+          setMoveDirection("bottom");
+        }
+        if (pathPosition.x && refPosition.x && pathPosition.x < refPosition.x){
+          setMoveDirection("left");
+        }
+        if (!isMoveAnimationActive){
+          animationPath.pop();
+        }
+      }
+
       // Update army list
       const newArmyList = [...armies];
       for (const subList of newArmyList) {
