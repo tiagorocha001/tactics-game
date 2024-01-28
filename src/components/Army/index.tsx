@@ -1,6 +1,13 @@
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
-import { useEffect, Dispatch, SetStateAction, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 import { PathActive } from "../Map";
 import styles from "./styles.module.css";
 
@@ -16,6 +23,9 @@ interface Props {
   x: number;
   index: number;
   isMoveActive: boolean;
+  setMoveDirection: Dispatch<
+    SetStateAction<"top" | "right" | "bottom" | "left" | "none">
+  >;
   setArmySelect: Dispatch<
     SetStateAction<{
       y: number;
@@ -24,6 +34,7 @@ interface Props {
       copy: ArmyPropsWithoutSelect | null;
     }>
   >;
+  armySelect: ArmySelect;
   path: PathActive[];
   moveDirection: "top" | "right" | "bottom" | "left" | "none";
   setIsMoveAnimationActive: Dispatch<SetStateAction<boolean>>;
@@ -35,7 +46,9 @@ export type ArmyPropsWithoutSelect = Omit<
   | "isMoveActive"
   | "path"
   | "moveDirection"
+  | "setMoveDirection"
   | "setIsMoveAnimationActive"
+  | "armySelect"
 >;
 
 export interface ArmySelect {
@@ -56,8 +69,10 @@ export const Army = ({
   y,
   x,
   index,
+  setMoveDirection,
   isMoveActive,
   setArmySelect,
+  armySelect,
   path,
   moveDirection,
   setIsMoveAnimationActive,
@@ -65,6 +80,7 @@ export const Army = ({
   const element = useRef<HTMLDivElement | null>(null);
   const [yAnimation, setYAnimation] = useState(0);
   const [xAnimation, setXAnimation] = useState(0);
+  const [active, setActive] = useState(false);
 
   const currentLife = convertToPercentage(lifeRef, life);
 
@@ -92,6 +108,7 @@ export const Army = ({
   useEffect(() => {
     const moveDirectionHandler = () => {
       setIsMoveAnimationActive(false);
+      setMoveDirection("none");
     };
 
     const el = element.current;
@@ -103,30 +120,42 @@ export const Army = ({
         el.removeEventListener("transitionend", moveDirectionHandler);
       };
     }
+  }, [setMoveDirection, setIsMoveAnimationActive]);
 
-    if (moveDirection === "top") {
-      setYAnimation((prev) => prev - 54);
+  useEffect(() => {
+    if (active) {
+      if (moveDirection === "top") {
+        setYAnimation((prev) => prev - 54);
+      }
+      if (moveDirection === "right") {
+        setXAnimation((prev) => prev + 54);
+      }
+      if (moveDirection === "bottom") {
+        setYAnimation((prev) => prev + 54);
+      }
+      if (moveDirection === "left") {
+        setXAnimation((prev) => prev - 54);
+      }
     }
-    if (moveDirection === "right") {
-      setXAnimation((prev) => prev + 54);
+  }, [moveDirection, active]);
+
+  useEffect(() => {
+    if (armySelect?.copy?.id === id){
+      setActive(true);
+    } else {
+      setActive(false);
     }
-    if (moveDirection === "bottom") {
-      setYAnimation((prev) => prev + 54);
-    }
-    if (moveDirection === "left") {
-      setXAnimation((prev) => prev - 54);
-    }
-  }, [moveDirection, setIsMoveAnimationActive]);
+  }, [armySelect, id])
 
   // Handle direction
-  const translateDirection = () => {
+  const translateDirection = useMemo(() => {
     if (moveDirection === "top" || moveDirection === "bottom") {
-      return `translateY(${yAnimation}px)`
+      return `translateY(${yAnimation}px)`;
     }
     if (moveDirection === "right" || moveDirection === "left") {
-      return `translateX(${xAnimation}px)`
+      return `translateX(${xAnimation}px)`;
     }
-  };
+  }, [yAnimation, xAnimation, moveDirection]);
 
   return (
     <div
@@ -134,8 +163,9 @@ export const Army = ({
       onClick={() => handleArmySelection()}
       id={`${type}-${y}-${x}`}
       ref={element}
-      style={{ transform: translateDirection() }}
+      style={{ transform: active ? translateDirection : "" }}
     >
+      {moveDirection} / {String(active)}
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,

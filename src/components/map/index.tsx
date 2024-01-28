@@ -73,8 +73,10 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           {...data}
           index={index}
           setArmySelect={setArmySelect}
+          armySelect={armySelect}
           isMoveActive={isMoveActive}
           path={path}
+          setMoveDirection={setMoveDirection}
           moveDirection={moveDirection}
           setIsMoveAnimationActive={setIsMoveAnimationActive}
         />

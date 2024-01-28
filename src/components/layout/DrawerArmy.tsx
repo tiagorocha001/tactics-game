@@ -19,9 +19,9 @@ export const DrawerArmy = ({ opened, close, armies }: Props) => {
         <div>pos y/x</div>
       </div>
       {armies[0].length > 0 &&
-        armies[0].map((item) => {
+        armies[0].map((item, index) => {
           return (
-            <div className="army-drawer-list">
+            <div className="army-drawer-list" key={`army-list-${index}`}>
               <div
                 className={`unit ${styles[`army-${item.race}-${item.type}`]}`}
                 style={{ height: "50px", width: "50px" }}

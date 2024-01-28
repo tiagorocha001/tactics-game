@@ -112,7 +112,6 @@ export const MapRange = ({
       newMap[currentIndex].army = "";
       setMap(newMap);
       setPathActive({ y: null, x: null });
-      setPath([]);
       setArmySelect({
         y: 0,
         x: 0,
@@ -124,7 +123,9 @@ export const MapRange = ({
       const animationPath = [...path];
       const refPosition = animationPath[animationPath.length-1];
       animationPath.pop();
-      while(animationPath.length > 0){
+      let loopErrorBlocker = 0;
+      while(animationPath.length > 0 && loopErrorBlocker < 10_000){
+        loopErrorBlocker++;
         setIsMoveAnimationActive(true);
         const pathPosition = animationPath[animationPath.length-1];
         if (pathPosition.y && refPosition.y && pathPosition.y < refPosition.y){
@@ -143,6 +144,8 @@ export const MapRange = ({
           animationPath.pop();
         }
       }
+
+      setPath([]);
 
       // Update army list
       const newArmyList = [...armies];
