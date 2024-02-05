@@ -41,7 +41,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   // Path data
   const [path, setPath] = useState<PathActive[]>([]);
   const [isMoveActive, setIsMoveActive] = useState(false);
-  const [isMoveAnimationActive, setIsMoveAnimationActive] = useState(false);
+  const [isMoveAnimationActive, setIsMoveAnimationActive] = useState(true);
   const [moveDirection, setMoveDirection] = useState<
     "top" | "right" | "bottom" | "left" | "none"
   >("none");
@@ -79,6 +79,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           setMoveDirection={setMoveDirection}
           moveDirection={moveDirection}
           setIsMoveAnimationActive={setIsMoveAnimationActive}
+          isMoveAnimationActive={isMoveAnimationActive}
         />
       );
     } else {

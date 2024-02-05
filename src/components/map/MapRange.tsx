@@ -16,7 +16,9 @@ interface Props {
   setIsMoveActive: Dispatch<SetStateAction<boolean>>;
   setIsMoveAnimationActive: Dispatch<SetStateAction<boolean>>;
   isMoveAnimationActive: boolean;
-  setMoveDirection: Dispatch<SetStateAction<"top" | "right" | "bottom" | "left" | "none">>;
+  setMoveDirection: Dispatch<
+    SetStateAction<"top" | "right" | "bottom" | "left" | "none">
+  >;
   armies: ArmyPropsWithoutSelect[][];
   setArmies: Dispatch<SetStateAction<ArmyPropsWithoutSelect[][]>>;
 }
@@ -121,52 +123,53 @@ export const MapRange = ({
 
       // Animation
       const animationPath = [...path];
-      const refPosition = animationPath[animationPath.length-1];
+      const refPosition = animationPath[animationPath.length - 1];
       animationPath.pop();
       let loopErrorBlocker = 0;
-      while(animationPath.length > 0 && loopErrorBlocker < 10_000){
+      while (animationPath.length > 0 && loopErrorBlocker < 10_000) {
         loopErrorBlocker++;
-        setIsMoveAnimationActive(true);
-        const pathPosition = animationPath[animationPath.length-1];
-        if (pathPosition.y && refPosition.y && pathPosition.y < refPosition.y){
+        const pathPosition = animationPath[animationPath.length - 1];
+        if (pathPosition.y && refPosition.y && pathPosition.y < refPosition.y) {
           setMoveDirection("top");
-        }
-        if (pathPosition.x && refPosition.x && pathPosition.x > refPosition.x){
+        } else if (pathPosition.x && refPosition.x && pathPosition.x > refPosition.x) {
           setMoveDirection("right");
-        }
-        if (pathPosition.y && refPosition.y && pathPosition.y > refPosition.y){
+        } else if (pathPosition.y && refPosition.y && pathPosition.y > refPosition.y) {
           setMoveDirection("bottom");
-        }
-        if (pathPosition.x && refPosition.x && pathPosition.x < refPosition.x){
+        } else if (pathPosition.x && refPosition.x && pathPosition.x < refPosition.x) {
           setMoveDirection("left");
         }
-        if (!isMoveAnimationActive){
+        if (!isMoveAnimationActive) {
+          console.log(1234)
           animationPath.pop();
+          console.log(animationPath.length)
+          setIsMoveAnimationActive(true);
         }
       }
 
       setPath([]);
 
       // Update army list
-      const newArmyList = [...armies];
-      for (const subList of newArmyList) {
-        for (const item of subList) {
-          if (item.id === armyId) {
-            item.x = x;
-            item.y = y;
-            return;
+      if (!animationPath.length) {
+        const newArmyList = [...armies];
+        for (const subList of newArmyList) {
+          for (const item of subList) {
+            if (item.id === armyId) {
+              item.x = x;
+              item.y = y;
+              return;
+            }
           }
         }
+        setArmies([...newArmyList]);
+      } else {
+        setArmySelect({
+          y: 0,
+          x: 0,
+          active: false,
+          copy: null,
+        });
+        setPath([]);
       }
-      setArmies([...newArmyList]);
-    } else {
-      setArmySelect({
-        y: 0,
-        x: 0,
-        active: false,
-        copy: null,
-      });
-      setPath([]);
     }
   };
 

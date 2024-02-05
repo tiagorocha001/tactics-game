@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
 import {
@@ -38,6 +39,7 @@ interface Props {
   path: PathActive[];
   moveDirection: "top" | "right" | "bottom" | "left" | "none";
   setIsMoveAnimationActive: Dispatch<SetStateAction<boolean>>;
+  isMoveAnimationActive: boolean;
 }
 
 export type ArmyPropsWithoutSelect = Omit<
@@ -49,6 +51,7 @@ export type ArmyPropsWithoutSelect = Omit<
   | "setMoveDirection"
   | "setIsMoveAnimationActive"
   | "armySelect"
+  | "isMoveAnimationActive"
 >;
 
 export interface ArmySelect {
@@ -76,6 +79,7 @@ export const Army = ({
   path,
   moveDirection,
   setIsMoveAnimationActive,
+  isMoveAnimationActive,
 }: Props) => {
   const element = useRef<HTMLDivElement | null>(null);
   const [yAnimation, setYAnimation] = useState(0);
@@ -105,67 +109,90 @@ export const Army = ({
     });
   };
 
-  useEffect(() => {
-    const moveDirectionHandler = () => {
-      setIsMoveAnimationActive(false);
-      setMoveDirection("none");
-    };
+  // useEffect(() => {
+  //   const moveDirectionHandler = () => {
+  //     console.log("transitionend");
+  //     setIsMoveAnimationActive(false);
+  //     setMoveDirection("none");
+  //   };
 
-    const el = element.current;
+  //   const el = element.current;
 
-    if (el) {
-      el?.addEventListener("transitionend", moveDirectionHandler);
+  //   if (el && isMoveAnimationActive) {
+  //     el?.addEventListener("transitionend", moveDirectionHandler);
 
-      return () => {
-        el.removeEventListener("transitionend", moveDirectionHandler);
-      };
-    }
-  }, [setMoveDirection, setIsMoveAnimationActive]);
+  //     return () => {
+  //       el.removeEventListener("transitionend", moveDirectionHandler);
+  //     };
+  //   }
+  // }, [setMoveDirection, setIsMoveAnimationActive, isMoveAnimationActive]);
 
-  useEffect(() => {
-    if (active) {
-      if (moveDirection === "top") {
-        setYAnimation((prev) => prev - 54);
-      }
-      if (moveDirection === "right") {
-        setXAnimation((prev) => prev + 54);
-      }
-      if (moveDirection === "bottom") {
-        setYAnimation((prev) => prev + 54);
-      }
-      if (moveDirection === "left") {
-        setXAnimation((prev) => prev - 54);
-      }
-    }
-  }, [moveDirection, active]);
+  const moveDirectionHandler = () => {
+    console.log("transitionend");
+    setIsMoveAnimationActive(false);
+    setMoveDirection("none");
+  };
 
   useEffect(() => {
-    if (armySelect?.copy?.id === id){
+    if (armySelect?.copy?.id === id) {
       setActive(true);
     } else {
       setActive(false);
     }
-  }, [armySelect, id])
+  }, [armySelect, id]);
+
+  useEffect(() => {
+    if (moveDirection === "top") {
+      setYAnimation((prev) => prev - 54);
+    } else if (moveDirection === "right") {
+      setXAnimation((prev) => prev + 54);
+    } else if (moveDirection === "bottom") {
+      setYAnimation((prev) => prev + 54);
+    } else if (moveDirection === "left") {
+      setXAnimation((prev) => prev - 54);
+    }
+  }, [moveDirection]);
 
   // Handle direction
-  const translateDirection = useMemo(() => {
-    if (moveDirection === "top" || moveDirection === "bottom") {
-      return `translateY(${yAnimation}px)`;
-    }
-    if (moveDirection === "right" || moveDirection === "left") {
-      return `translateX(${xAnimation}px)`;
-    }
-  }, [yAnimation, xAnimation, moveDirection]);
+  // const translateDirection = useMemo(() => {
+  //   if (active && (moveDirection === "top" || moveDirection === "bottom")) {
+  //     if (moveDirection === "top") {
+  //       setYAnimation((prev) => prev - 54);
+  //     } else if (moveDirection === "bottom") {
+  //       setYAnimation((prev) => prev + 54);
+  //     }
+  //     return {
+  //       transform: `translateY(${yAnimation}px)`,
+  //     };
+  //   } else if (
+  //     active &&
+  //     (moveDirection === "right" || moveDirection === "left")
+  //   ) {
+  //     if (moveDirection === "right") {
+  //       setXAnimation((prev) => prev + 54);
+  //     } else if (moveDirection === "left") {
+  //       setXAnimation((prev) => prev - 54);
+  //     }
+  //     return {
+  //       transform: `translateY(${xAnimation}px)`,
+  //     };
+  //   }
+  // }, [moveDirection, active]);
+
+  // console.log("translateDirection: ", translateDirection);
 
   return (
     <div
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
       onClick={() => handleArmySelection()}
+      onTransitionEnd={() => moveDirectionHandler()}
       id={`${type}-${y}-${x}`}
       ref={element}
-      style={{ transform: active ? translateDirection : "" }}
+      style={{
+        transform: `translateX(${xAnimation}px) translateY(${yAnimation}px)`,
+      }}
     >
-      {moveDirection} / {String(active)}
+      {yAnimation} / {String(active)}
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,
