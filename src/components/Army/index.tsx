@@ -1,15 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
-import {
-  useEffect,
-  useMemo,
-  Dispatch,
-  SetStateAction,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, Dispatch, SetStateAction, useState, useMemo } from "react";
 import { PathActive } from "../Map";
+import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 
 interface Props {
@@ -23,10 +17,6 @@ interface Props {
   y: number;
   x: number;
   index: number;
-  isMoveActive: boolean;
-  setMoveDirection: Dispatch<
-    SetStateAction<"top" | "right" | "bottom" | "left" | "none">
-  >;
   setArmySelect: Dispatch<
     SetStateAction<{
       y: number;
@@ -35,23 +25,14 @@ interface Props {
       copy: ArmyPropsWithoutSelect | null;
     }>
   >;
+  pathFinal: PathActive[];
   armySelect: ArmySelect;
-  path: PathActive[];
-  moveDirection: "top" | "right" | "bottom" | "left" | "none";
-  setIsMoveAnimationActive: Dispatch<SetStateAction<boolean>>;
-  isMoveAnimationActive: boolean;
+  armies: ArmyPropsWithoutSelect[][];
 }
 
 export type ArmyPropsWithoutSelect = Omit<
   Props,
-  | "setArmySelect"
-  | "isMoveActive"
-  | "path"
-  | "moveDirection"
-  | "setMoveDirection"
-  | "setIsMoveAnimationActive"
-  | "armySelect"
-  | "isMoveAnimationActive"
+  "setArmySelect" | "isMoveActive" | "pathFinal" | "armySelect" | "armies"
 >;
 
 export interface ArmySelect {
@@ -72,19 +53,17 @@ export const Army = ({
   y,
   x,
   index,
-  setMoveDirection,
-  isMoveActive,
   setArmySelect,
   armySelect,
-  path,
-  moveDirection,
-  setIsMoveAnimationActive,
-  isMoveAnimationActive,
+  pathFinal,
+  armies,
 }: Props) => {
-  const element = useRef<HTMLDivElement | null>(null);
-  const [yAnimation, setYAnimation] = useState(0);
-  const [xAnimation, setXAnimation] = useState(0);
   const [active, setActive] = useState(false);
+  // Animation
+  const [animateValues, setAnimateValues] = useState<{
+    x: number[];
+    y: number[];
+  }>({ x: [], y: [] });
 
   const currentLife = convertToPercentage(lifeRef, life);
 
@@ -109,30 +88,6 @@ export const Army = ({
     });
   };
 
-  // useEffect(() => {
-  //   const moveDirectionHandler = () => {
-  //     console.log("transitionend");
-  //     setIsMoveAnimationActive(false);
-  //     setMoveDirection("none");
-  //   };
-
-  //   const el = element.current;
-
-  //   if (el && isMoveAnimationActive) {
-  //     el?.addEventListener("transitionend", moveDirectionHandler);
-
-  //     return () => {
-  //       el.removeEventListener("transitionend", moveDirectionHandler);
-  //     };
-  //   }
-  // }, [setMoveDirection, setIsMoveAnimationActive, isMoveAnimationActive]);
-
-  const moveDirectionHandler = () => {
-    console.log("transitionend");
-    setIsMoveAnimationActive(false);
-    setMoveDirection("none");
-  };
-
   useEffect(() => {
     if (armySelect?.copy?.id === id) {
       setActive(true);
@@ -141,64 +96,67 @@ export const Army = ({
     }
   }, [armySelect, id]);
 
-  useEffect(() => {
-    if (moveDirection === "top") {
-      setYAnimation((prev) => prev - 54);
-    } else if (moveDirection === "right") {
-      setXAnimation((prev) => prev + 54);
-    } else if (moveDirection === "bottom") {
-      setYAnimation((prev) => prev + 54);
-    } else if (moveDirection === "left") {
-      setXAnimation((prev) => prev - 54);
+  function generateAnimationData(data: PathActive[]) {
+    let prevX, prevY;
+    const xList: number[] = [];
+    const yList: number[] = [];
+
+    for (const point of data) {
+      const x = point.x;
+      const y = point.y;
+
+      if (prevX === undefined || prevX !== x) {
+        xList.push(
+          prevX === undefined
+            ? 0
+            : xList[xList.length - 1] +
+                ((prevX as number) < (x as number) ? -54 : 54)
+        );
+      } else {
+        xList.push(xList[xList.length - 1]);
+      }
+
+      if (prevY === undefined || prevY !== y) {
+        yList.push(
+          prevY === undefined
+            ? 0
+            : yList[yList.length - 1] +
+                ((prevY as number) < (y as number) ? -54 : 54)
+        );
+      } else {
+        yList.push(yList[yList.length - 1]);
+      }
+
+      prevX = x;
+      prevY = y;
     }
-  }, [moveDirection]);
 
-  // Handle direction
-  // const translateDirection = useMemo(() => {
-  //   if (active && (moveDirection === "top" || moveDirection === "bottom")) {
-  //     if (moveDirection === "top") {
-  //       setYAnimation((prev) => prev - 54);
-  //     } else if (moveDirection === "bottom") {
-  //       setYAnimation((prev) => prev + 54);
-  //     }
-  //     return {
-  //       transform: `translateY(${yAnimation}px)`,
-  //     };
-  //   } else if (
-  //     active &&
-  //     (moveDirection === "right" || moveDirection === "left")
-  //   ) {
-  //     if (moveDirection === "right") {
-  //       setXAnimation((prev) => prev + 54);
-  //     } else if (moveDirection === "left") {
-  //       setXAnimation((prev) => prev - 54);
-  //     }
-  //     return {
-  //       transform: `translateY(${xAnimation}px)`,
-  //     };
-  //   }
-  // }, [moveDirection, active]);
+    setAnimateValues({ x: xList, y: yList });
+  }
 
-  // console.log("translateDirection: ", translateDirection);
+  useEffect(() => {
+    if (pathFinal.length > 0) {
+      generateAnimationData(pathFinal);
+    }
+  }, [pathFinal.length]);
 
   return (
-    <div
+    <motion.div
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
       onClick={() => handleArmySelection()}
-      onTransitionEnd={() => moveDirectionHandler()}
       id={`${type}-${y}-${x}`}
-      ref={element}
-      style={{
-        transform: `translateX(${xAnimation}px) translateY(${yAnimation}px)`,
+      // animate={{ x: [0, 54, 54, 54], y: [0, 0, 54, 108] }}
+      animate={{ x: animateValues.x, y: animateValues.y }}
+      transition={{
       }}
     >
-      {yAnimation} / {String(active)}
+      {String(active)}
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,
         }}
         className="life-bar"
       ></div>
-    </div>
+    </motion.div>
   );
 };

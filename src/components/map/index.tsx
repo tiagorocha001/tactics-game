@@ -40,11 +40,9 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
 
   // Path data
   const [path, setPath] = useState<PathActive[]>([]);
-  const [isMoveActive, setIsMoveActive] = useState(false);
-  const [isMoveAnimationActive, setIsMoveAnimationActive] = useState(true);
-  const [moveDirection, setMoveDirection] = useState<
-    "top" | "right" | "bottom" | "left" | "none"
-  >("none");
+
+  // Path data
+  const [pathFinal, setPathFinal] = useState<PathActive[]>([]);
 
   // Current base selected data
   const [baseSelect, setBaseSelect] = useState({ y: 0, x: 0, active: false });
@@ -74,12 +72,8 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           index={index}
           setArmySelect={setArmySelect}
           armySelect={armySelect}
-          isMoveActive={isMoveActive}
-          path={path}
-          setMoveDirection={setMoveDirection}
-          moveDirection={moveDirection}
-          setIsMoveAnimationActive={setIsMoveAnimationActive}
-          isMoveAnimationActive={isMoveAnimationActive}
+          pathFinal={pathFinal}
+          armies={armies}
         />
       );
     } else {
@@ -236,7 +230,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
       Army Select: {JSON.stringify(armySelect)} <br />
       pathActive: {JSON.stringify(pathActive)} <br />
       path: {JSON.stringify(path)} <br />
-      move: {JSON.stringify(isMoveActive)}
+      pathFinal: {JSON.stringify(pathFinal)} <br />
       {/* Army range display */}
       {armySelect.active && (
         <MapRange
@@ -248,12 +242,9 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           setPathActive={setPathActive}
           setPath={setPath}
           path={path}
-          setIsMoveActive={setIsMoveActive}
-          setIsMoveAnimationActive={setIsMoveAnimationActive}
-          isMoveAnimationActive={isMoveAnimationActive}
-          setMoveDirection={setMoveDirection}
           armies={armies}
           setArmies={setArmies}
+          setPathFinal={setPathFinal}
         />
       )}
       {/* Main map */}
