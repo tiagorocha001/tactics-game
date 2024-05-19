@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
-import { useEffect, Dispatch, SetStateAction, useState, useMemo } from "react";
+import { useEffect, Dispatch, SetStateAction, useState } from "react";
 import { PathActive } from "../Map";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
@@ -131,7 +131,7 @@ export const Army = ({
       prevY = y;
     }
 
-    setAnimateValues({ x: xList, y: yList });
+    active && setAnimateValues({ x: xList, y: yList });
   }
 
   useEffect(() => {
@@ -150,7 +150,6 @@ export const Army = ({
       transition={{
       }}
     >
-      {String(active)}
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,
