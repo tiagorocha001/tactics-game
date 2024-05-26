@@ -2,6 +2,7 @@
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
 import { useEffect, Dispatch, SetStateAction, useState } from "react";
+import { GridItem } from "../../data/types";
 import { PathActive } from "../Map";
 import { motion } from "framer-motion";
 import styles from "./styles.module.css";
@@ -25,14 +26,25 @@ interface Props {
       copy: ArmyPropsWithoutSelect | null;
     }>
   >;
+  setMap: Dispatch<SetStateAction<GridItem[]>>;
   pathFinal: PathActive[];
   armySelect: ArmySelect;
-  armies: ArmyPropsWithoutSelect[][];
+  armyLocationIdIndex: {
+    currentIndex: number;
+    newIndex: number;
+  };
+  map: GridItem[];
 }
 
 export type ArmyPropsWithoutSelect = Omit<
   Props,
-  "setArmySelect" | "isMoveActive" | "pathFinal" | "armySelect" | "armies"
+  | "setArmySelect"
+  | "isMoveActive"
+  | "pathFinal"
+  | "armySelect"
+  | "setMap"
+  | "armyLocationIdIndex"
+  | "map"
 >;
 
 export interface ArmySelect {
@@ -56,10 +68,12 @@ export const Army = ({
   setArmySelect,
   armySelect,
   pathFinal,
-  armies,
+  setMap,
+  armyLocationIdIndex,
+  map,
 }: Props) => {
   const [active, setActive] = useState(false);
-  // Animation
+  // Animation path values
   const [animateValues, setAnimateValues] = useState<{
     x: number[];
     y: number[];
@@ -88,6 +102,7 @@ export const Army = ({
     });
   };
 
+  // Only activate animation for the current selected army
   useEffect(() => {
     if (armySelect?.copy?.id === id) {
       setActive(true);
@@ -96,6 +111,7 @@ export const Army = ({
     }
   }, [armySelect, id]);
 
+  // Generate keyframes
   function generateAnimationData(data: PathActive[]) {
     let prevX, prevY;
     const xList: number[] = [];
@@ -130,26 +146,42 @@ export const Army = ({
       prevX = x;
       prevY = y;
     }
-
+    console.log({ x: xList, y: yList });
     active && setAnimateValues({ x: xList, y: yList });
+  }
+
+  // On Animation Over - Add army ID to new map position
+  function changeArmyPostionOnMap() {
+    const newMap = [...map];
+    newMap[armyLocationIdIndex.newIndex].army = id;
+    newMap[armyLocationIdIndex.currentIndex].army = "";
+    setMap(newMap);
   }
 
   useEffect(() => {
     if (pathFinal.length > 0) {
       generateAnimationData(pathFinal);
     }
-  }, [pathFinal.length]);
+  }, [pathFinal]);
 
   return (
     <motion.div
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
       onClick={() => handleArmySelection()}
       id={`${type}-${y}-${x}`}
-      // animate={{ x: [0, 54, 54, 54], y: [0, 0, 54, 108] }}
       animate={{ x: animateValues.x, y: animateValues.y }}
-      transition={{
-      }}
+      onAnimationComplete={changeArmyPostionOnMap}
     >
+      <div
+        style={{
+          backgroundColor: "#000",
+          color: "#fff",
+          position: "absolute",
+          marginTop: "-20px",
+        }}
+      >
+        {JSON.stringify(animateValues.x)}
+      </div>
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,

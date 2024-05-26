@@ -38,7 +38,7 @@ export const Main = () => {
   const [armies, setArmies] = useState(armyList);
 
   // console.log(map);
-  console.log("armies", armies);
+  // console.log("armies", armies);
   // console.log(armyPositions);
 
   // Bases
@@ -51,6 +51,7 @@ export const Main = () => {
   
   // const [bases, setBases] = useState(initialValue());
 
+  // Drawer menu
   const [opened, { open, close }] = useDisclosure(false);
 
   return (

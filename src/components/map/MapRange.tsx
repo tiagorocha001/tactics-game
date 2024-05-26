@@ -16,6 +16,12 @@ interface Props {
   armies: ArmyPropsWithoutSelect[][];
   setArmies: Dispatch<SetStateAction<ArmyPropsWithoutSelect[][]>>;
   setPathFinal: Dispatch<SetStateAction<PathActive[]>>;
+  setArmyLocationIdIndex: Dispatch<
+    SetStateAction<{
+      currentIndex: number;
+      newIndex: number;
+    }>
+  >;
 }
 
 export const MapRange = ({
@@ -30,6 +36,7 @@ export const MapRange = ({
   armies,
   setArmies,
   setPathFinal,
+  setArmyLocationIdIndex,
 }: Props) => {
   // Context menu - mouse right click
   const handleContextMenuRange = (event: { preventDefault: () => void }) => {
@@ -75,6 +82,7 @@ export const MapRange = ({
       // This will trigger the army to move from position A to B
       // newMap[newIndex].army = armyId;
       // newMap[currentIndex].army = "";
+      setArmyLocationIdIndex({ currentIndex, newIndex});
       setMap(newMap);
       setPathActive({ y: null, x: null });
       setArmySelect({
@@ -109,7 +117,7 @@ export const MapRange = ({
               className="grid-item"
               data-y={cell.y}
               data-x={cell.x}
-              onClick={() => { 
+              onClick={() => {
                 activateMovement(cell.y, cell.x);
                 setPathFinal(path);
               }}
