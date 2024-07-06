@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, Dispatch, SetStateAction, useState } from "react";
+import { motion } from "framer-motion";
 import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
-import { useEffect, Dispatch, SetStateAction, useState } from "react";
 import { GridItem } from "../../data/types";
 import { PathActive } from "../Map";
-import { motion } from "framer-motion";
 import styles from "./styles.module.css";
 
 interface Props {
@@ -30,9 +30,15 @@ interface Props {
   pathFinal: PathActive[];
   armySelect: ArmySelect;
   armyLocationIdIndex: {
-    currentIndex: number;
-    newIndex: number;
+    currentIndex: number | null;
+    newIndex: number | null;
   };
+  setArmyLocationIdIndex: Dispatch<
+    SetStateAction<{
+      currentIndex: number | null;
+      newIndex: number | null;
+    }>
+  >;
   map: GridItem[];
 }
 
@@ -44,6 +50,7 @@ export type ArmyPropsWithoutSelect = Omit<
   | "armySelect"
   | "setMap"
   | "armyLocationIdIndex"
+  | "setArmyLocationIdIndex"
   | "map"
 >;
 
@@ -70,9 +77,12 @@ export const Army = ({
   pathFinal,
   setMap,
   armyLocationIdIndex,
+  setArmyLocationIdIndex,
   map,
 }: Props) => {
   const [active, setActive] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
   // Animation path values
   const [animateValues, setAnimateValues] = useState<{
     x: number[];
@@ -83,6 +93,7 @@ export const Army = ({
 
   // Select current army
   const handleArmySelection = () => {
+    console.log("asd");
     setArmySelect({
       y,
       x,
@@ -116,46 +127,54 @@ export const Army = ({
     let prevX, prevY;
     const xList: number[] = [];
     const yList: number[] = [];
+    const newData = [...data];
+    newData.reverse();
 
-    for (const point of data) {
+    for (const point of newData) {
       const x = point.x;
       const y = point.y;
 
+      // x
       if (prevX === undefined || prevX !== x) {
         xList.push(
-          prevX === undefined
+          !prevX
             ? 0
-            : xList[xList.length - 1] +
-                ((prevX as number) < (x as number) ? -54 : 54)
+            : (xList.at(-1) as number) +
+                ((prevX as number) > (x as number) ? -54 : 54)
         );
       } else {
-        xList.push(xList[xList.length - 1]);
+        xList.push(xList.at(-1) as number);
       }
 
+      // y
       if (prevY === undefined || prevY !== y) {
         yList.push(
-          prevY === undefined
+          !prevY
             ? 0
-            : yList[yList.length - 1] +
-                ((prevY as number) < (y as number) ? -54 : 54)
+            : (yList.at(-1) as number) +
+                ((prevY as number) > (y as number) ? -54 : 54)
         );
       } else {
-        yList.push(yList[yList.length - 1]);
+        yList.push(yList.at(-1) as number);
       }
 
       prevX = x;
       prevY = y;
     }
-    console.log({ x: xList, y: yList });
+
     active && setAnimateValues({ x: xList, y: yList });
   }
 
   // On Animation Over - Add army ID to new map position
-  function changeArmyPostionOnMap() {
-    const newMap = [...map];
-    newMap[armyLocationIdIndex.newIndex].army = id;
-    newMap[armyLocationIdIndex.currentIndex].army = "";
-    setMap(newMap);
+  function changeArmyPositionOnMap() {
+    if (armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex) {
+      const newMap = [...map];
+      newMap[armyLocationIdIndex.newIndex].army = id;
+      newMap[armyLocationIdIndex.currentIndex].army = "";
+      setMap(newMap);
+      setIsAnimating(false);
+      setArmyLocationIdIndex({ currentIndex: null, newIndex: null });
+    }
   }
 
   useEffect(() => {
@@ -167,10 +186,14 @@ export const Army = ({
   return (
     <motion.div
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
-      onClick={() => handleArmySelection()}
+      onClick={() => !isAnimating && handleArmySelection()}
       id={`${type}-${y}-${x}`}
       animate={{ x: animateValues.x, y: animateValues.y }}
-      onAnimationComplete={changeArmyPostionOnMap}
+      onAnimationComplete={changeArmyPositionOnMap}
+      onAnimationStart={() => armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex && setIsAnimating(true)}
+      whileHover={{ scale: 1.2 }}
+      whileTap={{ scale: 1.5 }}
+      transition={{ duration: 0.5, damping: 20, stiffness: 300 }}
     >
       <div
         style={{
@@ -180,7 +203,7 @@ export const Army = ({
           marginTop: "-20px",
         }}
       >
-        {JSON.stringify(animateValues.x)}
+        {JSON.stringify(isAnimating)}
       </div>
       <div
         style={{

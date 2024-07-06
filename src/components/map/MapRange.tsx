@@ -18,8 +18,8 @@ interface Props {
   setPathFinal: Dispatch<SetStateAction<PathActive[]>>;
   setArmyLocationIdIndex: Dispatch<
     SetStateAction<{
-      currentIndex: number;
-      newIndex: number;
+      currentIndex: number | null;
+      newIndex: number | null;
     }>
   >;
 }

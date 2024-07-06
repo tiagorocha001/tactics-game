@@ -4,6 +4,6 @@ export const COREVALUES = {
         size: 20
     },
     player: {
-        rangeIncrement: 7
+        rangeIncrement: 18
     }
 }

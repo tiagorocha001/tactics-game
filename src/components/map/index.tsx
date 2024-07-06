@@ -43,9 +43,12 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   const [pathFinal, setPathFinal] = useState<PathActive[]>([]);
 
   // Previous and new map index for army ID placement
-  const [armyLocationIdIndex, setArmyLocationIdIndex] = useState({
-    currentIndex: 0,
-    newIndex: 0,
+  const [armyLocationIdIndex, setArmyLocationIdIndex] = useState<{
+    currentIndex: number | null,
+    newIndex: number | null,
+  }>({
+    currentIndex: null,
+    newIndex: null,
   });
 
   // Current base selected data
@@ -80,6 +83,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
           armySelect={armySelect}
           pathFinal={pathFinal}
           armyLocationIdIndex={armyLocationIdIndex}
+          setArmyLocationIdIndex={setArmyLocationIdIndex}
         />
       );
     } else {
