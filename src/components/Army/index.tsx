@@ -93,7 +93,6 @@ export const Army = ({
 
   // Select current army
   const handleArmySelection = () => {
-    console.log("asd");
     setArmySelect({
       y,
       x,

@@ -11,11 +11,10 @@ import { Header } from "./layout/Header";
 import { DrawerArmy } from "./layout/DrawerArmy";
 
 export const Main = () => {
-  // Prevent page refresh with the G5 by mistake *** uncomment latter
+  // Prevent page refresh *** uncomment latter
   // useEffect(() => {
   //   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   //     event.preventDefault();
-  //     event.returnValue = ''; // This line is necessary for Chrome compatibility
   //   };
 
   //   window.addEventListener('beforeunload', handleBeforeUnload);

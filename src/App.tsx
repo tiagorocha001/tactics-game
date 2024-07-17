@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { WaveTest } from "./components/WaveTest";
 import { Main } from "./components/Main";
 import "./App.css";
+import '@mantine/core/styles.css';
 
 function App() {
   return (
