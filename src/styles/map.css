@@ -44,6 +44,7 @@
   height: 100%;
   z-index: 10;
   border-radius: 5px;
+  cursor: pointer;
 
   /* Initial size */
   transform: scale(1);

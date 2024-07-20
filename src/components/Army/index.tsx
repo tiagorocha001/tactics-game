@@ -192,7 +192,7 @@ export const Army = ({
       onAnimationStart={() => armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex && setIsAnimating(true)}
       whileHover={{ scale: 1.2 }}
       whileTap={{ scale: 1.5 }}
-      transition={{ duration: 0.5, damping: 20, stiffness: 300 }}
+      transition={{ duration: animateValues.x.length * 0.2, damping: 20, stiffness: 300 }}
     >
       <div
         style={{
@@ -202,7 +202,6 @@ export const Army = ({
           marginTop: "-20px",
         }}
       >
-        {JSON.stringify(isAnimating)}
       </div>
       <div
         style={{

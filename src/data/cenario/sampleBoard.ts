@@ -1,7 +1,7 @@
 import { generateWave, FinalCell } from './waveFunctionA';
 import { COREVALUES } from '../consts';
 import { GridItem } from '../types';
-import { InitialPosition } from "../initialArmyState";
+import { type InitialPosition } from "../initialArmyState";
 
 function gridItem(): GridItem {
   return {
@@ -110,6 +110,7 @@ export function generateMap() {
 
   // Set first army location
   function armyFirstLocation(positions: {player: GridItem, enemy: GridItem}){
+    console.log("positions: ", positions);
     const { player, enemy } = positions;
 
     // Player
