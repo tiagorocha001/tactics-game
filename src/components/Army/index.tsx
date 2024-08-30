@@ -167,7 +167,7 @@ export const Army = ({
   // On Animation Over - Add army ID to new map position
   function changeArmyPositionOnMap() {
     if (armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex) {
-      const newMap = [...map];
+      const newMap = JSON.parse(JSON.stringify(map));
       newMap[armyLocationIdIndex.newIndex].army = id;
       newMap[armyLocationIdIndex.currentIndex].army = "";
       setMap(newMap);
@@ -194,15 +194,6 @@ export const Army = ({
       whileTap={{ scale: 1.5 }}
       transition={{ duration: animateValues.x.length * 0.2, damping: 20, stiffness: 300 }}
     >
-      <div
-        style={{
-          backgroundColor: "#000",
-          color: "#fff",
-          position: "absolute",
-          marginTop: "-20px",
-        }}
-      >
-      </div>
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,
