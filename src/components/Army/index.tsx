@@ -196,6 +196,7 @@ export const Army = ({
       whileHover={{ scale: 1.2 }}
       whileTap={{ scale: 1.5 }}
       transition={{ duration: animateValues.x.length * 0.2, damping: 20, stiffness: 300 }}
+      style={{ pointerEvents: isAnimating ? "none" : "auto" }}
     >
       <div
         style={{
