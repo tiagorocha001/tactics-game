@@ -169,8 +169,8 @@ export const Army = ({
   // On Animation Over - Add army ID to new map position
   function changeArmyPositionOnMap() {
     if (armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex) {
+      setAnimateValues({ x: [], y: [] });
       const newMap = JSON.parse(JSON.stringify(map));
-      console.log("id: ", newMap[armyLocationIdIndex.currentIndex].army);
       newMap[armyLocationIdIndex.newIndex].army = newMap[armyLocationIdIndex.currentIndex].army;
       newMap[armyLocationIdIndex.currentIndex].army = "";
       setMap(newMap);
