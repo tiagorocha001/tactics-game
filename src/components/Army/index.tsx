@@ -5,7 +5,10 @@ import { convertToPercentage } from "../../utils";
 import { ArmyType } from "../../data/types";
 import { GridItem } from "../../data/types";
 import { PathActive } from "../Map";
+import { COREVALUES } from "../../data/consts";
 import styles from "./styles.module.css";
+
+const blockSize = COREVALUES.combatMap.blockSize;
 
 interface Props {
   id: string;
@@ -45,7 +48,6 @@ interface Props {
 export type ArmyPropsWithoutSelect = Omit<
   Props,
   | "setArmySelect"
-  | "isMoveActive"
   | "pathFinal"
   | "armySelect"
   | "setMap"
@@ -126,7 +128,7 @@ export const Army = ({
     let prevX, prevY;
     const xList: number[] = [];
     const yList: number[] = [];
-    const newData = [...data];
+    const newData = JSON.parse(JSON.stringify(data));
     newData.reverse();
 
     for (const point of newData) {
@@ -139,7 +141,7 @@ export const Army = ({
           !prevX
             ? 0
             : (xList.at(-1) as number) +
-                ((prevX as number) > (x as number) ? -54 : 54)
+                ((prevX as number) > (x as number) ? -blockSize : blockSize)
         );
       } else {
         xList.push(xList.at(-1) as number);
@@ -151,7 +153,7 @@ export const Army = ({
           !prevY
             ? 0
             : (yList.at(-1) as number) +
-                ((prevY as number) > (y as number) ? -54 : 54)
+                ((prevY as number) > (y as number) ? -blockSize : blockSize)
         );
       } else {
         yList.push(yList.at(-1) as number);
@@ -168,7 +170,8 @@ export const Army = ({
   function changeArmyPositionOnMap() {
     if (armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex) {
       const newMap = JSON.parse(JSON.stringify(map));
-      newMap[armyLocationIdIndex.newIndex].army = id;
+      console.log("id: ", newMap[armyLocationIdIndex.currentIndex].army);
+      newMap[armyLocationIdIndex.newIndex].army = newMap[armyLocationIdIndex.currentIndex].army;
       newMap[armyLocationIdIndex.currentIndex].army = "";
       setMap(newMap);
       setIsAnimating(false);

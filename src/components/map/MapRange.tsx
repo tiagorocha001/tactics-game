@@ -69,7 +69,7 @@ export const MapRange = ({
 
     // Move army from old to new position
     if (match) {
-      const newMap = [...map];
+      const newMap: GridItem[] = JSON.parse(JSON.stringify(map));
       const pathLast = path[path.length - 1];
       const pathFirst = path[0];
       const currentIndex = newMap.findIndex(
@@ -92,6 +92,8 @@ export const MapRange = ({
 
       // Update army list
       const newArmyList = [...armies];
+      // const newArmyList = JSON.parse(JSON.stringify(armies));
+      console.log("a:", newArmyList);
       for (const subList of newArmyList) {
         for (const item of subList) {
           if (item.id === armyId) {

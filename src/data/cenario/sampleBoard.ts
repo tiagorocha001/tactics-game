@@ -112,7 +112,7 @@ export function generateMap() {
   function armyFirstLocation(positions: {player: GridItem, enemy: GridItem}){
     console.log("positions: ", positions);
     const { player, enemy } = positions;
-
+    console.log("map: ", map);
     // Player
     map[player.y][player.x+1].army = '0-0-human-knight';
     map[1][1].army = '0-1-human-knight';

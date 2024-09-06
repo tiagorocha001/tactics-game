@@ -68,27 +68,24 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   };
 
   const placeArmy = (armyRef: string, index: number) => {
-    if (armyRef.length > 0) {
-      const data = findObjectById(armyRef, armies);
-      if (!data) {
-        return null;
-      }
-      return (
-        <Army
-          {...data}
-          index={index}
-          setArmySelect={setArmySelect}
-          setMap={setMap}
-          map={map}
-          armySelect={armySelect}
-          pathFinal={pathFinal}
-          armyLocationIdIndex={armyLocationIdIndex}
-          setArmyLocationIdIndex={setArmyLocationIdIndex}
-        />
-      );
-    } else {
+    // console.log("armyRef:", armyRef);
+    const data = findObjectById(armyRef, armies);
+    if (!data) {
       return null;
     }
+    return (
+      <Army
+        {...data}
+        index={index}
+        setArmySelect={setArmySelect}
+        setMap={setMap}
+        map={map}
+        armySelect={armySelect}
+        pathFinal={pathFinal}
+        armyLocationIdIndex={armyLocationIdIndex}
+        setArmyLocationIdIndex={setArmyLocationIdIndex}
+      />
+    );
   };
 
   // -------------------------
@@ -96,7 +93,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   // -------------------------
   const rangeMap = useMemo(() => {
     const gridPoints = () => {
-      const grid = [...map];
+      const grid = JSON.parse(JSON.stringify(map));
       const stack = [];
 
       if (!armySelect.copy) return;
@@ -268,7 +265,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
               className={`grid-item type-${cell.terrain}`}
             >
               {/* Army render */}
-              {placeArmy(cell.army, index)}
+              {!!cell.army && placeArmy(cell.army, index)}
               {/* Base render */}
               {cell.base.length > 0 && (
                 <Base {...cell.base[0]} setBaseSelect={setBaseSelect} />
