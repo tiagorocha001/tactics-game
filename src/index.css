@@ -14,6 +14,15 @@
   -webkit-text-size-adjust: 100%;
 }
 
+:root::-webkit-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+:root::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
 a {
   font-weight: 500;
   color: #646cff;

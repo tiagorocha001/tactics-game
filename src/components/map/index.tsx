@@ -31,6 +31,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
   const [armySelect, setArmySelect] = useState<ArmySelect>({
     ...armySelectInitialState,
   });
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Active path
   const [pathActive, setPathActive] = useState<PathActive>({
@@ -84,6 +85,8 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
         pathFinal={pathFinal}
         armyLocationIdIndex={armyLocationIdIndex}
         setArmyLocationIdIndex={setArmyLocationIdIndex}
+        isAnimating={isAnimating}
+        setIsAnimating={setIsAnimating}
       />
     );
   };

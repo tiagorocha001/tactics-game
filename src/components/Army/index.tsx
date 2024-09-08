@@ -43,6 +43,8 @@ interface Props {
     }>
   >;
   map: GridItem[];
+  isAnimating: boolean;
+  setIsAnimating: Dispatch<SetStateAction<boolean>>;
 }
 
 export type ArmyPropsWithoutSelect = Omit<
@@ -54,6 +56,8 @@ export type ArmyPropsWithoutSelect = Omit<
   | "armyLocationIdIndex"
   | "setArmyLocationIdIndex"
   | "map"
+  | "isAnimating"
+  | "setIsAnimating"
 >;
 
 export interface ArmySelect {
@@ -81,9 +85,10 @@ export const Army = ({
   armyLocationIdIndex,
   setArmyLocationIdIndex,
   map,
+  isAnimating,
+  setIsAnimating
 }: Props) => {
   const [active, setActive] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   // Animation path values
   const [animateValues, setAnimateValues] = useState<{
