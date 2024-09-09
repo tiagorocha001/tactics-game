@@ -2,7 +2,7 @@
 import { useEffect, Dispatch, SetStateAction, useState } from "react";
 import { motion } from "framer-motion";
 import { convertToPercentage } from "../../utils";
-import { ArmyType } from "../../data/types";
+import { UnitProps } from "../../data/types";
 import { GridItem } from "../../data/types";
 import { PathActive } from "../Map";
 import { COREVALUES } from "../../data/consts";
@@ -10,23 +10,13 @@ import styles from "./styles.module.css";
 
 const blockSize = COREVALUES.combatMap.blockSize;
 
-interface Props {
-  id: string;
-  faction: number;
-  race: string;
-  type: ArmyType;
-  life: number;
-  lifeRef: number;
-  rank: number;
-  y: number;
-  x: number;
-  index: number;
+interface Props extends UnitProps {
   setArmySelect: Dispatch<
     SetStateAction<{
       y: number;
       x: number;
       active: boolean;
-      copy: ArmyPropsWithoutSelect | null;
+      copy: UnitProps | null;
     }>
   >;
   setMap: Dispatch<SetStateAction<GridItem[]>>;
@@ -47,24 +37,11 @@ interface Props {
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
 }
 
-export type ArmyPropsWithoutSelect = Omit<
-  Props,
-  | "setArmySelect"
-  | "pathFinal"
-  | "armySelect"
-  | "setMap"
-  | "armyLocationIdIndex"
-  | "setArmyLocationIdIndex"
-  | "map"
-  | "isAnimating"
-  | "setIsAnimating"
->;
-
 export interface ArmySelect {
   y: number;
   x: number;
   active: boolean;
-  copy: ArmyPropsWithoutSelect | null;
+  copy: UnitProps | null;
 }
 
 export const Army = ({

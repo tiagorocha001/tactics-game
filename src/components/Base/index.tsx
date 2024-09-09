@@ -1,23 +1,12 @@
-import { convertToPercentage } from '../../utils';
-import { BaseType } from '../../data/types';
+import { convertToPercentage } from "../../utils";
+import { UnitProps } from "../../data/types";
 import styles from "./styles.module.css";
 
-interface Props {
-  id: string;
-  faction: number;
-  race: string;
-  type: BaseType;
-  life: number;
-  lifeRef: number;
-  rank: number;
-  y: number;
-  x: number;
+interface Props extends UnitProps {
   setBaseSelect: ({ y, x }: { y: number; x: number; active: boolean }) => void;
 }
 
-export type BasePropsWithoutSelect = Omit<Props, 'setBaseSelect'>
-
-export const Base = ({ faction, type, life, lifeRef, rank, y, x }: Props) => {
+export const Base = ({ faction, type, life, lifeRef }: Props) => {
   const currentLife = convertToPercentage(lifeRef, life);
   return (
     <div className={`unit ${styles.base} ${styles[`base-${faction}-${type}`]}`}>
@@ -25,7 +14,7 @@ export const Base = ({ faction, type, life, lifeRef, rank, y, x }: Props) => {
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,
         }}
-        className='life-bar'
+        className="life-bar"
       ></div>
     </div>
   );

@@ -14,7 +14,7 @@ function gridItem(): GridItem {
     rangeValue: 0,
     pathActive: false,
     army: '',
-    base: []
+    base: ''
   };
 }
 
@@ -27,8 +27,9 @@ const basesPossibleTerrain: GridItem[] = [];
 const waveData = generateWave();
 const size = COREVALUES.combatMap.size;
 
-// Exported first armies position
+// Exported first positions
 let armyPositions: InitialPosition;
+let basePositions: InitialPosition
 
 export function generateMap() {
   function feedMap() {
@@ -78,33 +79,15 @@ export function generateMap() {
       selectPlayersPosition();
     } else {
       // Player
-      map[player.y][player.x].base[0] = {
-        id: 'human-base-1',
-        faction: 0,
-        race: 'human',
-        type: 'city',
-        life: 55,
-        lifeRef: 80,
-        rank: 0,
-        y: player.y,
-        x: player.x
-      }
+      map[player.y][player.x].base = '0-0-human-base',
 
       // Enemy
-      map[enemy.y][enemy.x].base[0] = {
-        id: 'orc-base-1',
-        faction: 1,
-        race: 'orc',
-        type: 'city',
-        life: 74,
-        lifeRef: 80,
-        rank: 0,
-        y: enemy.y,
-        x: enemy.x
-      }
+      map[enemy.y][enemy.x].base = '1-0-orc-base',
 
       // Set first army location
       armyFirstLocation({player, enemy});
+
+      basePositions = {y0: player.y, x0: player.x, y1: enemy.y, x1: enemy.x};
     }
   }
 
@@ -129,5 +112,5 @@ export function generateMap() {
   }
 
   const finalMap = map.flat(2);
-  return { finalMap, armyPositions };
+  return { finalMap, armyPositions, basePositions };
 }

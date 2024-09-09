@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, MouseEvent } from "react";
-import { ArmyPropsWithoutSelect, ArmySelect } from "../Army";
+import { ArmySelect } from "../Army";
+import { UnitProps } from "../../data/types";
 import { PathActive } from ".";
 import { GridItem } from "../../data/types";
 import { COREVALUES } from "../../data/consts";
@@ -13,8 +14,8 @@ interface Props {
   setPathActive: Dispatch<SetStateAction<PathActive>>;
   setPath: Dispatch<SetStateAction<PathActive[]>>;
   path: PathActive[];
-  armies: ArmyPropsWithoutSelect[][];
-  setArmies: Dispatch<SetStateAction<ArmyPropsWithoutSelect[][]>>;
+  armies: UnitProps[][];
+  setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
   setPathFinal: Dispatch<SetStateAction<PathActive[]>>;
   setArmyLocationIdIndex: Dispatch<
     SetStateAction<{

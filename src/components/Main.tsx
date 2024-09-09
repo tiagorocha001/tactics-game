@@ -3,8 +3,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { generateMap } from "../data/cenario/sampleBoard";
 // Types
 import { Turn } from "../data/types";
-// Army initial state
+// Initial state
 import { initialArmyState } from "../data/initialArmyState";
+import { initialBaseState } from "../data/initialBaseState";
 // Components
 import { Map } from "./Map";
 import { Header } from "./layout/Header";
@@ -24,8 +25,7 @@ export const Main = () => {
   //   };
   // }, []);
 
-  const { finalMap, armyPositions } = generateMap();
-  const armyList = initialArmyState(armyPositions);
+  const { finalMap, armyPositions, basePositions } = generateMap();
 
   // Map
   const [map, setMap] = useState(finalMap);
@@ -34,21 +34,14 @@ export const Main = () => {
   const [turn, setTurn] = useState<Turn>("move");
 
   // Armies
-  const [armies, setArmies] = useState(armyList);
+  const [armies, setArmies] = useState(initialArmyState(armyPositions));
+
+  // Bases
+  const [bases, ] = useState(initialBaseState(basePositions));
 
   // console.log(map);
   // console.log("armies", armies);
   // console.log(armyPositions);
-
-  // Bases
-  // function initialValue() {
-  //   return {
-  //     player: [],
-  //     enemy: [],
-  //   };
-  // }
-  
-  // const [bases, setBases] = useState(initialValue());
 
   // Drawer menu
   const [opened, { open, close }] = useDisclosure(false);
@@ -57,7 +50,7 @@ export const Main = () => {
     <>
       <button onClick={open}>Army List</button>
       <Header turn={turn} setTurn={setTurn} />
-      <Map map={map} setMap={setMap} armies={armies} setArmies={setArmies} />
+      <Map map={map} setMap={setMap} armies={armies} setArmies={setArmies} bases={bases} />
       <DrawerArmy opened={opened} close={close} armies={armies} />
     </>
   );

@@ -2,16 +2,18 @@ import { useState, useMemo, Dispatch, SetStateAction } from "react";
 import { COREVALUES } from "../../data/consts";
 import { GridItem } from "../../data/types";
 import { calculateDistance } from "../../utils";
-import { Army, ArmyPropsWithoutSelect, ArmySelect } from "../Army";
+import { Army, ArmySelect } from "../Army";
 import { Base } from "../Base";
+import { UnitProps } from "../../data/types";
 import { MapRange } from "./MapRange";
 import styles from "./styles.module.css";
 
 interface Props {
   map: GridItem[];
   setMap: Dispatch<SetStateAction<GridItem[]>>;
-  armies: ArmyPropsWithoutSelect[][];
-  setArmies: Dispatch<SetStateAction<ArmyPropsWithoutSelect[][]>>;
+  armies: UnitProps[][];
+  setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
+  bases: UnitProps[][];
 }
 
 export interface PathActive {
@@ -26,7 +28,15 @@ const armySelectInitialState = {
   copy: null,
 };
 
-export const Map = ({ map, setMap, armies, setArmies }: Props) => {
+const baseSelectInitialState = { y: 0, x: 0, active: false }
+
+export const Map = ({
+  map,
+  setMap,
+  armies,
+  setArmies,
+  bases,
+}: Props) => {
   // Current army selected data
   const [armySelect, setArmySelect] = useState<ArmySelect>({
     ...armySelectInitialState,
@@ -45,20 +55,20 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
 
   // Previous and new map index for army ID placement
   const [armyLocationIdIndex, setArmyLocationIdIndex] = useState<{
-    currentIndex: number | null,
-    newIndex: number | null,
+    currentIndex: number | null;
+    newIndex: number | null;
   }>({
     currentIndex: null,
     newIndex: null,
   });
 
   // Current base selected data
-  const [baseSelect, setBaseSelect] = useState({ y: 0, x: 0, active: false });
+  const [baseSelect, setBaseSelect] = useState(baseSelectInitialState);
 
   // Place army
   const findObjectById = (
     id: string,
-    arrayOfArrays: ArmyPropsWithoutSelect[][]
+    arrayOfArrays: UnitProps[][]
   ) => {
     for (const arr of arrayOfArrays) {
       const foundObject = arr.find((obj) => obj.id === id);
@@ -68,15 +78,18 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
     }
   };
 
-  const placeArmy = (armyRef: string, index: number) => {
-    // console.log("armyRef:", armyRef);
-    const data = findObjectById(armyRef, armies);
+  const placeArmy = (id: string, index: number) => {
+    const data = findObjectById(
+      id,
+      armies
+    );
     if (!data) {
       return null;
     }
     return (
       <Army
         {...data}
+        key={id}
         index={index}
         setArmySelect={setArmySelect}
         setMap={setMap}
@@ -89,6 +102,15 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
         setIsAnimating={setIsAnimating}
       />
     );
+  };
+
+  const placeBase = (id: string, index: number) => {
+    // console.log("armyRef:", armyRef);
+    const data = findObjectById(id, bases);
+    if (!data) {
+      return null;
+    }
+    return <Base {...data} key={id} index={index} setBaseSelect={setBaseSelect} />;
   };
 
   // -------------------------
@@ -270,9 +292,7 @@ export const Map = ({ map, setMap, armies, setArmies }: Props) => {
               {/* Army render */}
               {!!cell.army && placeArmy(cell.army, index)}
               {/* Base render */}
-              {cell.base.length > 0 && (
-                <Base {...cell.base[0]} setBaseSelect={setBaseSelect} />
-              )}
+              {!!cell.base && placeBase(cell.base, index)}
             </div>
           ))}
       </div>

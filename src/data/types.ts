@@ -1,5 +1,3 @@
-import { BasePropsWithoutSelect } from '../components/Base';
-
 // Base
 export type BaseType = 'castle' | 'city' | 'farm' | 'fortress' | 'template' | '';
 
@@ -23,5 +21,18 @@ export interface GridItem {
   rangeValue: number;
   pathActive: boolean;
   army: string;
-  base: BasePropsWithoutSelect[];
+  base: string;
+}
+
+export interface UnitProps {
+  id: string;
+  faction: number;
+  race: string;
+  type: BaseType | ArmyType;
+  life: number;
+  lifeRef: number;
+  rank: number;
+  y: number;
+  x: number;
+  index: number;
 }

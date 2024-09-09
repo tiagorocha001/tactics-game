@@ -1,4 +1,4 @@
-import { ArmyPropsWithoutSelect } from "../components/Army";
+import { UnitProps } from "../data/types";
 
 export interface InitialPosition {
   y0: number;
@@ -7,7 +7,7 @@ export interface InitialPosition {
   x1: number;
 }
 
-export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyPropsWithoutSelect[][] {
+export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[][] {
   return [
     [
       {
