@@ -132,9 +132,9 @@ export const MapRange = ({
               onMouseOver={(e) => activatePath(isMoveableBlock as boolean, e)}
               onContextMenu={handleContextMenuRange}
             >
-              <div className={isMoveableBlock ? "range-block" : ""}>
+              <div className={isMoveableBlock ? "range-block" : "not-range-block"}>
                 <div className={cell.pathActive ? "path" : ""}>
-                  {cell.rangeValue}
+                  {/* {cell.rangeValue} */}
                 </div>
               </div>
             </div>

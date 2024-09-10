@@ -15,13 +15,13 @@
 
 @keyframes fade {
   0% {
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.4);
   }
   50% {
-    background-color: rgba(255, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
   }
   100% {
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.4);
   }
 }
 
@@ -37,9 +37,26 @@
   }
 }
 
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.not-range-block {
+  background-color: rgb(0, 0, 0, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .range-block {
   position: absolute;
-  animation: fade 2s infinite;
   width: 100%;
   height: 100%;
   z-index: 10;
@@ -59,10 +76,16 @@
   }
 
   .path {
-    animation: fadePath 2s infinite;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: red; /* Blue circle, change as needed */
+    border-radius: 50%;
+    animation: pulse 2s infinite ease-in-out;
+    border: 2px solid white;
   }
 }
 
