@@ -35,6 +35,7 @@ interface Props extends UnitProps {
   map: GridItem[];
   isAnimating: boolean;
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
+  setMenu: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ArmySelect {
@@ -63,7 +64,8 @@ export const Army = ({
   setArmyLocationIdIndex,
   map,
   isAnimating,
-  setIsAnimating
+  setIsAnimating,
+  setMenu,
 }: Props) => {
   const [active, setActive] = useState(false);
 
@@ -76,7 +78,7 @@ export const Army = ({
   const currentLife = convertToPercentage(lifeRef, life);
 
   // Select current army
-  const handleArmySelection = () => {
+  function handleArmySelection() {
     setArmySelect({
       y,
       x,
@@ -94,7 +96,9 @@ export const Army = ({
         index,
       },
     });
-  };
+    console.log("hello")
+    setMenu(true);
+  }
 
   // Only activate animation for the current selected army
   useEffect(() => {
@@ -153,7 +157,8 @@ export const Army = ({
     if (armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex) {
       setAnimateValues({ x: [], y: [] });
       const newMap = JSON.parse(JSON.stringify(map));
-      newMap[armyLocationIdIndex.newIndex].army = newMap[armyLocationIdIndex.currentIndex].army;
+      newMap[armyLocationIdIndex.newIndex].army =
+        newMap[armyLocationIdIndex.currentIndex].army;
       newMap[armyLocationIdIndex.currentIndex].army = "";
       setMap(newMap);
       setIsAnimating(false);
@@ -169,16 +174,24 @@ export const Army = ({
 
   return (
     <motion.div
-      className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
-      onClick={() => !isAnimating && handleArmySelection()}
       id={`${type}-${y}-${x}`}
+      className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
+      style={{ pointerEvents: isAnimating ? "none" : "auto" }}
+      onClick={() => !isAnimating && handleArmySelection()}
       animate={{ x: animateValues.x, y: animateValues.y }}
       onAnimationComplete={changeArmyPositionOnMap}
-      onAnimationStart={() => armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex && setIsAnimating(true)}
+      onAnimationStart={() =>
+        armyLocationIdIndex.newIndex &&
+        armyLocationIdIndex.currentIndex &&
+        setIsAnimating(true)
+      }
       whileHover={{ scale: 1.2 }}
       whileTap={{ scale: 1.5 }}
-      transition={{ duration: animateValues.x.length * 0.2, damping: 20, stiffness: 300 }}
-      style={{ pointerEvents: isAnimating ? "none" : "auto" }}
+      transition={{
+        duration: animateValues.x.length * 0.2,
+        damping: 20,
+        stiffness: 300,
+      }}
     >
       <div
         style={{

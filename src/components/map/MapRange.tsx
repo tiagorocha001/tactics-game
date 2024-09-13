@@ -12,7 +12,6 @@ interface Props {
   armySelect: ArmySelect;
   setArmySelect: Dispatch<SetStateAction<ArmySelect>>;
   setPathActive: Dispatch<SetStateAction<PathActive>>;
-  setPath: Dispatch<SetStateAction<PathActive[]>>;
   path: PathActive[];
   armies: UnitProps[][];
   setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
@@ -32,25 +31,12 @@ export const MapRange = ({
   armySelect,
   setArmySelect,
   setPathActive,
-  setPath,
   path,
   armies,
   setArmies,
   setPathFinal,
   setArmyLocationIdIndex,
 }: Props) => {
-  // Context menu - mouse right click
-  const handleContextMenuRange = (event: { preventDefault: () => void }) => {
-    event.preventDefault(); // Disable the default right-click behavior
-    setArmySelect({
-      y: 0,
-      x: 0,
-      active: false,
-      copy: null,
-    });
-    setPath([]);
-  };
-
   function activatePath(onRange: boolean, e: MouseEvent<HTMLDivElement>) {
     const { dataset } = e.currentTarget;
     const x = Number(dataset.x);
@@ -130,7 +116,6 @@ export const MapRange = ({
                 }
               }}
               onMouseOver={(e) => activatePath(isMoveableBlock as boolean, e)}
-              onContextMenu={handleContextMenuRange}
             >
               <div className={isMoveableBlock ? "range-block" : "not-range-block"}>
                 <div className={cell.pathActive ? "path" : ""}>

@@ -5,7 +5,7 @@ export type BaseType = 'castle' | 'city' | 'farm' | 'fortress' | 'template' | ''
 export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | '';
 
 // Turn
-export type Turn = 'move' | 'attack' | 'enemy';
+export type Turn = 'move' | 'attack' | 'item' | 'rest' | 'none';
 
 // Terrain
 type WaveTerrain = 'G' | 'S' | 'M' | 'F' | 'W' | string;

@@ -2,10 +2,11 @@ import { useState, useMemo, Dispatch, SetStateAction } from "react";
 import { COREVALUES } from "../../data/consts";
 import { GridItem } from "../../data/types";
 import { calculateDistance } from "../../utils";
-import { Army, ArmySelect } from "../Army";
+import { Army, type ArmySelect } from "../Army";
 import { Base } from "../Base";
 import { UnitProps } from "../../data/types";
 import { MapRange } from "./MapRange";
+import { type Turn } from "../../data/types";
 import styles from "./styles.module.css";
 
 interface Props {
@@ -13,7 +14,11 @@ interface Props {
   setMap: Dispatch<SetStateAction<GridItem[]>>;
   armies: UnitProps[][];
   setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
+  armySelect: ArmySelect;
+  setArmySelect: Dispatch<SetStateAction<ArmySelect>>;
   bases: UnitProps[][];
+  setMenu: Dispatch<SetStateAction<boolean>>;
+  turn: Turn;
 }
 
 export interface PathActive {
@@ -21,14 +26,7 @@ export interface PathActive {
   x: number | null;
 }
 
-const armySelectInitialState = {
-  y: -1,
-  x: -1,
-  active: false,
-  copy: null,
-};
-
-const baseSelectInitialState = { y: 0, x: 0, active: false }
+const baseSelectInitialState = { y: 0, x: 0, active: false };
 
 export const Map = ({
   map,
@@ -36,11 +34,11 @@ export const Map = ({
   armies,
   setArmies,
   bases,
+  armySelect,
+  setArmySelect,
+  setMenu,
+  turn,
 }: Props) => {
-  // Current army selected data
-  const [armySelect, setArmySelect] = useState<ArmySelect>({
-    ...armySelectInitialState,
-  });
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Active path
@@ -66,10 +64,7 @@ export const Map = ({
   const [baseSelect, setBaseSelect] = useState(baseSelectInitialState);
 
   // Place army
-  const findObjectById = (
-    id: string,
-    arrayOfArrays: UnitProps[][]
-  ) => {
+  const findObjectById = (id: string, arrayOfArrays: UnitProps[][]) => {
     for (const arr of arrayOfArrays) {
       const foundObject = arr.find((obj) => obj.id === id);
       if (foundObject && foundObject.life > 0) {
@@ -79,10 +74,7 @@ export const Map = ({
   };
 
   const placeArmy = (id: string, index: number) => {
-    const data = findObjectById(
-      id,
-      armies
-    );
+    const data = findObjectById(id, armies);
     if (!data) {
       return null;
     }
@@ -100,6 +92,7 @@ export const Map = ({
         setArmyLocationIdIndex={setArmyLocationIdIndex}
         isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
+        setMenu={setMenu}
       />
     );
   };
@@ -110,7 +103,9 @@ export const Map = ({
     if (!data) {
       return null;
     }
-    return <Base {...data} key={id} index={index} setBaseSelect={setBaseSelect} />;
+    return (
+      <Base {...data} key={id} index={index} setBaseSelect={setBaseSelect} />
+    );
   };
 
   // -------------------------
@@ -118,7 +113,7 @@ export const Map = ({
   // -------------------------
   const rangeMap = useMemo(() => {
     const gridPoints = () => {
-      const grid = JSON.parse(JSON.stringify(map));
+      const grid = structuredClone(map);
       const stack = [];
 
       if (!armySelect.copy) return;
@@ -259,12 +254,21 @@ export const Map = ({
 
   return (
     <div className={styles[`main-container`]}>
-      Army Select: {JSON.stringify(armySelect)} <br />
-      pathActive: {JSON.stringify(pathActive)} <br />
-      path: {JSON.stringify(path)} <br />
-      pathFinal: {JSON.stringify(pathFinal)} <br />
+      <div
+        style={{
+          position: "absolute",
+          width: "170px",
+          marginLeft: "-420px",
+          textAlign: "left",
+        }}
+      >
+        <b>Army Select:</b> {JSON.stringify(armySelect)} <br />
+        <b>pathActive:</b> {JSON.stringify(pathActive)} <br />
+        <b>path:</b> {JSON.stringify(path)} <br />
+        <b>pathFinal:</b> {JSON.stringify(pathFinal)} <br />
+      </div>
       {/* Army range display */}
-      {armySelect.active && (
+      {armySelect.active && turn === "move" && (
         <MapRange
           rangeMap={rangeMap}
           map={map}
@@ -274,7 +278,6 @@ export const Map = ({
           setMap={setMap}
           setArmySelect={setArmySelect}
           setPathActive={setPathActive}
-          setPath={setPath}
           setArmies={setArmies}
           setPathFinal={setPathFinal}
           setArmyLocationIdIndex={setArmyLocationIdIndex}
