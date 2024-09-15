@@ -1,16 +1,14 @@
-import { Dispatch, SetStateAction, MouseEvent } from "react";
-import { ArmySelect } from "../Army";
-import { UnitProps } from "../../data/types";
-import { PathActive } from ".";
-import { GridItem } from "../../data/types";
-import { COREVALUES } from "../../data/consts";
+import { Dispatch, SetStateAction, MouseEvent } from 'react';
+import { UnitProps } from '../../data/types';
+import { PathActive } from '.';
+import { GridItem } from '../../data/types';
 
 interface Props {
   rangeMap: GridItem[];
   map: GridItem[];
   setMap: Dispatch<SetStateAction<GridItem[]>>;
-  armySelect: ArmySelect;
-  setArmySelect: Dispatch<SetStateAction<ArmySelect>>;
+  armySelect: UnitProps | null;
+  setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
   setPathActive: Dispatch<SetStateAction<PathActive>>;
   path: PathActive[];
   armies: UnitProps[][];
@@ -56,7 +54,7 @@ export const MapRange = ({
 
     // Move army from old to new position
     if (match) {
-      const newMap: GridItem[] = JSON.parse(JSON.stringify(map));
+      const newMap: GridItem[] = structuredClone(map);
       const pathLast = path[path.length - 1];
       const pathFirst = path[0];
       const currentIndex = newMap.findIndex(
@@ -70,22 +68,16 @@ export const MapRange = ({
       setArmyLocationIdIndex({ currentIndex, newIndex });
       setMap(newMap);
       setPathActive({ y: null, x: null });
-      setArmySelect({
-        y: 0,
-        x: 0,
-        active: false,
-        copy: null,
-      });
+      setArmySelect(null);
 
       // Update army list
       const newArmyList = [...armies];
-      // const newArmyList = JSON.parse(JSON.stringify(armies));
-      console.log("a:", newArmyList);
       for (const subList of newArmyList) {
         for (const item of subList) {
           if (item.id === armyId) {
             item.x = x;
             item.y = y;
+            item.movePoints = item.movePoints && item.movePoints - path.length;
             return;
           }
         }
@@ -95,18 +87,18 @@ export const MapRange = ({
   };
 
   return (
-    <div className="grid-container-over-a">
-      <div className="range-map">
+    <div className='grid-container-over-a'>
+      <div className='range-map'>
         {rangeMap.map((cell) => {
           const isMoveableBlock =
-            cell.rangeValue > 0 &&
-            armySelect.copy &&
-            cell.rangeValue <=
-              armySelect.copy.rank + COREVALUES.player.rangeIncrement;
+          cell.rangeValue > 0 &&
+          armySelect &&
+          armySelect.movePoints !== undefined &&
+          cell.rangeValue <= armySelect.movePoints;
           return (
             <div
-              key={cell.id + "range"}
-              className="grid-item"
+              key={cell.id + 'range'}
+              className='grid-item'
               data-y={cell.y}
               data-x={cell.x}
               onClick={() => {
@@ -117,8 +109,8 @@ export const MapRange = ({
               }}
               onMouseOver={(e) => activatePath(isMoveableBlock as boolean, e)}
             >
-              <div className={isMoveableBlock ? "range-block" : "not-range-block"}>
-                <div className={cell.pathActive ? "path" : ""}>
+              <div className={isMoveableBlock ? 'range-block' : 'not-range-block'}>
+                <div className={cell.pathActive ? 'path' : ''}>
                   {/* {cell.rangeValue} */}
                 </div>
               </div>

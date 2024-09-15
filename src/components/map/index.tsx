@@ -1,21 +1,21 @@
-import { useState, useMemo, Dispatch, SetStateAction } from "react";
-import { COREVALUES } from "../../data/consts";
-import { GridItem } from "../../data/types";
-import { calculateDistance } from "../../utils";
-import { Army, type ArmySelect } from "../Army";
-import { Base } from "../Base";
-import { UnitProps } from "../../data/types";
-import { MapRange } from "./MapRange";
-import { type Turn } from "../../data/types";
-import styles from "./styles.module.css";
+import { useState, useMemo, Dispatch, SetStateAction } from 'react';
+import { COREVALUES } from '../../data/consts';
+import { GridItem } from '../../data/types';
+import { calculateDistance } from '../../utils';
+import { Army } from '../Army';
+import { Base } from '../Base';
+import { UnitProps } from '../../data/types';
+import { MapRange } from './MapRange';
+import { Turn } from '../../data/types';
+import styles from './styles.module.css';
 
 interface Props {
   map: GridItem[];
   setMap: Dispatch<SetStateAction<GridItem[]>>;
   armies: UnitProps[][];
   setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
-  armySelect: ArmySelect;
-  setArmySelect: Dispatch<SetStateAction<ArmySelect>>;
+  armySelect: UnitProps | null;
+  setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
   bases: UnitProps[][];
   setMenu: Dispatch<SetStateAction<boolean>>;
   turn: Turn;
@@ -101,7 +101,6 @@ export const Map = ({
   };
 
   const placeBase = (id: string, index: number) => {
-    // console.log("armyRef:", armyRef);
     const data = findObjectById(id, bases);
     if (!data) {
       return null;
@@ -119,12 +118,11 @@ export const Map = ({
       const grid = structuredClone(map);
       const stack = [];
 
-      if (!armySelect.copy) return;
+      if (!armySelect) return;
 
-      stack.push(armySelect.copy.index);
-
+      stack.push(armySelect.index);
       // Mark player position as already checked
-      grid[armySelect.copy.index].rangeCheck = true;
+      grid[armySelect.index].rangeCheck = true;
 
       // Feed grid with positions costs
       for (let i = 0; i < grid.length; i++) {
@@ -139,16 +137,16 @@ export const Map = ({
 
         // Terrain cost set
         if (
-          (grid[i].terrain === "F" || grid[i].terrain === "M") &&
-          armySelect.copy.index !== i
+          (grid[i].terrain === 'F' || grid[i].terrain === 'M') && // TODO: add enum
+          armySelect.index !== i
         ) {
           terrainCost = 1;
-        } else if (armySelect.copy.index !== i && grid[i].terrain === "W") {
+        } else if (armySelect.index !== i && grid[i].terrain === 'W') {
           terrainCost = 2;
         }
 
         // Unit/Base cost set
-        if (armySelect.copy.index !== i && grid[i].army.length) {
+        if (armySelect.index !== i && grid[i].army.length) {
           terrainCost = 99;
         }
         if (grid[i].base.length) {
@@ -259,10 +257,10 @@ export const Map = ({
     <div className={styles[`main-container`]}>
       <div
         style={{
-          position: "absolute",
-          width: "170px",
-          marginLeft: "-420px",
-          textAlign: "left",
+          position: 'absolute',
+          width: '170px',
+          marginLeft: '-420px',
+          textAlign: 'left',
         }}
       >
         <b>Army Select:</b> {JSON.stringify(armySelect)} <br />
@@ -271,7 +269,7 @@ export const Map = ({
         <b>pathFinal:</b> {JSON.stringify(pathFinal)} <br />
       </div>
       {/* Army range display */}
-      {armySelect.active && turn === "move" && (
+      {armySelect && turn === Turn.move && (
         <MapRange
           rangeMap={rangeMap}
           map={map}
@@ -287,7 +285,7 @@ export const Map = ({
         />
       )}
       {/* Main map */}
-      <div className="grid-container">
+      <div className='grid-container'>
         {map.length > 0 &&
           map.map((cell: GridItem, index) => (
             <div

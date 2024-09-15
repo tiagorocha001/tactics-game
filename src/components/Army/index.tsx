@@ -1,30 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, Dispatch, SetStateAction, useState } from "react";
-import { motion } from "framer-motion";
-import { convertToPercentage } from "../../utils";
-import { PathActive } from "../Map";
-import { COREVALUES } from "../../data/consts";
+import { useEffect, Dispatch, SetStateAction, useState } from 'react';
+import { motion } from 'framer-motion';
+import { convertToPercentage } from '../../utils';
+import { PathActive } from '../Map';
+import { COREVALUES } from '../../data/consts';
 // Types
-import { type Turn } from "../../data/types";
-import { type UnitProps } from "../../data/types";
-import { type GridItem } from "../../data/types";
+import { Turn } from '../../data/types';
+import { type UnitProps } from '../../data/types';
+import { type GridItem } from '../../data/types';
 // Style
-import styles from "./styles.module.css";
+import styles from './styles.module.css';
 
 const blockSize = COREVALUES.combatMap.blockSize;
 
 interface Props extends UnitProps {
-  setArmySelect: Dispatch<
-    SetStateAction<{
-      y: number;
-      x: number;
-      active: boolean;
-      copy: UnitProps | null;
-    }>
-  >;
+  setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
   setMap: Dispatch<SetStateAction<GridItem[]>>;
   pathFinal: PathActive[];
-  armySelect: ArmySelect;
+  armySelect: UnitProps | null;
   armyLocationIdIndex: {
     currentIndex: number | null;
     newIndex: number | null;
@@ -42,13 +35,6 @@ interface Props extends UnitProps {
   setTurn: Dispatch<SetStateAction<Turn>>;
 }
 
-export interface ArmySelect {
-  y: number;
-  x: number;
-  active: boolean;
-  copy: UnitProps | null;
-}
-
 export const Army = ({
   id,
   faction,
@@ -56,6 +42,8 @@ export const Army = ({
   type,
   life,
   lifeRef,
+  movePoints,
+  movePointsRef,
   rank,
   y,
   x,
@@ -85,28 +73,25 @@ export const Army = ({
   // Select current army
   function handleArmySelection() {
     setArmySelect({
+      id,
+      faction,
+      race,
+      type,
+      life,
+      lifeRef,
+      movePoints,
+      movePointsRef,
+      rank,
       y,
       x,
-      active: true,
-      copy: {
-        id,
-        faction,
-        race,
-        type,
-        life,
-        lifeRef,
-        rank,
-        y,
-        x,
-        index,
-      },
+      index,
     });
     setMenu(true);
   }
 
   // Only activate animation for the current selected army
   useEffect(() => {
-    if (armySelect?.copy?.id === id) {
+    if (armySelect?.id === id) {
       setActive(true);
     } else {
       setActive(false);
@@ -163,11 +148,11 @@ export const Army = ({
       const newMap = JSON.parse(JSON.stringify(map));
       newMap[armyLocationIdIndex.newIndex].army =
         newMap[armyLocationIdIndex.currentIndex].army;
-      newMap[armyLocationIdIndex.currentIndex].army = "";
+      newMap[armyLocationIdIndex.currentIndex].army = '';
       setMap(newMap);
       setIsAnimating(false);
       setArmyLocationIdIndex({ currentIndex: null, newIndex: null });
-      setTurn("none");
+      setTurn(Turn.none);
     }
   }
 
@@ -181,7 +166,7 @@ export const Army = ({
     <motion.div
       id={`${type}-${y}-${x}`}
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
-      style={{ pointerEvents: isAnimating ? "none" : "auto" }}
+      style={{ pointerEvents: isAnimating ? 'none' : 'auto' }}
       onClick={() => !isAnimating && handleArmySelection()}
       animate={{ x: animateValues.x, y: animateValues.y }}
       onAnimationComplete={changeArmyPositionOnMap}
@@ -202,7 +187,7 @@ export const Army = ({
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,
         }}
-        className="life-bar"
+        className='life-bar'
       ></div>
     </motion.div>
   );

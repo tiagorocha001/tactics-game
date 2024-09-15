@@ -1,27 +1,16 @@
-import { useRef, Dispatch, SetStateAction } from "react";
-import { motion } from "framer-motion";
-import styles from "./styles.module.css";
-import { useClickOutside } from "../../hooks/useClickOutside";
-import { type Turn } from "../../data/types";
+import { useRef, Dispatch, SetStateAction } from 'react';
+import { motion } from 'framer-motion';
+import styles from './styles.module.css';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import { Turn, UnitProps } from '../../data/types';
 
 interface Props {
   setMenu: Dispatch<SetStateAction<boolean>>;
   setTurn: Dispatch<SetStateAction<Turn>>;
+  armySelect: UnitProps | null;
 }
 
-interface MenuItems {
-  name: Turn;
-  id: string;
-}
-
-const menuItems: MenuItems[] = [
-  { name: "move", id: "unitId-move" },
-  { name: "attack", id: "unitId-attack" },
-  { name: "item", id: "unitId-item" },
-  { name: "rest", id: "unitId-rest" },
-];
-
-export const UnitMenu = ({ setMenu, setTurn }: Props) => {
+export const UnitMenu = ({ setMenu, setTurn, armySelect }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   function clickOutside() {
@@ -42,10 +31,10 @@ export const UnitMenu = ({ setMenu, setTurn }: Props) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {menuItems.map((item) => {
+      {Object.values(Turn).map((item) => {
         return (
-          <button id={item.id} onClick={() => clickInside(item.name)}>
-            {item.name}
+          <button key={`unit-menu-${item}`} id={item} onClick={() => clickInside(item)} disabled={item === Turn.move && !armySelect?.movePoints}>
+            {item}
           </button>
         );
       })}

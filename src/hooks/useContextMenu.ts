@@ -1,16 +1,11 @@
-import { useEffect, Dispatch, SetStateAction } from "react";
-import { type ArmySelect } from "../components/Army";
+import { useEffect, Dispatch, SetStateAction } from 'react';
+import { UnitProps } from '../data/types';
 
-export const useContextMenu = (setArmySelect: Dispatch<SetStateAction<ArmySelect>>) => {
+export const useContextMenu = (setArmySelect: Dispatch<SetStateAction<UnitProps | null>>) => {
     useEffect(() => {
       const handleContextMenu = (e: { preventDefault: () => void }) => {
         e.preventDefault();
-        setArmySelect({
-          y: 0,
-          x: 0,
-          active: false,
-          copy: null,
-        });
+        setArmySelect(null);
       };
   
       document.addEventListener('contextmenu', handleContextMenu);

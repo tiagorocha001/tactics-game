@@ -15,5 +15,16 @@
     &:hover {
       background-color: darkgreen;
     }
+
+    &:hover:not(:disabled) {
+      background-color: darkgreen;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #444;
+      color: #888;
+    }
   }
 }

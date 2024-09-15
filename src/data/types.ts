@@ -19,7 +19,14 @@ export const ArmyLevelMovePoints: Record<ArmyLevel, ArmyMove> = {
 };
 
 // Turn
-export type Turn = 'move' | 'attack' | 'item' | 'rest' | 'none';
+export enum Turn {
+  move = 'move',
+  attack = 'attack',
+  item = 'item',
+  reset = 'reset',
+  none = 'none'
+}
+
 
 // Terrain
 type WaveTerrain = 'G' | 'S' | 'M' | 'F' | 'W' | string;
@@ -46,7 +53,7 @@ export interface UnitProps {
   life: number;
   lifeRef: number;
   rank: number;
-  movePoints?: ArmyMove,
+  movePoints?: number,
   movePointsRef?: ArmyMove,
   y: number;
   x: number;
