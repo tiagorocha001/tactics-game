@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { generateMap } from "../data/cenario/sampleBoard";
 // Types
@@ -73,6 +73,7 @@ export const Main = () => {
         bases={bases}
         setMenu={setMenu}
         turn={turn}
+        setTurn={setTurn}
       />
       <DrawerArmy opened={opened} close={close} armies={armies} />
     </>

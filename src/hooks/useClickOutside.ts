@@ -5,28 +5,34 @@ export const useClickOutside = (
   callback: () => void
 ) => {
   const callbackRef = useRef(callback);
-  const ignoreFirstClickRef = useRef(true);
+  const isClickInsideRef = useRef(false);
 
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
   useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
-      if (ignoreFirstClickRef.current) {
-        ignoreFirstClickRef.current = false;
-        return;
-      }
-
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        callbackRef.current();
+    const handleMouseDown = (event: MouseEvent) => {
+      if (ref.current && ref.current.contains(event.target as Node)) {
+        isClickInsideRef.current = true;
+      } else {
+        isClickInsideRef.current = false;
       }
     };
 
-    document.addEventListener("mousedown", handleClick);
+    const handleMouseUp = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node) && !isClickInsideRef.current) {
+        callbackRef.current();
+      }
+      isClickInsideRef.current = false;
+    };
+
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mouseup", handleMouseUp);
 
     return () => {
-      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [ref]);
 };

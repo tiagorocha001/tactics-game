@@ -1,4 +1,4 @@
-import { UnitProps } from "../data/types";
+import { type UnitProps, ArmyLevelMovePoints } from "../data/types";
 
 export interface InitialPosition {
   y0: number;
@@ -17,7 +17,9 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         type: "knight",
         life: 80,
         lifeRef: 80,
-        rank: 0,
+        movePoints: ArmyLevelMovePoints[1],
+        movePointsRef: 8,
+        rank: 1,
         y: y0,
         x: x0,
         index: 0,
@@ -29,7 +31,9 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         type: "knight",
         life: 80,
         lifeRef: 80,
-        rank: 0,
+        movePoints: ArmyLevelMovePoints[1],
+        movePointsRef: 8,
+        rank: 1,
         y: 1,
         x: 1,
         index: 0,
@@ -43,7 +47,9 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         type: "knight",
         life: 80,
         lifeRef: 80,
-        rank: 0,
+        movePoints: ArmyLevelMovePoints[1],
+        movePointsRef: 8,
+        rank: 1,
         y: y1,
         x: x1,
         index: 0,

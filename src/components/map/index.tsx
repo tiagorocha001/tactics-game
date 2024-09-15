@@ -19,6 +19,7 @@ interface Props {
   bases: UnitProps[][];
   setMenu: Dispatch<SetStateAction<boolean>>;
   turn: Turn;
+  setTurn: Dispatch<SetStateAction<Turn>>;
 }
 
 export interface PathActive {
@@ -38,6 +39,7 @@ export const Map = ({
   setArmySelect,
   setMenu,
   turn,
+  setTurn,
 }: Props) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -93,6 +95,7 @@ export const Map = ({
         isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
         setMenu={setMenu}
+        setTurn={setTurn}
       />
     );
   };

@@ -2,10 +2,13 @@
 import { useEffect, Dispatch, SetStateAction, useState } from "react";
 import { motion } from "framer-motion";
 import { convertToPercentage } from "../../utils";
-import { UnitProps } from "../../data/types";
-import { GridItem } from "../../data/types";
 import { PathActive } from "../Map";
 import { COREVALUES } from "../../data/consts";
+// Types
+import { type Turn } from "../../data/types";
+import { type UnitProps } from "../../data/types";
+import { type GridItem } from "../../data/types";
+// Style
 import styles from "./styles.module.css";
 
 const blockSize = COREVALUES.combatMap.blockSize;
@@ -36,6 +39,7 @@ interface Props extends UnitProps {
   isAnimating: boolean;
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
   setMenu: Dispatch<SetStateAction<boolean>>;
+  setTurn: Dispatch<SetStateAction<Turn>>;
 }
 
 export interface ArmySelect {
@@ -66,6 +70,7 @@ export const Army = ({
   isAnimating,
   setIsAnimating,
   setMenu,
+  setTurn,
 }: Props) => {
   const [active, setActive] = useState(false);
 
@@ -96,7 +101,6 @@ export const Army = ({
         index,
       },
     });
-    console.log("hello")
     setMenu(true);
   }
 
@@ -163,6 +167,7 @@ export const Army = ({
       setMap(newMap);
       setIsAnimating(false);
       setArmyLocationIdIndex({ currentIndex: null, newIndex: null });
+      setTurn("none");
     }
   }
 
