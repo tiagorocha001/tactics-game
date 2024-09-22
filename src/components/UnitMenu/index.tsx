@@ -34,6 +34,7 @@ export const UnitMenu = ({ setMenu, setTurn, armySelect }: Props) => {
       exit={{ opacity: 0 }}
     >
       {Object.values(Turn).map((item) => {
+        if (item ===  Turn.reset) return null;
         return (
           <button
             key={`unit-menu-${item}`}

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDisclosure } from '@mantine/hooks';
 import { generateMap } from '../data/cenario/sampleBoard';
 // Types
 import { Turn, type UnitProps } from '../data/types';
@@ -9,7 +8,7 @@ import { initialBaseState } from '../data/initialBaseState';
 // Components
 import { Map } from './Map';
 import { Header } from './layout/Header';
-import { DrawerArmy } from './layout/DrawerArmy';
+import { MenuArmy } from './layout/MenuArmy';
 import { UnitMenu } from './UnitMenu';
 // Hooks
 import { useContextMenu } from '../hooks/useContextMenu';
@@ -40,8 +39,8 @@ export const Main = () => {
   // console.log('armies', armies);
   // console.log(armyPositions);
 
-  // Drawer menu
-  const [opened, { open, close }] = useDisclosure(false);
+  // Menu Army
+  const [openedArmyMenu, setOpenedArmyMenu] = useState(false);
 
   // Hooks
   useContextMenu(setArmySelect); // Disable right click context menu
@@ -50,7 +49,7 @@ export const Main = () => {
   return (
     <>
       menu: {String(menu)}
-      <button onClick={open}>Army List</button>
+      <button onClick={() => setOpenedArmyMenu(!openedArmyMenu)}>Army List</button>
       <Header turn={turn} setTurn={setTurn} />
       {menu && <UnitMenu setMenu={setMenu} setTurn={setTurn} armySelect={armySelect} />}
       <Map
@@ -65,7 +64,7 @@ export const Main = () => {
         turn={turn}
         setTurn={setTurn}
       />
-      <DrawerArmy opened={opened} close={close} armies={armies} />
+      <MenuArmy opened={openedArmyMenu} close={close} armies={armies} />
     </>
   );
 };

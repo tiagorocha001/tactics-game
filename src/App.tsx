@@ -1,9 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 // Routes
-import { WaveTest } from "./components/WaveTest";
-import { Main } from "./components/Main";
-import "./App.css";
-import '@mantine/core/styles.css';
+import { WaveTest } from './components/WaveTest';
+import { Main } from './components/Main';
+import './App.css';
 
 function App() {
   return (
