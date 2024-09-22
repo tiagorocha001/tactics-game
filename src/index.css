@@ -14,6 +14,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
+/* Disable scroll */
 :root::-webkit-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer and Edge */

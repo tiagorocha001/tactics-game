@@ -17,11 +17,13 @@ export const UnitMenu = ({ setMenu, setTurn, armySelect }: Props) => {
     setMenu(false);
   }
 
-  function clickInside(action: Turn) {
+  function clickMenu(action: Turn) {
     setTurn(action);
     setMenu(false);
   }
   useClickOutside(ref, clickOutside);
+
+  const isMovementPossible = armySelect?.movePoints ? armySelect?.movePoints > 0 : false;
 
   return (
     <motion.div
@@ -33,7 +35,12 @@ export const UnitMenu = ({ setMenu, setTurn, armySelect }: Props) => {
     >
       {Object.values(Turn).map((item) => {
         return (
-          <button key={`unit-menu-${item}`} id={item} onClick={() => clickInside(item)} disabled={item === Turn.move && !armySelect?.movePoints}>
+          <button
+            key={`unit-menu-${item}`}
+            id={item}
+            onClick={() => clickMenu(item)}
+            disabled={item === Turn.move && !isMovementPossible}
+          >
             {item}
           </button>
         );

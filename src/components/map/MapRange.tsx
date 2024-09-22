@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, MouseEvent } from 'react';
-import { UnitProps } from '../../data/types';
 import { PathActive } from '.';
+// Types
 import { GridItem } from '../../data/types';
+import { UnitProps } from '../../data/types';
 
 interface Props {
   rangeMap: GridItem[];
@@ -35,6 +36,7 @@ export const MapRange = ({
   setPathFinal,
   setArmyLocationIdIndex,
 }: Props) => {
+
   function activatePath(onRange: boolean, e: MouseEvent<HTMLDivElement>) {
     const { dataset } = e.currentTarget;
     const x = Number(dataset.x);

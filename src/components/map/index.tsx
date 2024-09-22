@@ -253,6 +253,8 @@ export const Map = ({
   // -------------------------
   // -------------------------
 
+  console.log('armySelect: ', armySelect);
+
   return (
     <div className={styles[`main-container`]}>
       <div
@@ -267,6 +269,7 @@ export const Map = ({
         <b>pathActive:</b> {JSON.stringify(pathActive)} <br />
         <b>path:</b> {JSON.stringify(path)} <br />
         <b>pathFinal:</b> {JSON.stringify(pathFinal)} <br />
+        <b>armySelect:</b> {JSON.stringify(armySelect)}
       </div>
       {/* Army range display */}
       {armySelect && turn === Turn.move && (
