@@ -20,10 +20,11 @@ export const ArmyLevelMovePoints: Record<ArmyLevel, ArmyMove> = {
 
 // Action
 export enum Action {
+  openedMenu = 'openedMenu',
   move = 'move',
   attack = 'attack',
   item = 'item',
-  reset = 'reset',
+  armyList = 'army list',
   none = 'none'
 }
 

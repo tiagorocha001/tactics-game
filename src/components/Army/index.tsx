@@ -31,7 +31,6 @@ interface Props extends UnitProps {
   map: GridItem[];
   isAnimating: boolean;
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
-  setMenu: Dispatch<SetStateAction<boolean>>;
   setAction: Dispatch<SetStateAction<Action>>;
 }
 
@@ -57,7 +56,6 @@ export const Army = ({
   map,
   isAnimating,
   setIsAnimating,
-  setMenu,
   setAction,
 }: Props) => {
   const [active, setActive] = useState(false);
@@ -86,7 +84,7 @@ export const Army = ({
       x,
       index,
     });
-    setMenu(true);
+    setAction(Action.openedMenu);
   }
 
   // Only activate animation for the current selected army

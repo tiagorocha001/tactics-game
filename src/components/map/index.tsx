@@ -17,7 +17,6 @@ interface Props {
   armySelect: UnitProps | null;
   setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
   bases: UnitProps[][];
-  setMenu: Dispatch<SetStateAction<boolean>>;
   action: Action;
   setAction: Dispatch<SetStateAction<Action>>;
 }
@@ -37,7 +36,6 @@ export const Map = ({
   bases,
   armySelect,
   setArmySelect,
-  setMenu,
   action,
   setAction,
 }: Props) => {
@@ -94,7 +92,6 @@ export const Map = ({
         setArmyLocationIdIndex={setArmyLocationIdIndex}
         isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
-        setMenu={setMenu}
         setAction={setAction}
       />
     );

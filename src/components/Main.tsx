@@ -8,7 +8,6 @@ import { initialBaseState } from '../data/initialBaseState';
 // Components
 import { Map } from './Map';
 import { Header } from './layout/Header';
-import { MenuArmy } from './UnitMenu/MenuArmy';
 import { UnitMenu } from './UnitMenu';
 // Hooks
 import { useContextMenu } from '../hooks/useContextMenu';
@@ -25,9 +24,6 @@ export const Main = () => {
 
   // Turns
   const [turn, setTurn] = useState<Turn>(Turn.player);
-
-  // Unit Menu
-  const [menu, setMenu] = useState(false);
 
   // Armies
   const [armies, setArmies] = useState(initialArmyState(armyPositions));
@@ -51,10 +47,10 @@ export const Main = () => {
 
   return (
     <div className='main'>
-      menu: {String(menu)}
+      menu: {String(action)}
       <button onClick={() => setOpenedArmyMenu(!openedArmyMenu)}>Army List</button>
       <Header turn={turn} setTurn={setTurn} />
-      {menu && <UnitMenu setMenu={setMenu} setAction={setAction} armySelect={armySelect} />}
+      <UnitMenu action={action} setAction={setAction} armySelect={armySelect} armies={armies} />
       <Map
         map={map}
         setMap={setMap}
@@ -63,11 +59,9 @@ export const Main = () => {
         armySelect={armySelect}
         setArmySelect={setArmySelect}
         bases={bases}
-        setMenu={setMenu}
         action={action}
         setAction={setAction}
       />
-      <MenuArmy opened={openedArmyMenu} close={close} armies={armies} />
     </div>
   );
 };

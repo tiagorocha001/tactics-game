@@ -1,51 +1,23 @@
-import { useRef, Dispatch, SetStateAction } from 'react';
-import { motion } from 'framer-motion';
-import styles from './styles.module.css';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { Dispatch, SetStateAction } from 'react';
 import { Action, UnitProps } from '../../data/types';
+import { ArmyList } from './ArmyList';
+import { OptionsList } from './OptionsList';
 
 interface Props {
-  setMenu: Dispatch<SetStateAction<boolean>>;
+  action: Action;
   setAction: Dispatch<SetStateAction<Action>>;
   armySelect: UnitProps | null;
+  armies: UnitProps[][];
 }
 
-export const UnitMenu = ({ setMenu, setAction, armySelect }: Props) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  function clickOutside() {
-    setMenu(false);
-  }
-
-  function clickMenu(action: Action) {
-    setAction(action);
-    setMenu(false);
-  }
-  useClickOutside(ref, clickOutside);
-
-  const isMovementPossible = armySelect?.movePoints ? armySelect?.movePoints > 0 : false;
-
+export const UnitMenu = ({ action, setAction, armySelect, armies }: Props) => {
+  useClickOutside(ref, () => {
+    setAction(Action.none);
+  });
   return (
-    <motion.div
-      ref={ref}
-      className={styles.unitMenu}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      {Object.values(Action).map((item) => {
-        if (item ===  Action.reset) return null;
-        return (
-          <button
-            key={`unit-menu-${item}`}
-            id={item}
-            onClick={() => clickMenu(item)}
-            disabled={item === Action.move && !isMovementPossible}
-          >
-            {item}
-          </button>
-        );
-      })}
-    </motion.div>
+    <>
+      {action === Action.openedMenu && <OptionsList armySelect={armySelect} setAction={setAction} />}
+      {action === Action.armyList && <ArmyList armies={armies} />}
+    </>
   );
 };
