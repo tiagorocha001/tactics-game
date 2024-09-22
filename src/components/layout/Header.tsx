@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 import { Turn } from '../../data/types';
 
 export interface Props {
@@ -16,7 +16,7 @@ export const Header = ({
         {turn}
       </div>
       <div className="turn-menu">
-        <button onClick={() => setTurn("enemy")}>End Turn</button>
+        <button onClick={() => setTurn(Turn.enemy)}>End Turn</button>
       </div>
     </div>
   );

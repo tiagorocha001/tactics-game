@@ -1,4 +1,4 @@
-import { UnitProps } from "../data/types";
+import { UnitProps } from '../data/types';
 
 export interface InitialPosition {
   y0: number;

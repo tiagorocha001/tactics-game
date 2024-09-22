@@ -5,7 +5,7 @@ import { convertToPercentage } from '../../utils';
 import { PathActive } from '../Map';
 import { COREVALUES } from '../../data/consts';
 // Types
-import { Turn } from '../../data/types';
+import { Action } from '../../data/types';
 import { type UnitProps } from '../../data/types';
 import { type GridItem } from '../../data/types';
 // Style
@@ -32,7 +32,7 @@ interface Props extends UnitProps {
   isAnimating: boolean;
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
   setMenu: Dispatch<SetStateAction<boolean>>;
-  setTurn: Dispatch<SetStateAction<Turn>>;
+  setAction: Dispatch<SetStateAction<Action>>;
 }
 
 export const Army = ({
@@ -58,7 +58,7 @@ export const Army = ({
   isAnimating,
   setIsAnimating,
   setMenu,
-  setTurn,
+  setAction,
 }: Props) => {
   const [active, setActive] = useState(false);
 
@@ -152,7 +152,7 @@ export const Army = ({
       setMap(newMap);
       setIsAnimating(false);
       setArmyLocationIdIndex({ currentIndex: null, newIndex: null });
-      setTurn(Turn.none);
+      setAction(Action.none);
     }
   }
 

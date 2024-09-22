@@ -2,23 +2,23 @@ import { useRef, Dispatch, SetStateAction } from 'react';
 import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { useClickOutside } from '../../hooks/useClickOutside';
-import { Turn, UnitProps } from '../../data/types';
+import { Action, UnitProps } from '../../data/types';
 
 interface Props {
   setMenu: Dispatch<SetStateAction<boolean>>;
-  setTurn: Dispatch<SetStateAction<Turn>>;
+  setAction: Dispatch<SetStateAction<Action>>;
   armySelect: UnitProps | null;
 }
 
-export const UnitMenu = ({ setMenu, setTurn, armySelect }: Props) => {
+export const UnitMenu = ({ setMenu, setAction, armySelect }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   function clickOutside() {
     setMenu(false);
   }
 
-  function clickMenu(action: Turn) {
-    setTurn(action);
+  function clickMenu(action: Action) {
+    setAction(action);
     setMenu(false);
   }
   useClickOutside(ref, clickOutside);
@@ -33,14 +33,14 @@ export const UnitMenu = ({ setMenu, setTurn, armySelect }: Props) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {Object.values(Turn).map((item) => {
-        if (item ===  Turn.reset) return null;
+      {Object.values(Action).map((item) => {
+        if (item ===  Action.reset) return null;
         return (
           <button
             key={`unit-menu-${item}`}
             id={item}
             onClick={() => clickMenu(item)}
-            disabled={item === Turn.move && !isMovementPossible}
+            disabled={item === Action.move && !isMovementPossible}
           >
             {item}
           </button>

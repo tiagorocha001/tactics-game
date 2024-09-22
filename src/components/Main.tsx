@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { generateMap } from '../data/cenario/sampleBoard';
 // Types
-import { Turn, type UnitProps } from '../data/types';
+import { Action, Turn, type UnitProps } from '../data/types';
 // Initial state
 import { initialArmyState } from '../data/initialArmyState';
 import { initialBaseState } from '../data/initialBaseState';
 // Components
 import { Map } from './Map';
 import { Header } from './layout/Header';
-import { MenuArmy } from './layout/MenuArmy';
+import { MenuArmy } from './UnitMenu/MenuArmy';
 import { UnitMenu } from './UnitMenu';
 // Hooks
 import { useContextMenu } from '../hooks/useContextMenu';
@@ -20,8 +20,11 @@ export const Main = () => {
   // Map
   const [map, setMap] = useState(finalMap);
 
+  // Actions
+  const [action, setAction] = useState<Action>(Action.none);
+
   // Turns
-  const [turn, setTurn] = useState<Turn>(Turn.none);
+  const [turn, setTurn] = useState<Turn>(Turn.player);
 
   // Unit Menu
   const [menu, setMenu] = useState(false);
@@ -47,11 +50,11 @@ export const Main = () => {
   // usePreventPageReload() // Prevent page refresh *** uncomment latter
 
   return (
-    <>
+    <div className='main'>
       menu: {String(menu)}
       <button onClick={() => setOpenedArmyMenu(!openedArmyMenu)}>Army List</button>
       <Header turn={turn} setTurn={setTurn} />
-      {menu && <UnitMenu setMenu={setMenu} setTurn={setTurn} armySelect={armySelect} />}
+      {menu && <UnitMenu setMenu={setMenu} setAction={setAction} armySelect={armySelect} />}
       <Map
         map={map}
         setMap={setMap}
@@ -61,10 +64,10 @@ export const Main = () => {
         setArmySelect={setArmySelect}
         bases={bases}
         setMenu={setMenu}
-        turn={turn}
-        setTurn={setTurn}
+        action={action}
+        setAction={setAction}
       />
       <MenuArmy opened={openedArmyMenu} close={close} armies={armies} />
-    </>
+    </div>
   );
 };

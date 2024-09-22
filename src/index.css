@@ -3,6 +3,10 @@
   src: url('./assets/RetroGaming.ttf') format('truetype'),
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :root {
   font-family: 'RetroGaming';
   line-height: 1.5;

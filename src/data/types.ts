@@ -18,8 +18,8 @@ export const ArmyLevelMovePoints: Record<ArmyLevel, ArmyMove> = {
   4: 12 
 };
 
-// Turn
-export enum Turn {
+// Action
+export enum Action {
   move = 'move',
   attack = 'attack',
   item = 'item',
@@ -27,6 +27,11 @@ export enum Turn {
   none = 'none'
 }
 
+// Turn
+export enum Turn {
+  player = 'player',
+  enemy = 'enemy',
+}
 
 // Terrain
 type WaveTerrain = 'G' | 'S' | 'M' | 'F' | 'W' | string;

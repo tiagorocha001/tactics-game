@@ -6,7 +6,7 @@ import { Army } from '../Army';
 import { Base } from '../Base';
 import { UnitProps } from '../../data/types';
 import { MapRange } from './MapRange';
-import { Turn } from '../../data/types';
+import { Action } from '../../data/types';
 import styles from './styles.module.css';
 
 interface Props {
@@ -18,8 +18,8 @@ interface Props {
   setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
   bases: UnitProps[][];
   setMenu: Dispatch<SetStateAction<boolean>>;
-  turn: Turn;
-  setTurn: Dispatch<SetStateAction<Turn>>;
+  action: Action;
+  setAction: Dispatch<SetStateAction<Action>>;
 }
 
 export interface PathActive {
@@ -38,8 +38,8 @@ export const Map = ({
   armySelect,
   setArmySelect,
   setMenu,
-  turn,
-  setTurn,
+  action,
+  setAction,
 }: Props) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -95,7 +95,7 @@ export const Map = ({
         isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
         setMenu={setMenu}
-        setTurn={setTurn}
+        setAction={setAction}
       />
     );
   };
@@ -272,7 +272,7 @@ export const Map = ({
         <b>armySelect:</b> {JSON.stringify(armySelect)}
       </div>
       {/* Army range display */}
-      {armySelect && turn === Turn.move && (
+      {armySelect && action === Action.move && (
         <MapRange
           rangeMap={rangeMap}
           map={map}
