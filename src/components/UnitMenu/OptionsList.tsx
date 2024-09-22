@@ -1,21 +1,15 @@
-import { useRef, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import styles from './styles.module.css';
-import { useClickOutside } from '../../hooks/useClickOutside';
 import { Action, UnitProps } from '../../data/types';
 
 interface Props {
   setAction: Dispatch<SetStateAction<Action>>;
   armySelect: UnitProps | null;
+  ref: HTMLDivElement;
 }
 
-export const OptionsList = ({ setAction, armySelect }: Props) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useClickOutside(ref, () => {
-    setAction(Action.none);
-  });
-
+export const OptionsList = forwardRef<HTMLDivElement, Props>(({ setAction, armySelect }, ref) => {
   const isMovementPossible = armySelect?.movePoints ? armySelect?.movePoints > 0 : false;
 
   return (
@@ -41,4 +35,4 @@ export const OptionsList = ({ setAction, armySelect }: Props) => {
       })}
     </motion.div>
   );
-};
+});

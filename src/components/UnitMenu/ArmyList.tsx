@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { type UnitProps } from '../../data/types';
 import styles from './styles.module.css';
@@ -5,11 +6,13 @@ import armyStyles from '../Army/styles.module.css';
 
 export interface Props {
   armies: UnitProps[][];
+  ref: HTMLDivElement;
 }
 
-export const ArmyList = ({ armies }: Props) => {
+export const ArmyList = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
   return (
     <motion.div
+      ref={ref}
       className={styles.armyList}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -43,4 +46,4 @@ export const ArmyList = ({ armies }: Props) => {
         })}
     </motion.div>
   );
-};
+});
