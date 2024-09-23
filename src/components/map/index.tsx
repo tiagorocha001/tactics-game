@@ -16,6 +16,7 @@ interface Props {
   setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
   armySelect: UnitProps | null;
   setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
+  setBaseSelect: Dispatch<SetStateAction<UnitProps | null>>;
   bases: UnitProps[][];
   action: Action;
   setAction: Dispatch<SetStateAction<Action>>;
@@ -26,8 +27,6 @@ export interface PathActive {
   x: number | null;
 }
 
-const baseSelectInitialState = { y: 0, x: 0, active: false };
-
 export const Map = ({
   map,
   setMap,
@@ -36,6 +35,7 @@ export const Map = ({
   bases,
   armySelect,
   setArmySelect,
+  setBaseSelect,
   action,
   setAction,
 }: Props) => {
@@ -59,9 +59,6 @@ export const Map = ({
     currentIndex: null,
     newIndex: null,
   });
-
-  // Current base selected data
-  const [baseSelect, setBaseSelect] = useState(baseSelectInitialState);
 
   // Place army
   const findObjectById = (id: string, arrayOfArrays: UnitProps[][]) => {
@@ -103,7 +100,13 @@ export const Map = ({
       return null;
     }
     return (
-      <Base {...data} key={id} index={index} setBaseSelect={setBaseSelect} />
+      <Base
+        {...data}
+        key={id}
+        index={index}
+        setBaseSelect={setBaseSelect}
+        setAction={setAction}
+      />
     );
   };
 
@@ -285,7 +288,7 @@ export const Map = ({
         />
       )}
       {/* Main map */}
-      <div className='grid-container'>
+      <div className="grid-container">
         {map.length > 0 &&
           map.map((cell: GridItem, index) => (
             <div

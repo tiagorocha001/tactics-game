@@ -69,7 +69,7 @@ export const Army = ({
   const currentLife = convertToPercentage(lifeRef, life);
 
   // Select current army
-  function handleArmySelection() {
+  function handleUnitSelection() {
     setArmySelect({
       id,
       faction,
@@ -165,7 +165,7 @@ export const Army = ({
       id={`${type}-${y}-${x}`}
       className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
       style={{ pointerEvents: isAnimating ? 'none' : 'auto' }}
-      onClick={() => !isAnimating && handleArmySelection()}
+      onClick={() => !isAnimating && handleUnitSelection()}
       animate={{ x: animateValues.x, y: animateValues.y }}
       onAnimationComplete={changeArmyPositionOnMap}
       onAnimationStart={() =>

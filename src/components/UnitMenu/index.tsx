@@ -20,7 +20,7 @@ export const UnitMenu = ({ action, setAction, armySelect, armies }: Props) => {
   return (
     <>
       {action === Action.openedMenu && <Options ref={ref} armySelect={armySelect} setAction={setAction} />}
-      {action === Action.stats && <Stats ref={ref} armies={armies} />}
+      {action === Action.stats && <Stats ref={ref} armySelect={armySelect} />}
       {action === Action.armyList && <Armies ref={ref} armies={armies} />}
     </>
   );

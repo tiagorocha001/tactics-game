@@ -28,6 +28,9 @@ export const Main = () => {
   // Armies
   const [armies, setArmies] = useState(initialArmyState(armyPositions));
 
+  // Base
+  const [baseSelect, setBaseSelect] = useState<UnitProps | null>(null);
+
   // Current army selected data
   const [armySelect, setArmySelect] = useState<UnitProps | null>(null);
 
@@ -47,7 +50,7 @@ export const Main = () => {
 
   return (
     <div className='main'>
-      menu: {String(action)}
+      baseSelect: {JSON.stringify(baseSelect)}
       <button onClick={() => setOpenedArmyMenu(!openedArmyMenu)}>Army List</button>
       <Header turn={turn} setTurn={setTurn} />
       <UnitMenu action={action} setAction={setAction} armySelect={armySelect} armies={armies} />
@@ -58,6 +61,7 @@ export const Main = () => {
         setArmies={setArmies}
         armySelect={armySelect}
         setArmySelect={setArmySelect}
+        setBaseSelect={setBaseSelect}
         bases={bases}
         action={action}
         setAction={setAction}

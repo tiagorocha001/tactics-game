@@ -1,15 +1,57 @@
-import { convertToPercentage } from "../../utils";
-import { UnitProps } from "../../data/types";
-import styles from "./styles.module.css";
+import { Dispatch, SetStateAction } from 'react';
+import { convertToPercentage } from '../../utils';
+// Types
+import { Action } from '../../data/types';
+import { UnitProps } from '../../data/types';
+// Style
+import styles from './styles.module.css';
 
 interface Props extends UnitProps {
-  setBaseSelect: ({ y, x }: { y: number; x: number; active: boolean }) => void;
+  setBaseSelect: Dispatch<SetStateAction<UnitProps | null>>;
+  setAction: Dispatch<SetStateAction<Action>>;
 }
 
-export const Base = ({ faction, type, life, lifeRef }: Props) => {
+export const Base = ({
+  id,
+  faction,
+  race,
+  type,
+  life,
+  lifeRef,
+  movePoints,
+  movePointsRef,
+  rank,
+  y,
+  x,
+  index,
+  setBaseSelect,
+  setAction
+}: Props) => {
+  // Select current army
+  function handleUnitSelection() {
+    setBaseSelect({
+      id,
+      faction,
+      race,
+      type,
+      life,
+      lifeRef,
+      movePoints,
+      movePointsRef,
+      rank,
+      y,
+      x,
+      index,
+    });
+    setAction(Action.openedMenu);
+  }
+
   const currentLife = convertToPercentage(lifeRef, life);
   return (
-    <div className={`unit ${styles.base} ${styles[`base-${faction}-${type}`]}`}>
+    <div
+      className={`unit ${styles.base} ${styles[`base-${faction}-${type}`]}`}
+      onClick={() => handleUnitSelection()}
+    >
       <div
         style={{
           background: `linear-gradient(to right, red ${currentLife}, black ${currentLife})`,

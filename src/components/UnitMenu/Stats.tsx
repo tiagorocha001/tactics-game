@@ -2,14 +2,13 @@ import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { type UnitProps } from '../../data/types';
 import styles from './styles.module.css';
-import armyStyles from '../Army/styles.module.css';
 
 export interface Props {
-  armies: UnitProps[][];
+  armySelect: UnitProps | null;
   ref: HTMLDivElement;
 }
 
-export const Stats = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
+export const Stats = forwardRef<HTMLDivElement, Props>(({ armySelect }, ref) => {
   return (
     <motion.div
       ref={ref}
@@ -19,31 +18,17 @@ export const Stats = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
       exit={{ opacity: 0 }}
     >
       <div className={styles.armyListRows}>
-        <div style={{ height: '50px', width: '50px' }}></div>
         <div>race</div>
-        <div>life</div>
         <div>type</div>
-        <div>pos y/x</div>
+        <div>life</div>
+        <div>rank</div>
       </div>
-      {armies[0].length > 0 &&
-        armies[0].map((item, index) => {
-          return (
-            <div className={styles.armyListRows} key={`army-list-${index}`}>
-              <div
-                className={`unit ${
-                  armyStyles[`army-${item.race}-${item.type}`]
-                }`}
-                style={{ height: '50px', width: '50px' }}
-              ></div>
-              <div>{item.race}</div>
-              <div>{item.life}</div>
-              <div>{item.type}</div>
-              <div>
-                {item.y}/{item.x}
-              </div>
-            </div>
-          );
-        })}
+      <div className={styles.armyListRows}>
+        <div>{armySelect?.race}</div>
+        <div>{armySelect?.type}</div>
+        <div>{armySelect?.life} / {armySelect?.lifeRef}</div>
+        <div>{armySelect?.rank}</div>
+      </div>
     </motion.div>
   );
 });
