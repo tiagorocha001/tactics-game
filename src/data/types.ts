@@ -24,8 +24,9 @@ export enum Action {
   move = 'move',
   attack = 'attack',
   item = 'item',
+  stats = 'stats',
   armyList = 'army list',
-  none = 'none'
+  close = 'close'
 }
 
 // Turn

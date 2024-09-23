@@ -20,7 +20,7 @@ export const Main = () => {
   const [map, setMap] = useState(finalMap);
 
   // Actions
-  const [action, setAction] = useState<Action>(Action.none);
+  const [action, setAction] = useState<Action>(Action.close);
 
   // Turns
   const [turn, setTurn] = useState<Turn>(Turn.player);

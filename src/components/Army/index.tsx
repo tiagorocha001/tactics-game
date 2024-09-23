@@ -150,7 +150,7 @@ export const Army = ({
       setMap(newMap);
       setIsAnimating(false);
       setArmyLocationIdIndex({ currentIndex: null, newIndex: null });
-      setAction(Action.none);
+      setAction(Action.close);
     }
   }
 

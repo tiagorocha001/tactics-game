@@ -1,7 +1,8 @@
 import { useRef, Dispatch, SetStateAction } from 'react';
 import { Action, UnitProps } from '../../data/types';
-import { ArmyList } from './ArmyList';
-import { OptionsList } from './OptionsList';
+import { Armies } from './Armies';
+import { Options } from './Options';
+import { Stats } from './Stats';
 import { useClickOutside } from '../../hooks/useClickOutside';
 
 interface Props {
@@ -14,12 +15,13 @@ interface Props {
 export const UnitMenu = ({ action, setAction, armySelect, armies }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, () => {
-    setAction(Action.none);
+    setAction(Action.close);
   });
   return (
     <>
-      {action === Action.openedMenu && <OptionsList ref={ref} armySelect={armySelect} setAction={setAction} />}
-      {action === Action.armyList && <ArmyList ref={ref} armies={armies} />}
+      {action === Action.openedMenu && <Options ref={ref} armySelect={armySelect} setAction={setAction} />}
+      {action === Action.stats && <Stats ref={ref} armies={armies} />}
+      {action === Action.armyList && <Armies ref={ref} armies={armies} />}
     </>
   );
 };

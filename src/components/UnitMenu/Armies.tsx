@@ -9,7 +9,7 @@ export interface Props {
   ref: HTMLDivElement;
 }
 
-export const ArmyList = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
+export const Armies = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
   return (
     <motion.div
       ref={ref}

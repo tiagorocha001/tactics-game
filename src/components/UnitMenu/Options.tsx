@@ -9,7 +9,7 @@ interface Props {
   ref: HTMLDivElement;
 }
 
-export const OptionsList = forwardRef<HTMLDivElement, Props>(({ setAction, armySelect }, ref) => {
+export const Options = forwardRef<HTMLDivElement, Props>(({ setAction, armySelect }, ref) => {
   const isMovementPossible = armySelect?.movePoints ? armySelect?.movePoints > 0 : false;
 
   return (
