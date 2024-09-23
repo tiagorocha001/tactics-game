@@ -14,10 +14,10 @@ import styles from './styles.module.css';
 const blockSize = COREVALUES.combatMap.blockSize;
 
 interface Props extends UnitProps {
-  setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
+  unitSelected: UnitProps | null;
+  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
   setMap: Dispatch<SetStateAction<GridItem[]>>;
   pathFinal: PathActive[];
-  armySelect: UnitProps | null;
   armyLocationIdIndex: {
     currentIndex: number | null;
     newIndex: number | null;
@@ -47,8 +47,8 @@ export const Army = ({
   y,
   x,
   index,
-  setArmySelect,
-  armySelect,
+  setUnitSelected,
+  unitSelected,
   pathFinal,
   setMap,
   armyLocationIdIndex,
@@ -70,7 +70,7 @@ export const Army = ({
 
   // Select current army
   function handleUnitSelection() {
-    setArmySelect({
+    setUnitSelected({
       id,
       faction,
       race,
@@ -89,12 +89,12 @@ export const Army = ({
 
   // Only activate animation for the current selected army
   useEffect(() => {
-    if (armySelect?.id === id) {
+    if (unitSelected?.id === id) {
       setActive(true);
     } else {
       setActive(false);
     }
-  }, [armySelect, id]);
+  }, [unitSelected, id]);
 
   // Generate keyframes
   function generateAnimationData(data: PathActive[]) {

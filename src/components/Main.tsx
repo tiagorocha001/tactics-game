@@ -28,11 +28,8 @@ export const Main = () => {
   // Armies
   const [armies, setArmies] = useState(initialArmyState(armyPositions));
 
-  // Base
-  const [baseSelect, setBaseSelect] = useState<UnitProps | null>(null);
-
   // Current army selected data
-  const [armySelect, setArmySelect] = useState<UnitProps | null>(null);
+  const [unitSelected, setUnitSelected] = useState<UnitProps | null>(null);
 
   // Bases
   const [bases] = useState(initialBaseState(basePositions));
@@ -45,23 +42,22 @@ export const Main = () => {
   const [openedArmyMenu, setOpenedArmyMenu] = useState(false);
 
   // Hooks
-  useContextMenu(setArmySelect); // Disable right click context menu
+  useContextMenu(setUnitSelected); // Disable right click context menu
   // usePreventPageReload() // Prevent page refresh *** uncomment latter
 
   return (
     <div className='main'>
-      baseSelect: {JSON.stringify(baseSelect)}
+      baseSelect: {JSON.stringify(unitSelected)}
       <button onClick={() => setOpenedArmyMenu(!openedArmyMenu)}>Army List</button>
       <Header turn={turn} setTurn={setTurn} />
-      <UnitMenu action={action} setAction={setAction} armySelect={armySelect} armies={armies} />
+      <UnitMenu action={action} setAction={setAction} armySelect={unitSelected} armies={armies} />
       <Map
         map={map}
         setMap={setMap}
         armies={armies}
         setArmies={setArmies}
-        armySelect={armySelect}
-        setArmySelect={setArmySelect}
-        setBaseSelect={setBaseSelect}
+        unitSelected={unitSelected}
+        setUnitSelected={setUnitSelected}
         bases={bases}
         action={action}
         setAction={setAction}

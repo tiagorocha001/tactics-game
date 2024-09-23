@@ -7,7 +7,7 @@ import { UnitProps } from '../../data/types';
 import styles from './styles.module.css';
 
 interface Props extends UnitProps {
-  setBaseSelect: Dispatch<SetStateAction<UnitProps | null>>;
+  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
   setAction: Dispatch<SetStateAction<Action>>;
 }
 
@@ -24,12 +24,12 @@ export const Base = ({
   y,
   x,
   index,
-  setBaseSelect,
+  setUnitSelected,
   setAction
 }: Props) => {
   // Select current army
   function handleUnitSelection() {
-    setBaseSelect({
+    setUnitSelected({
       id,
       faction,
       race,

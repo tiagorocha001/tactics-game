@@ -14,9 +14,8 @@ interface Props {
   setMap: Dispatch<SetStateAction<GridItem[]>>;
   armies: UnitProps[][];
   setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
-  armySelect: UnitProps | null;
-  setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
-  setBaseSelect: Dispatch<SetStateAction<UnitProps | null>>;
+  unitSelected: UnitProps | null;
+  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
   bases: UnitProps[][];
   action: Action;
   setAction: Dispatch<SetStateAction<Action>>;
@@ -33,9 +32,8 @@ export const Map = ({
   armies,
   setArmies,
   bases,
-  armySelect,
-  setArmySelect,
-  setBaseSelect,
+  unitSelected,
+  setUnitSelected,
   action,
   setAction,
 }: Props) => {
@@ -80,10 +78,10 @@ export const Map = ({
         {...data}
         key={id}
         index={index}
-        setArmySelect={setArmySelect}
+        setUnitSelected={setUnitSelected}
         setMap={setMap}
         map={map}
-        armySelect={armySelect}
+        unitSelected={unitSelected}
         pathFinal={pathFinal}
         armyLocationIdIndex={armyLocationIdIndex}
         setArmyLocationIdIndex={setArmyLocationIdIndex}
@@ -104,7 +102,7 @@ export const Map = ({
         {...data}
         key={id}
         index={index}
-        setBaseSelect={setBaseSelect}
+        setUnitSelected={setUnitSelected}
         setAction={setAction}
       />
     );
@@ -118,18 +116,18 @@ export const Map = ({
       const grid = structuredClone(map);
       const stack = [];
 
-      if (!armySelect) return;
+      if (!unitSelected) return;
 
-      stack.push(armySelect.index);
+      stack.push(unitSelected.index);
       // Mark player position as already checked
-      grid[armySelect.index].rangeCheck = true;
+      grid[unitSelected.index].rangeCheck = true;
 
       // Feed grid with positions costs
       for (let i = 0; i < grid.length; i++) {
         grid[i].rangeCheck = true;
         const distance = calculateDistance(
-          armySelect.x,
-          armySelect.y,
+          unitSelected.x,
+          unitSelected.y,
           grid[i].x,
           grid[i].y
         );
@@ -138,15 +136,15 @@ export const Map = ({
         // Terrain cost set
         if (
           (grid[i].terrain === 'F' || grid[i].terrain === 'M') && // TODO: add enum
-          armySelect.index !== i
+          unitSelected.index !== i
         ) {
           terrainCost = 1;
-        } else if (armySelect.index !== i && grid[i].terrain === 'W') {
+        } else if (unitSelected.index !== i && grid[i].terrain === 'W') {
           terrainCost = 2;
         }
 
         // Unit/Base cost set
-        if (armySelect.index !== i && grid[i].army.length) {
+        if (unitSelected.index !== i && grid[i].army.length) {
           terrainCost = 99;
         }
         if (grid[i].base.length) {
@@ -249,11 +247,11 @@ export const Map = ({
       return newArray.flat(2);
     };
     return gridPoints() || [];
-  }, [armySelect, map, pathActive]);
+  }, [unitSelected, map, pathActive]);
   // -------------------------
   // -------------------------
 
-  console.log('armySelect: ', armySelect);
+  console.log('armySelect: ', unitSelected);
 
   return (
     <div className={styles[`main-container`]}>
@@ -265,22 +263,22 @@ export const Map = ({
           textAlign: 'left',
         }}
       >
-        <b>Army Select:</b> {JSON.stringify(armySelect)} <br />
+        <b>Army Select:</b> {JSON.stringify(unitSelected)} <br />
         <b>pathActive:</b> {JSON.stringify(pathActive)} <br />
         <b>path:</b> {JSON.stringify(path)} <br />
         <b>pathFinal:</b> {JSON.stringify(pathFinal)} <br />
-        <b>armySelect:</b> {JSON.stringify(armySelect)}
+        <b>armySelect:</b> {JSON.stringify(unitSelected)}
       </div>
       {/* Army range display */}
-      {armySelect && action === Action.move && (
+      {unitSelected && action === Action.move && (
         <MapRange
           rangeMap={rangeMap}
           map={map}
-          armySelect={armySelect}
+          unitSelected={unitSelected}
           path={path}
           armies={armies}
           setMap={setMap}
-          setArmySelect={setArmySelect}
+          setUnitSelected={setUnitSelected}
           setPathActive={setPathActive}
           setArmies={setArmies}
           setPathFinal={setPathFinal}

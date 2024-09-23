@@ -8,8 +8,8 @@ interface Props {
   rangeMap: GridItem[];
   map: GridItem[];
   setMap: Dispatch<SetStateAction<GridItem[]>>;
-  armySelect: UnitProps | null;
-  setArmySelect: Dispatch<SetStateAction<UnitProps | null>>;
+  unitSelected: UnitProps | null;
+  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
   setPathActive: Dispatch<SetStateAction<PathActive>>;
   path: PathActive[];
   armies: UnitProps[][];
@@ -27,8 +27,8 @@ export const MapRange = ({
   rangeMap,
   map,
   setMap,
-  armySelect,
-  setArmySelect,
+  unitSelected,
+  setUnitSelected,
   setPathActive,
   path,
   armies,
@@ -70,7 +70,7 @@ export const MapRange = ({
       setArmyLocationIdIndex({ currentIndex, newIndex });
       setMap(newMap);
       setPathActive({ y: null, x: null });
-      setArmySelect(null);
+      setUnitSelected(null);
 
       // Update army list
       const newArmyList = [...armies];
@@ -94,9 +94,9 @@ export const MapRange = ({
         {rangeMap.map((cell) => {
           const isMoveableBlock =
           cell.rangeValue > 0 &&
-          armySelect &&
-          armySelect.movePoints !== undefined &&
-          cell.rangeValue <= armySelect.movePoints;
+          unitSelected &&
+          unitSelected.movePoints !== undefined &&
+          cell.rangeValue <= unitSelected.movePoints;
           return (
             <div
               key={cell.id + 'range'}
