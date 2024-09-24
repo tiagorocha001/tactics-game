@@ -7,13 +7,13 @@ import { UnitProps } from '../../data/types';
 interface Props {
   rangeMap: GridItem[];
   map: GridItem[];
-  setMap: Dispatch<SetStateAction<GridItem[]>>;
+  setMap: (map: GridItem[]) => void;
   unitSelected: UnitProps | null;
-  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
+  setUnitSelected: (unitSelected: UnitProps | null) => void;
   setPathActive: Dispatch<SetStateAction<PathActive>>;
   path: PathActive[];
   armies: UnitProps[][];
-  setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
+  setArmies: (armies: UnitProps[][]) => void;
   setPathFinal: Dispatch<SetStateAction<PathActive[]>>;
   setArmyLocationIdIndex: Dispatch<
     SetStateAction<{

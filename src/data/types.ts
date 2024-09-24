@@ -5,7 +5,7 @@ export type BaseType = 'castle' | 'city' | 'farm' | 'fortress' | 'template' | ''
 export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | '';
 
 // Army move ref
-export type ArmyMove = 8 | 10 | 12;
+export type ArmyMove = 8 | 10 | 12 | 50;
 
 // Army move ref
 export type ArmyLevel = 1 | 2 | 3 | 4; 
@@ -15,7 +15,7 @@ export const ArmyLevelMovePoints: Record<ArmyLevel, ArmyMove> = {
   1: 8,
   2: 10,
   3: 12,
-  4: 12 
+  4: 50 
 };
 
 // Action

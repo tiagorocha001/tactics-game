@@ -1,4 +1,4 @@
-import { useRef, Dispatch, SetStateAction } from 'react';
+import { useRef } from 'react';
 import { Action, UnitProps } from '../../data/types';
 import { Armies } from './Armies';
 import { Options } from './Options';
@@ -7,7 +7,7 @@ import { useClickOutside } from '../../hooks/useClickOutside';
 
 interface Props {
   action: Action;
-  setAction: Dispatch<SetStateAction<Action>>;
+  setAction: (action: Action) => void;
   armySelect: UnitProps | null;
   armies: UnitProps[][];
 }

@@ -1,4 +1,4 @@
-import { useState, useMemo, Dispatch, SetStateAction } from 'react';
+import { useState, useMemo } from 'react';
 import { COREVALUES } from '../../data/consts';
 import { GridItem } from '../../data/types';
 import { calculateDistance } from '../../utils';
@@ -11,14 +11,14 @@ import styles from './styles.module.css';
 
 interface Props {
   map: GridItem[];
-  setMap: Dispatch<SetStateAction<GridItem[]>>;
+  setMap: (map: GridItem[]) => void;
   armies: UnitProps[][];
-  setArmies: Dispatch<SetStateAction<UnitProps[][]>>;
+  setArmies: (armies: UnitProps[][]) => void;
   unitSelected: UnitProps | null;
-  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
+  setUnitSelected: (unitSelected: UnitProps | null) => void;
   bases: UnitProps[][];
   action: Action;
-  setAction: Dispatch<SetStateAction<Action>>;
+  setAction: (action: Action) => void;
 }
 
 export interface PathActive {

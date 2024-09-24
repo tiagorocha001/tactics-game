@@ -15,8 +15,8 @@ const blockSize = COREVALUES.combatMap.blockSize;
 
 interface Props extends UnitProps {
   unitSelected: UnitProps | null;
-  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
-  setMap: Dispatch<SetStateAction<GridItem[]>>;
+  setUnitSelected: (unitSelected: UnitProps | null) => void;
+  setMap: (map: GridItem[]) => void;
   pathFinal: PathActive[];
   armyLocationIdIndex: {
     currentIndex: number | null;
@@ -31,7 +31,7 @@ interface Props extends UnitProps {
   map: GridItem[];
   isAnimating: boolean;
   setIsAnimating: Dispatch<SetStateAction<boolean>>;
-  setAction: Dispatch<SetStateAction<Action>>;
+  setAction: (action: Action) => void;
 }
 
 export const Army = ({

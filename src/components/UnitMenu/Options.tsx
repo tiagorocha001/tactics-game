@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { Action, UnitProps } from '../../data/types';
 
 interface Props {
-  setAction: Dispatch<SetStateAction<Action>>;
+  setAction: (action: Action) => void;
   armySelect: UnitProps | null;
   ref: HTMLDivElement;
 }

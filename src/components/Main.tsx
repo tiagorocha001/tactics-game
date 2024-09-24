@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { generateMap } from '../data/cenario/sampleBoard';
 // Types
-import { Action, Turn, type UnitProps } from '../data/types';
+import { Action, Turn, type UnitProps, type GridItem } from '../data/types';
 // Initial state
 import { initialArmyState } from '../data/initialArmyState';
 import { initialBaseState } from '../data/initialBaseState';
@@ -13,33 +13,43 @@ import { UnitMenu } from './UnitMenu';
 import { useContextMenu } from '../hooks/useContextMenu';
 // import { usePreventPageReload } from '../hooks/usePreventPageReload';
 
+interface GameState {
+  map: GridItem[];
+  action: Action;
+  turn: Turn;
+  armies: UnitProps[][];
+  unitSelected: UnitProps | null;
+  bases: UnitProps[][];
+  openedArmyMenu: boolean;
+}
+
 export const Main = () => {
   const { finalMap, armyPositions, basePositions } = generateMap();
 
-  // Map
-  const [map, setMap] = useState(finalMap);
+  // Initialize all state in a single object
+  const [gameState, setGameState] = useState<GameState>({
+    map: finalMap,
+    action: Action.close,
+    turn: Turn.player,
+    armies: initialArmyState(armyPositions),
+    unitSelected: null,
+    bases: initialBaseState(basePositions),
+    openedArmyMenu: false,
+  });
 
-  // Actions
-  const [action, setAction] = useState<Action>(Action.close);
+  // Helper function to update specific properties of the state
+  const updateGameState = useCallback((updates: Partial<GameState>) => {
+    setGameState(prevState => ({ ...prevState, ...updates }));
+  }, []);
 
-  // Turns
-  const [turn, setTurn] = useState<Turn>(Turn.player);
+  // Specific update functions
+  const setMap = useCallback((map: GridItem[]) => updateGameState({ map }), [updateGameState]);
+  const setAction = useCallback((action: Action) => updateGameState({ action }), [updateGameState]);
+  const setTurn = useCallback((turn: Turn) => updateGameState({ turn }), [updateGameState]);
+  const setArmies = useCallback((armies: UnitProps[][]) => updateGameState({ armies }), [updateGameState]);
+  const setUnitSelected = useCallback((unitSelected: UnitProps | null) => updateGameState({ unitSelected }), [updateGameState]);
 
-  // Armies
-  const [armies, setArmies] = useState(initialArmyState(armyPositions));
-
-  // Current army selected data
-  const [unitSelected, setUnitSelected] = useState<UnitProps | null>(null);
-
-  // Bases
-  const [bases] = useState(initialBaseState(basePositions));
-
-  // console.log(map);
-  // console.log('armies', armies);
-  // console.log(armyPositions);
-
-  // Menu Army
-  const [openedArmyMenu, setOpenedArmyMenu] = useState(false);
+  console.log('gameState', gameState);
 
   // Hooks
   useContextMenu(setUnitSelected); // Disable right click context menu
@@ -47,19 +57,18 @@ export const Main = () => {
 
   return (
     <div className='main'>
-      baseSelect: {JSON.stringify(unitSelected)}
-      <button onClick={() => setOpenedArmyMenu(!openedArmyMenu)}>Army List</button>
-      <Header turn={turn} setTurn={setTurn} />
-      <UnitMenu action={action} setAction={setAction} armySelect={unitSelected} armies={armies} />
+      baseSelect: {JSON.stringify(gameState.unitSelected)}
+      <Header turn={gameState.turn} setTurn={setTurn} />
+      <UnitMenu action={gameState.action} setAction={setAction} armySelect={gameState.unitSelected} armies={gameState.armies} />
       <Map
-        map={map}
+        map={gameState.map}
         setMap={setMap}
-        armies={armies}
+        armies={gameState.armies}
         setArmies={setArmies}
-        unitSelected={unitSelected}
+        unitSelected={gameState.unitSelected}
         setUnitSelected={setUnitSelected}
-        bases={bases}
-        action={action}
+        bases={gameState.bases}
+        action={gameState.action}
         setAction={setAction}
       />
     </div>

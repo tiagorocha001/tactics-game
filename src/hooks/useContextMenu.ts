@@ -1,7 +1,7 @@
-import { useEffect, Dispatch, SetStateAction } from 'react';
+import { useEffect } from 'react';
 import { UnitProps } from '../data/types';
 
-export const useContextMenu = (setArmySelect: Dispatch<SetStateAction<UnitProps | null>>) => {
+export const useContextMenu = (setArmySelect: (unitSelected: UnitProps | null) => void) => {
     useEffect(() => {
       const handleContextMenu = (e: { preventDefault: () => void }) => {
         e.preventDefault();

@@ -1,9 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Turn } from '../../data/types';
 
 export interface Props {
   turn: string;
-  setTurn: Dispatch<SetStateAction<Turn>>;
+  setTurn: (turn: Turn) => void;
 }
 
 export const Header = ({

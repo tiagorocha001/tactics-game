@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { convertToPercentage } from '../../utils';
 // Types
 import { Action } from '../../data/types';
@@ -7,8 +6,8 @@ import { UnitProps } from '../../data/types';
 import styles from './styles.module.css';
 
 interface Props extends UnitProps {
-  setUnitSelected: Dispatch<SetStateAction<UnitProps | null>>;
-  setAction: Dispatch<SetStateAction<Action>>;
+  setUnitSelected: (unitSelected: UnitProps | null) => void;
+  setAction: (action: Action) => void;
 }
 
 export const Base = ({
