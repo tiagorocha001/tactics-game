@@ -101,7 +101,7 @@ export const Army = ({
     let prevX, prevY;
     const xList: number[] = [];
     const yList: number[] = [];
-    const newData = JSON.parse(JSON.stringify(data));
+    const newData = structuredClone(data);
     newData.reverse();
 
     for (const point of newData) {
@@ -143,7 +143,7 @@ export const Army = ({
   function changeArmyPositionOnMap() {
     if (armyLocationIdIndex.newIndex && armyLocationIdIndex.currentIndex) {
       setAnimateValues({ x: [], y: [] });
-      const newMap = JSON.parse(JSON.stringify(map));
+      const newMap = structuredClone(map);
       newMap[armyLocationIdIndex.newIndex].army =
         newMap[armyLocationIdIndex.currentIndex].army;
       newMap[armyLocationIdIndex.currentIndex].army = '';
@@ -163,7 +163,7 @@ export const Army = ({
   return (
     <motion.div
       id={`${type}-${y}-${x}`}
-      className={`unit ${styles.army} ${styles[`army-${race}-${type}`]}`}
+      className={`unit ${styles.army} ${styles[`army-${race}-${type}`]} ${active && styles.active}`}
       style={{ pointerEvents: isAnimating ? 'none' : 'auto' }}
       onClick={() => !isAnimating && handleUnitSelection()}
       animate={{ x: animateValues.x, y: animateValues.y }}
