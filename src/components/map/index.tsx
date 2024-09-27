@@ -283,6 +283,7 @@ export const Map = ({
           setArmies={setArmies}
           setPathFinal={setPathFinal}
           setArmyLocationIdIndex={setArmyLocationIdIndex}
+          setIsAnimating={setIsAnimating}
         />
       )}
       {/* Main map */}

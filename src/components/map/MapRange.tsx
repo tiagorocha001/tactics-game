@@ -21,6 +21,7 @@ interface Props {
       newIndex: number | null;
     }>
   >;
+  setIsAnimating: Dispatch<SetStateAction<boolean>>;
 }
 
 export const MapRange = ({
@@ -35,6 +36,7 @@ export const MapRange = ({
   setArmies,
   setPathFinal,
   setArmyLocationIdIndex,
+  setIsAnimating,
 }: Props) => {
 
   function activatePath(onRange: boolean, e: MouseEvent<HTMLDivElement>) {
@@ -107,6 +109,7 @@ export const MapRange = ({
                 if (isMoveableBlock){
                   activateMovement(cell.y, cell.x);
                   setPathFinal(path);
+                  setIsAnimating(true);
                 }
               }}
               onMouseOver={(e) => activatePath(isMoveableBlock as boolean, e)}
