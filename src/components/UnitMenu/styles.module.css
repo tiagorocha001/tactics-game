@@ -29,6 +29,8 @@
   }
 }
 
+/* ARMY MENU */
+
 .armyList {
   position: absolute;
   top: 50%;
@@ -50,4 +52,98 @@
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
   margin-bottom: 10px;
+}
+
+/* ITEM MENU */
+
+.itemList {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  /* height: 80%; TODO */
+  overflow-y: auto;
+  background-color: black;
+  padding: 30px;
+  z-index: 999;
+  display: flex;
+}
+
+.itemListLeftPanel {
+  width: 30%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #555;
+  text-align: left;
+  padding: 10px;
+}
+
+.itemListRightPanel {
+  width: 70%;
+  height: 100%;
+  text-align: left;
+  padding: 10px;
+}
+
+.itemListRightPanelList {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  background-color: #333;
+  padding: 10px;
+}
+
+.itemListNameBar {
+  display: flex;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    gap: 10;
+  }
+}
+
+.itemListRarity {
+  padding: 4px;
+  background-color:midnightblue;
+  display: flex;
+}
+
+.itemListEffect {
+  padding: 4px;
+  background-color:darkcyan;
+  display: flex;
+}
+
+.itemTabButton {
+  border-radius: 0;
+  background-color: #000;
+
+  &:disabled {
+    background-color: #333;
+  }
+
+  &:hover {
+    background-color: #444;
+  }
+}
+
+/* Custom scrollbar styles for WebKit browsers (Chrome, Safari, newer versions of Edge) */
+.itemListRightPanelList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.itemListRightPanelList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.itemListRightPanelList::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.itemListRightPanelList::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

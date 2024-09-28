@@ -66,3 +66,24 @@ export interface UnitProps {
   x: number;
   index: number;
 }
+
+// Items
+export type ItemType = 'potion' | 'armor' | 'weapon' | 'talisman';
+
+type ItemRarity = 1 | 2 | 3 | 4;
+
+type ItemEffectValue = 1 | 2 | 3 | 4;
+
+type ItemPotionEffect = 'Cure' | 'Revive' | 'Antidote';
+type ItemArmorEffect = 'Increase Defense';
+type ItemWeaponEffect = 'Increase Attack';
+type ItemTalismanEffect = 'Increase Attack' | 'Increase Defense' | 'Increase Movement' | 'Resistant to Magic';
+
+export interface Item {
+  type: ItemType;
+  name: string;
+  description: string;
+  rarity: ItemRarity;
+  effects: ItemPotionEffect | ItemArmorEffect | ItemWeaponEffect | ItemTalismanEffect;
+  effectValue: ItemEffectValue;
+}
