@@ -86,6 +86,11 @@
   padding: 10px;
 }
 
+.itemListRightPanelTabs {
+  display: flex;
+  gap: 5px;
+}
+
 .itemListRightPanelList {
   height: 100%;
   overflow-y: auto;
@@ -93,6 +98,25 @@
   scrollbar-color: #888 #f1f1f1;
   background-color: #333;
   padding: 10px;
+  margin-top: -1px;
+}
+
+.itemListEntry {
+  border: solid 1px #555;
+  margin-bottom: 12px;
+  padding: 12px;
+  transition: 0.5s;
+  display: flex;
+  gap: 5px;
+
+  &:hover {
+    background-color: #000;
+  }
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
 }
 
 .itemListNameBar {
@@ -108,18 +132,26 @@
 .itemListRarity {
   padding: 4px;
   background-color:midnightblue;
-  display: flex;
+  text-decoration: none;
+  min-width: 30px;
+  text-align: center;
+  font-size: 10px;
 }
 
 .itemListEffect {
   padding: 4px;
   background-color:darkcyan;
-  display: flex;
+  text-decoration: none;
+  min-width: 30px;
+  text-align: center;
+  font-size: 10px;
 }
 
 .itemTabButton {
   border-radius: 0;
   background-color: #000;
+  display: flex;
+  gap: 5px;
 
   &:disabled {
     background-color: #333;
@@ -127,6 +159,12 @@
 
   &:hover {
     background-color: #444;
+  }
+
+  img {
+    width: 18px;
+    height: 18px;
+    filter: invert(100%);
   }
 }
 
