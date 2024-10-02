@@ -107,15 +107,20 @@
   padding: 12px;
   transition: 0.5s;
   display: flex;
-  gap: 5px;
+  gap: 10px;
 
   &:hover {
     background-color: #000;
+    cursor: pointer;
   }
 
   img {
     width: 34px;
     height: 34px;
+  }
+
+  div {
+    width: 100%;
   }
 }
 
@@ -123,9 +128,10 @@
   display: flex;
   justify-content: space-between;
 
-  div {
+  div.itemListNameBarNumberLabels {
     display: flex;
     gap: 10;
+    justify-content: flex-end
   }
 }
 
@@ -159,6 +165,7 @@
 
   &:hover {
     background-color: #444;
+    cursor: pointer;
   }
 
   img {

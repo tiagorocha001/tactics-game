@@ -67,11 +67,12 @@ export const Items = forwardRef<HTMLDivElement, Props>(
                   <img
                     src={handleAssetName(item.name, item.effectValue, item.type)}
                   />
-
                   <div>
                     <div className={styles.itemListNameBar}>
-                      {item.name}
                       <div>
+                        {item.name}
+                      </div>
+                      <div className={styles.itemListNameBarNumberLabels}>
                         <abbr
                           title="Item Rarity"
                           className={styles.itemListRarity}
