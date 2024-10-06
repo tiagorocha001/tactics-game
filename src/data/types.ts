@@ -3,14 +3,9 @@ export type BaseType = 'castle' | 'city' | 'farm' | 'fortress' | 'template' | ''
 
 // Army
 export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | '';
-
-// Army move ref
 export type ArmyMove = 8 | 10 | 12 | 50;
-
-// Army move ref
 export type ArmyLevel = 1 | 2 | 3 | 4; 
 
-// Army Level and Move Points Mapping
 export const ArmyLevelMovePoints: Record<ArmyLevel, ArmyMove> = {
   1: 8,
   2: 10,
@@ -60,12 +55,15 @@ export interface UnitProps {
   life: number;
   lifeRef: number;
   rank: number;
-  movePoints?: number,
-  movePointsRef?: ArmyMove,
   y: number;
   x: number;
   index: number;
+  // Army stats
+  movePoints?: number;
+  movePointsRef?: ArmyMove;
   experience?: number;
+  items?: Item[]
+  // Base
 }
 
 // Items
