@@ -21,7 +21,7 @@ export const Armies = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
       <div className={styles.armyListRows}>
         <div style={{ height: '50px', width: '50px' }}></div>
         <div>race</div>
-        <div>life</div>
+        <div>army health</div>
         <div>type</div>
         <div>pos y/x</div>
       </div>

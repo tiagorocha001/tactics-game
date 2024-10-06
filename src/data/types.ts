@@ -65,6 +65,7 @@ export interface UnitProps {
   y: number;
   x: number;
   index: number;
+  experience?: number;
 }
 
 // Items

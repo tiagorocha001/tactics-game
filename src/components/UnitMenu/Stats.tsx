@@ -20,7 +20,7 @@ export const Stats = forwardRef<HTMLDivElement, Props>(({ armySelect }, ref) => 
       <div className={styles.armyListRows}>
         <div>race</div>
         <div>type</div>
-        <div>life</div>
+        <div>army health</div>
         <div>rank</div>
       </div>
       <div className={styles.armyListRows}>
