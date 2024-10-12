@@ -165,8 +165,8 @@ export const Army = ({
 
   return (
     <motion.div
-      id={`${type}-${y}-${x}`}
-      className={`unit ${styles.army} ${styles[`army-${race}-${type}`]} ${active && styles.active}`}
+      id={`${type.subType}-${y}-${x}`}
+      className={`unit ${styles.army} ${styles[`army-${race}-${type.subType}`]} ${active && styles.active}`}
       style={{ pointerEvents: isAnimating ? 'none' : 'auto' }}
       onClick={() => !isAnimating && handleUnitSelection()}
       animate={{ x: animateValues.x, y: animateValues.y }}

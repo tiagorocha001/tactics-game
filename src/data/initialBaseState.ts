@@ -14,7 +14,10 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         id: '0-0-human-base',
         faction: 0,
         race: 'human',
-        type: 'city',
+        type: {
+          type: 'building',
+          subType: 'city',
+        },
         life: 55,
         lifeRef: 80,
         rank: 0,
@@ -28,7 +31,10 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         id: '1-0-orc-base',
         faction: 1,
         race: 'orc',
-        type: 'city',
+        type: {
+          type: 'building',
+          subType: 'city',
+        },
         life: 74,
         lifeRef: 80,
         rank: 0,

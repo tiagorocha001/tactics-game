@@ -37,7 +37,7 @@ export const Items = forwardRef<HTMLDivElement, Props>(
           <div>race</div>
           <div>{armySelect?.race}</div>
           <div>type</div>
-          <div>{armySelect?.type}</div>
+          <div>{armySelect?.type.subType}</div>
           <div>life</div>
           <div>
             {armySelect?.life} / {armySelect?.lifeRef}
