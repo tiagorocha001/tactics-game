@@ -14,8 +14,8 @@ import styles from './styles.module.css';
 const blockSize = COREVALUES.combatMap.blockSize;
 
 interface Props extends UnitProps {
-  unitSelected: UnitProps | null;
   setUnitSelected: (unitSelected: UnitProps | null) => void;
+  unitSelected: UnitProps | null;
   setMap: (map: GridItem[]) => void;
   pathFinal: PathActive[];
   armyLocationIdIndex: {
@@ -47,6 +47,8 @@ export const Army = ({
   y,
   x,
   index,
+  items,
+  // Local state props
   setUnitSelected,
   unitSelected,
   pathFinal,
@@ -83,6 +85,7 @@ export const Army = ({
       y,
       x,
       index,
+      items
     });
     setAction(Action.openedMenu);
   }

@@ -1,3 +1,4 @@
+import { items } from './items';
 import { type UnitProps, ArmyLevelMovePoints } from '../data/types';
 
 export interface InitialPosition {
@@ -23,6 +24,7 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         y: y0,
         x: x0,
         index: 0,
+        items: structuredClone(items),
       },
       {
         id: '0-1-human-knight',
@@ -37,6 +39,7 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         y: 1,
         x: 1,
         index: 0,
+        items: structuredClone(items),
       }
     ],
     [
@@ -53,6 +56,7 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         y: y1,
         x: x1,
         index: 0,
+        items: structuredClone(items),
       },
     ],
   ];

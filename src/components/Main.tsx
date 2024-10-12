@@ -57,7 +57,6 @@ export const Main = () => {
 
   return (
     <div className='main'>
-      baseSelect: {JSON.stringify(gameState.unitSelected)}
       <Header turn={gameState.turn} setTurn={setTurn} />
       <UnitMenu action={gameState.action} setAction={setAction} armySelect={gameState.unitSelected} armies={gameState.armies} />
       <Map

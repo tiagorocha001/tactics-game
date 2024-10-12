@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
-import { type UnitProps, type ItemType } from '../../data/types';
-import { items } from '../../data/items';
 import swordIcon from '../../assets/menu/sword.png';
+import { type UnitProps, type ItemType, type Item } from '../../data/types';
 import styles from './styles.module.css';
 
 export interface Props {
@@ -16,7 +15,7 @@ export const Items = forwardRef<HTMLDivElement, Props>(
     const [selectedCategory, setSelectedCategory] =
       useState<ItemType>('potion');
 
-    const categories = Object.keys(items);
+    const categories = Object.keys(armySelect?.items as Record<ItemType, Item[]>);
 
     const handleCategoryClick = (category: ItemType) => {
       setSelectedCategory(category);
@@ -62,7 +61,7 @@ export const Items = forwardRef<HTMLDivElement, Props>(
 
           {selectedCategory && (
             <div className={styles.itemListRightPanelList}>
-              {items[selectedCategory].map((item, index) => (
+              {(armySelect?.items as Record<ItemType, Item[]>)[selectedCategory].map((item, index) => (
                 <div key={index} className={styles.itemListEntry}>
                   <img
                     src={handleAssetName(item.name, item.effectValue, item.type)}

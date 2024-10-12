@@ -62,7 +62,7 @@ export interface UnitProps {
   movePoints?: number;
   movePointsRef?: ArmyMove;
   experience?: number;
-  items?: Item[]
+  items?: Record<ItemType, Item[]>
   // Base
 }
 
