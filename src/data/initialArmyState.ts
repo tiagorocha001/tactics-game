@@ -1,5 +1,5 @@
 import { items } from './items';
-import { type UnitProps, ArmyLevelMovePoints } from '../data/types';
+import { type UnitProps, ArmyLevelMovePoints, UnitType } from '../data/types';
 
 export interface InitialPosition {
   y0: number;
@@ -16,7 +16,7 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         faction: 0,
         race: 'human',
         type: {
-          type: 'unit',
+          type: UnitType.unit,
           subType: 'knight',
         },
         life: 80,
@@ -34,7 +34,7 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         faction: 0,
         race: 'human',
         type: {
-          type: 'unit',
+          type: UnitType.unit,
           subType: 'knight',
         },
         life: 80,
@@ -54,7 +54,7 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         faction: 1,
         race: 'orc',
         type: {
-          type: 'unit',
+          type: UnitType.unit,
           subType: 'knight',
         },
         life: 80,

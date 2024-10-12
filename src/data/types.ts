@@ -1,3 +1,8 @@
+export enum UnitType {
+  building = 'building',
+  unit = 'unit',
+}
+
 // Base
 export type BaseType =
   | 'castle'
@@ -58,7 +63,7 @@ export interface UnitProps {
   faction: number;
   race: string;
   type: {
-    type: 'unit' | 'building';
+    type: UnitType;
     subType: BaseType | ArmyType;
   };
   life: number;

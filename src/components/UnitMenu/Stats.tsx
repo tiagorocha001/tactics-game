@@ -25,7 +25,7 @@ export const Stats = forwardRef<HTMLDivElement, Props>(({ armySelect }, ref) => 
       </div>
       <div className={styles.armyListRows}>
         <div>{armySelect?.race}</div>
-        <div>{armySelect?.type}</div>
+        <div>{armySelect?.type.subType}</div>
         <div>{armySelect?.life} / {armySelect?.lifeRef}</div>
         <div>{armySelect?.rank}</div>
       </div>

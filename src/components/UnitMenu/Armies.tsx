@@ -31,13 +31,13 @@ export const Armies = forwardRef<HTMLDivElement, Props>(({ armies }, ref) => {
             <div className={styles.armyListRows} key={`army-list-${index}`}>
               <div
                 className={`unit ${
-                  armyStyles[`army-${item.race}-${item.type}`]
+                  armyStyles[`army-${item.race}-${item.type.subType}`]
                 }`}
                 style={{ height: '50px', width: '50px' }}
               ></div>
               <div>{item.race}</div>
               <div>{item.life}</div>
-              <div>{item.type}</div>
+              <div>{item.type.subType}</div>
               <div>
                 {item.y}/{item.x}
               </div>
