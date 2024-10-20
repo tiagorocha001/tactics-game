@@ -1,5 +1,6 @@
 import { items } from './items';
-import { type UnitProps, ArmyLevelMovePoints, UnitType } from '../data/types';
+import { type UnitProps, ArmyLevelMovePoints, UnitFaction } from '../data/types';
+import { generateId } from '../utils'
 
 export interface InitialPosition {
   y0: number;
@@ -12,11 +13,11 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
   return [
     [
       {
-        id: '0-0-human-knight',
-        faction: 0,
+        id: generateId(UnitFaction.humanA, 0, 'human', 'knight'),
+        faction: UnitFaction.humanA,
         race: 'human',
         type: {
-          type: UnitType.unit,
+          type: 'unit',
           subType: 'knight',
         },
         life: 80,
@@ -30,11 +31,11 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         items: structuredClone(items),
       },
       {
-        id: '0-1-human-knight',
-        faction: 0,
+        id: generateId(UnitFaction.humanA, 1, 'human', 'knight'),
+        faction: UnitFaction.humanA,
         race: 'human',
         type: {
-          type: UnitType.unit,
+          type: 'unit',
           subType: 'knight',
         },
         life: 80,
@@ -50,11 +51,11 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
     ],
     [
       {
-        id: '1-0-orc-knight',
-        faction: 1,
+        id: generateId(UnitFaction.orcA, 0, 'orc', 'knight'),
+        faction: UnitFaction.orcA,
         race: 'orc',
         type: {
-          type: UnitType.unit,
+          type: 'unit',
           subType: 'knight',
         },
         life: 80,

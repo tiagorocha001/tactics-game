@@ -1,6 +1,10 @@
-export enum UnitType {
-  building = 'building',
-  unit = 'unit',
+export type UnitType = 'building' | 'unit';
+
+export type UnitRace = 'human' | 'orc';
+
+export enum UnitFaction {
+  humanA = 'losnoth-kingdom',
+  orcA = 'adhark-kingdom' 
 }
 
 // Base
@@ -60,8 +64,8 @@ export interface GridItem {
 
 export interface UnitProps {
   id: string;
-  faction: number;
-  race: string;
+  faction: UnitFaction;
+  race: UnitRace;
   type: {
     type: UnitType;
     subType: BaseType | ArmyType;

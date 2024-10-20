@@ -1,7 +1,11 @@
-import { generateWave, FinalCell } from './waveFunctionA';
+import { generateWave } from './waveFunctionA';
 import { COREVALUES } from '../consts';
-import { GridItem } from '../types';
-import { type InitialPosition } from '../initialArmyState';
+// Types
+import type { FinalCell } from './waveFunctionA';
+import { type GridItem, UnitFaction } from '../types';
+import type { InitialPosition } from '../initialArmyState';
+// Utils
+import { generateId } from '../../utils'
 
 function gridItem(): GridItem {
   return {
@@ -29,7 +33,7 @@ const size = COREVALUES.combatMap.size;
 
 // Exported first positions
 let armyPositions: InitialPosition;
-let basePositions: InitialPosition
+let basePositions: InitialPosition;
 
 export function generateMap() {
   function feedMap() {
@@ -79,10 +83,10 @@ export function generateMap() {
       selectPlayersPosition();
     } else {
       // Player
-      map[player.y][player.x].base = '0-0-human-base',
+      map[player.y][player.x].base = generateId(UnitFaction.humanA, 0, 'human', 'fortress');
 
       // Enemy
-      map[enemy.y][enemy.x].base = '1-0-orc-base',
+      map[enemy.y][enemy.x].base = generateId(UnitFaction.orcA, 0, 'orc', 'fortress');
 
       // Set first army location
       armyFirstLocation({player, enemy});
@@ -97,11 +101,11 @@ export function generateMap() {
     const { player, enemy } = positions;
     console.log('map: ', map);
     // Player
-    map[player.y][player.x+1].army = '0-0-human-knight';
-    map[1][1].army = '0-1-human-knight';
+    map[player.y][player.x+1].army = generateId(UnitFaction.humanA, 0, 'human', 'knight');
+    map[1][1].army = generateId(UnitFaction.humanA, 1, 'human', 'knight');
 
     // Enemy
-    map[enemy.y][enemy.x+1].army = '1-0-orc-knight';
+    map[enemy.y][enemy.x+1].army = generateId(UnitFaction.orcA, 0, 'orc', 'knight');
 
     armyPositions = {y0: player.y, x0: player.x+1, y1: enemy.y, x1: enemy.x+1};
   }

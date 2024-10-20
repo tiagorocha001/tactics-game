@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react';
 import { COREVALUES } from '../../data/consts';
-import { GridItem } from '../../data/types';
+import type { GridItem } from '../../data/types';
 import { calculateDistance } from '../../utils';
 import { Army } from '../Army';
 import { Base } from '../Base';
-import { UnitProps } from '../../data/types';
+import type { UnitProps } from '../../data/types';
 import { MapRange } from './MapRange';
 import { Action } from '../../data/types';
 import styles from './styles.module.css';

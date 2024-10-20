@@ -8,9 +8,16 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', '@typescript-eslint'],
   rules: {
     'react-refresh/only-export-components': 'warn',
-    'quotes': ['error', 'single', { 'allowTemplateLiterals': true }]
+    'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+        disallowTypeAnnotations: false,
+      },
+    ],
   },
 }

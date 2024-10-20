@@ -1,4 +1,5 @@
-import { UnitProps, UnitType } from '../data/types';
+import type { UnitProps} from '../data/types';
+import { UnitFaction } from '../data/types';
 
 export interface InitialPosition {
   y0: number;
@@ -11,11 +12,11 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
   return [
     [
       {
-        id: '0-0-human-base',
-        faction: 0,
+        id: `${UnitFaction.humanA}-0-human-base`,
+        faction: UnitFaction.humanA,
         race: 'human',
         type: {
-          type: UnitType.building,
+          type: 'building',
           subType: 'city',
         },
         life: 55,
@@ -28,11 +29,11 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
     ],
     [
       {
-        id: '1-0-orc-base',
-        faction: 1,
+        id: `${UnitFaction.orcA}-0-orc-base`,
+        faction: UnitFaction.orcA,
         race: 'orc',
         type: {
-          type: UnitType.building,
+          type: 'building',
           subType: 'city',
         },
         life: 74,

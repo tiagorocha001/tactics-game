@@ -1,13 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, Dispatch, SetStateAction, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+// Utils
 import { convertToPercentage } from '../../utils';
-import { PathActive } from '../Map';
 import { COREVALUES } from '../../data/consts';
 // Types
+import type { Dispatch, SetStateAction} from 'react';
+import type { PathActive } from '../Map';
 import { Action } from '../../data/types';
 import { type UnitProps } from '../../data/types';
-import { type GridItem } from '../../data/types';
+import type { GridItem } from '../../data/types';
 // Style
 import styles from './styles.module.css';
 

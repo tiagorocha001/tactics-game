@@ -1,7 +1,7 @@
 import { convertToPercentage } from '../../utils';
 // Types
 import { Action } from '../../data/types';
-import { UnitProps } from '../../data/types';
+import type { UnitProps } from '../../data/types';
 // Style
 import styles from './styles.module.css';
 
