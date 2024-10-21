@@ -13,16 +13,20 @@
 .active {
   outline: 2px solid red;
 }
+
+/* Faction: HUMAN losnoth-kingdom */
   
-.army-human-knight {
-  background-image: url("../src/assets/units/human-knight-01.gif");
+.army-human-losnoth-kingdom-knight {
+  background-image: url("../src/assets/units/army-human-losnoth-kingdom-knight.gif");
   background-size: cover;
   width: 100%;
   height: 100%;
 }
 
-.army-orc-knight {
-  background-image: url("../src/assets/units/orc-knight-01.gif");
+/* Faction: ORC adhark-kingdom */
+
+.army-orc-adhark-kingdom-knight {
+  background-image: url("../src/assets/units/army-orc-adhark-kingdom-knight.gif");
   background-size: cover;
   width: 100%;
   height: 100%;

@@ -83,10 +83,10 @@ export function generateMap() {
       selectPlayersPosition();
     } else {
       // Player
-      map[player.y][player.x].base = generateId(UnitFaction.humanA, 0, 'human', 'fortress');
+      map[player.y][player.x].base = generateId(UnitFaction.humanA, 0, 'human', 'city');
 
       // Enemy
-      map[enemy.y][enemy.x].base = generateId(UnitFaction.orcA, 0, 'orc', 'fortress');
+      map[enemy.y][enemy.x].base = generateId(UnitFaction.orcA, 0, 'orc', 'city');
 
       // Set first army location
       armyFirstLocation({player, enemy});

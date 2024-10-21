@@ -6,14 +6,18 @@
   opacity: 1;
 }
 
-.base-0-city {
+/* Faction: HUMAN losnoth-kingdom */
+
+.base-human-losnoth-kingdom-city {
   background-image: url("../src/assets/bases/human_city.png");
   background-size: cover;
   width: 100%;
   height: 100%;
 }
 
-.base-1-city {
+/* Faction: ORC adhark-kingdom */
+
+.base-orc-adhark-kingdom-city {
   background-image: url("../src/assets/bases/orc_city.png");
   background-size: cover;
   width: 100%;

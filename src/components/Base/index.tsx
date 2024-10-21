@@ -46,9 +46,10 @@ export const Base = ({
   }
 
   const currentLife = convertToPercentage(lifeRef, life);
+  console.log('faction: ', faction)
   return (
     <div
-      className={`unit ${styles.base} ${styles[`base-${faction}-${type.subType}`]}`}
+      className={`unit ${styles.base} ${styles[`base-${race}-${faction}-${type.subType}`]}`}
       onClick={() => handleUnitSelection()}
     >
       <div

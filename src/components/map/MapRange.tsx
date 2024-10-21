@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction, MouseEvent } from 'react';
-import { PathActive } from '.';
-// Types
-import { GridItem } from '../../data/types';
-import { UnitProps } from '../../data/types';
+import type { Dispatch, SetStateAction, MouseEvent } from 'react';
+import type { PathActive } from '.';
+import type { GridItem } from '../../data/types';
+import type { UnitProps } from '../../data/types';
 
 interface Props {
   rangeMap: GridItem[];
