@@ -17,10 +17,19 @@ export type BaseType =
   | '';
 
 // Army
-export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | 'wing' | '';
+export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | 'wing';
 export type ArmyAttack = 2 | 3 | 4 | 5;
 export type ArmyMove = 8 | 10 | 12 | 50;
 export type ArmyRank = 1 | 2 | 3 | 4;
+export type AttackBonusMap = Record<ArmyType, ArmyType>;
+
+export const armyAttackBonuses: AttackBonusMap = {
+  knight: 'archer',    // knight has bonus vs archer
+  lancer: 'knight',    // lancer has bonus vs knight
+  archer: 'wing',      // archer has bonus vs wing
+  mage: 'lancer',      // mage has bonus vs lancer
+  wing: 'mage'         // wing has bonus vs mage
+};
 
 export const ArmyRankMovePoints: Record<ArmyRank, ArmyMove> = {
   1: 8,
