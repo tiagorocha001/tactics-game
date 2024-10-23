@@ -26,6 +26,7 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         y: y0,
         x: x0,
         index: 0,
+        movePoints: 0,
       }
     ],
     [
@@ -43,6 +44,7 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         y: y1,
         x: x1,
         index: 1,
+        movePoints: 0,
       },
     ],
   ];

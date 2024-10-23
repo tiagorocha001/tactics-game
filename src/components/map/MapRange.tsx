@@ -1,18 +1,18 @@
 import type { Dispatch, SetStateAction, MouseEvent } from 'react';
 import type { PathActive } from '.';
 import type { GridItem } from '../../data/types';
-import type { UnitProps } from '../../data/types';
+import type { UnitProps, ArmyProps } from '../../data/types';
 
 interface Props {
   rangeMap: GridItem[];
   map: GridItem[];
   setMap: (map: GridItem[]) => void;
-  unitSelected: UnitProps | null;
-  setUnitSelected: (unitSelected: UnitProps | null) => void;
+  unitSelected: UnitProps | UnitProps & ArmyProps | null;
+  setUnitSelected: (unitSelected: UnitProps | UnitProps & ArmyProps | null) => void;
   setPathActive: Dispatch<SetStateAction<PathActive>>;
   path: PathActive[];
-  armies: UnitProps[][];
-  setArmies: (armies: UnitProps[][]) => void;
+  armies: (UnitProps & ArmyProps)[][];
+  setArmies: (armies: (UnitProps & ArmyProps)[][]) => void;
   setPathFinal: Dispatch<SetStateAction<PathActive[]>>;
   setArmyLocationIdIndex: Dispatch<
     SetStateAction<{

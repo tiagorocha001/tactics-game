@@ -1,5 +1,5 @@
 import { items } from './items';
-import { type UnitProps, ArmyLevelMovePoints, UnitFaction } from '../data/types';
+import { type ArmyProps, ArmyRankMovePoints, ArmyAttackPoints, UnitFaction } from '../data/types';
 import { generateId } from '../utils'
 
 export interface InitialPosition {
@@ -9,10 +9,12 @@ export interface InitialPosition {
   x1: number;
 }
 
-export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[][] {
+export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[][] {
   return [
     [
       {
+        attack: ArmyAttackPoints[1],
+        experiencePoints: 0,
         id: generateId(UnitFaction.humanA, 0, 'human', 'knight'),
         faction: UnitFaction.humanA,
         race: 'human',
@@ -22,8 +24,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         },
         life: 80,
         lifeRef: 80,
-        movePoints: ArmyLevelMovePoints[1],
-        movePointsRef: ArmyLevelMovePoints[1],
+        movePoints: ArmyRankMovePoints[1],
+        movePointsRef: ArmyRankMovePoints[1],
         rank: 1,
         y: y0,
         x: x0,
@@ -31,6 +33,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         items: structuredClone(items),
       },
       {
+        attack: ArmyAttackPoints[1],
+        experiencePoints: 0,
         id: generateId(UnitFaction.humanA, 1, 'human', 'knight'),
         faction: UnitFaction.humanA,
         race: 'human',
@@ -40,8 +44,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         },
         life: 80,
         lifeRef: 80,
-        movePoints: ArmyLevelMovePoints[1],
-        movePointsRef: ArmyLevelMovePoints[1],
+        movePoints: ArmyRankMovePoints[1],
+        movePointsRef: ArmyRankMovePoints[1],
         rank: 1,
         y: 1,
         x: 1,
@@ -51,6 +55,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
     ],
     [
       {
+        attack: ArmyAttackPoints[1],
+        experiencePoints: 0,
         id: generateId(UnitFaction.orcA, 0, 'orc', 'knight'),
         faction: UnitFaction.orcA,
         race: 'orc',
@@ -60,8 +66,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         },
         life: 80,
         lifeRef: 80,
-        movePoints: ArmyLevelMovePoints[4],
-        movePointsRef: ArmyLevelMovePoints[4],
+        movePoints: ArmyRankMovePoints[4],
+        movePointsRef: ArmyRankMovePoints[4],
         rank: 1,
         y: y1,
         x: x1,

@@ -17,16 +17,31 @@ export type BaseType =
   | '';
 
 // Army
-export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | '';
+export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | 'wing' | '';
+export type ArmyAttack = 2 | 3 | 4 | 5;
 export type ArmyMove = 8 | 10 | 12 | 50;
-export type ArmyLevel = 1 | 2 | 3 | 4;
+export type ArmyRank = 1 | 2 | 3 | 4;
 
-export const ArmyLevelMovePoints: Record<ArmyLevel, ArmyMove> = {
+export const ArmyRankMovePoints: Record<ArmyRank, ArmyMove> = {
   1: 8,
   2: 10,
   3: 12,
   4: 50,
 };
+
+export const ArmyAttackPoints: Record<ArmyRank, ArmyAttack> = {
+  1: 2,
+  2: 3,
+  3: 4,
+  4: 5,
+};
+
+export interface ArmyProps extends UnitProps {
+  attack: number;
+  movePointsRef: ArmyMove;
+  experiencePoints: number;
+  items: Record<ItemType, Item[]>;
+}
 
 // Action
 export enum Action {
@@ -76,12 +91,7 @@ export interface UnitProps {
   y: number;
   x: number;
   index: number;
-  // Army stats
-  movePoints?: number;
-  movePointsRef?: ArmyMove;
-  experience?: number;
-  items?: Record<ItemType, Item[]>;
-  // Base
+  movePoints: number;
 }
 
 // Items

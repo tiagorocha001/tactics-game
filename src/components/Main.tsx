@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { generateMap } from '../data/cenario/sampleBoard';
 // Types
-import { Action, Turn, type UnitProps, type GridItem } from '../data/types';
+import { Action, Turn, type UnitProps, type GridItem, type ArmyProps } from '../data/types';
 // Initial state
 import { initialArmyState } from '../data/initialArmyState';
 import { initialBaseState } from '../data/initialBaseState';
@@ -17,8 +17,8 @@ interface GameState {
   map: GridItem[];
   action: Action;
   turn: Turn;
-  armies: UnitProps[][];
-  unitSelected: UnitProps | null;
+  armies: (UnitProps & ArmyProps)[][];
+  unitSelected: UnitProps | UnitProps & ArmyProps | null;
   bases: UnitProps[][];
   openedArmyMenu: boolean;
 }
@@ -46,8 +46,8 @@ export const Main = () => {
   const setMap = useCallback((map: GridItem[]) => updateGameState({ map }), [updateGameState]);
   const setAction = useCallback((action: Action) => updateGameState({ action }), [updateGameState]);
   const setTurn = useCallback((turn: Turn) => updateGameState({ turn }), [updateGameState]);
-  const setArmies = useCallback((armies: UnitProps[][]) => updateGameState({ armies }), [updateGameState]);
-  const setUnitSelected = useCallback((unitSelected: UnitProps | null) => updateGameState({ unitSelected }), [updateGameState]);
+  const setArmies = useCallback((armies: (UnitProps & ArmyProps)[][]) => updateGameState({ armies }), [updateGameState]);
+  const setUnitSelected = useCallback((unitSelected: UnitProps | UnitProps & ArmyProps | null) => updateGameState({ unitSelected }), [updateGameState]);
 
   console.log('gameState', gameState);
 
