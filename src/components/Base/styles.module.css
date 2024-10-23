@@ -9,7 +9,7 @@
 /* Faction: HUMAN losnoth-kingdom */
 
 .base-human-losnoth-kingdom-city {
-  background-image: url("../src/assets/bases/human_city.png");
+  background-image: url("../src/assets/bases/base-human-losnoth-kingdom-city.png");
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -18,7 +18,7 @@
 /* Faction: ORC adhark-kingdom */
 
 .base-orc-adhark-kingdom-city {
-  background-image: url("../src/assets/bases/orc_city.png");
+  background-image: url("../src/assets/bases/base-orc-adhark-kingdom-city.png");
   background-size: cover;
   width: 100%;
   height: 100%;
