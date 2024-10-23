@@ -45,9 +45,7 @@
 }
 
 .armyListRows {
-  display: grid;
-  align-items: center;
-  grid-template-columns: repeat(5, 1fr);
+  columns: 6;
   gap: 5px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;

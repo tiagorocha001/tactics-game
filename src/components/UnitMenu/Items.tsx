@@ -2,11 +2,18 @@ import { useState } from 'react';
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import swordIcon from '../../assets/menu/sword.png';
-import { type UnitProps, type ItemType, type Item } from '../../data/types';
+import {
+  type UnitProps,
+  type ArmyProps,
+  type ItemType,
+  type Item,
+  type ArmyType,
+  armyAttackBonuses,
+} from '../../data/types';
 import styles from './styles.module.css';
 
 export interface Props {
-  armySelect: UnitProps | null;
+  armySelect: (UnitProps & ArmyProps) | null;
   ref: HTMLDivElement;
 }
 
@@ -15,7 +22,9 @@ export const Items = forwardRef<HTMLDivElement, Props>(
     const [selectedCategory, setSelectedCategory] =
       useState<ItemType>('potion');
 
-    const categories = Object.keys(armySelect?.items as Record<ItemType, Item[]>);
+    const categories = Object.keys(
+      armySelect?.items as Record<ItemType, Item[]>
+    );
 
     const handleCategoryClick = (category: ItemType) => {
       setSelectedCategory(category);
@@ -23,7 +32,7 @@ export const Items = forwardRef<HTMLDivElement, Props>(
 
     const handleAssetName = (name: string, value: number, category: string) => {
       const newName = name.toLowerCase().replace(/ /g, '-') + '-' + value;
-      return `/src/assets/items/${category}/${newName}.gif`
+      return `/src/assets/items/${category}/${newName}.gif`;
     };
     return (
       <motion.div
@@ -34,16 +43,17 @@ export const Items = forwardRef<HTMLDivElement, Props>(
         exit={{ opacity: 0 }}
       >
         <div className={styles.itemListLeftPanel}>
-          <div>race</div>
-          <div>{armySelect?.race}</div>
-          <div>type</div>
-          <div>{armySelect?.type.subType}</div>
-          <div>life</div>
+          <div>race: {armySelect?.race}</div>
+          <div>type: {armySelect?.type.subType}</div>
           <div>
-            {armySelect?.life} / {armySelect?.lifeRef}
+            life: {armySelect?.life} / {armySelect?.lifeRef}
           </div>
-          <div>rank</div>
-          <div>{armySelect?.rank}</div>
+          <div>rank: {armySelect?.rank}</div>
+          <div>attack: {armySelect?.attack}</div>
+          <div>
+            strong vs:{' '}
+            {armyAttackBonuses[armySelect?.type?.subType as ArmyType]}
+          </div>
         </div>
         <div className={styles.itemListRightPanel}>
           <div className={styles.itemListRightPanelTabs}>
@@ -61,16 +71,20 @@ export const Items = forwardRef<HTMLDivElement, Props>(
 
           {selectedCategory && (
             <div className={styles.itemListRightPanelList}>
-              {(armySelect?.items as Record<ItemType, Item[]>)[selectedCategory].map((item, index) => (
+              {(armySelect?.items as Record<ItemType, Item[]>)[
+                selectedCategory
+              ].map((item, index) => (
                 <div key={index} className={styles.itemListEntry}>
                   <img
-                    src={handleAssetName(item.name, item.effectValue, item.type)}
+                    src={handleAssetName(
+                      item.name,
+                      item.effectValue,
+                      item.type
+                    )}
                   />
                   <div>
                     <div className={styles.itemListNameBar}>
-                      <div>
-                        {item.name}
-                      </div>
+                      <div>{item.name}</div>
                       <div className={styles.itemListNameBarNumberLabels}>
                         <abbr
                           title="Item Rarity"
