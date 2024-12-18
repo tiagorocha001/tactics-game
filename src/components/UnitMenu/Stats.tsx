@@ -4,7 +4,7 @@ import { type UnitProps, type ArmyProps, type ArmyType, armyAttackBonuses } from
 import styles from './styles.module.css';
 
 export interface Props {
-  armySelect: UnitProps & ArmyProps | null;
+  armySelect: UnitProps | UnitProps & ArmyProps | null;
   ref: HTMLDivElement;
 }
 
@@ -30,7 +30,7 @@ export const Stats = forwardRef<HTMLDivElement, Props>(({ armySelect }, ref) => 
         <div>{armySelect?.type.subType}</div>
         <div>{armySelect?.life} / {armySelect?.lifeRef}</div>
         <div>{armySelect?.rank}</div>
-        <div>{armySelect?.attack}</div>
+        <div>{(armySelect as ArmyProps)?.attack}</div>
         <div>{armyAttackBonuses[armySelect?.type?.subType as ArmyType]}</div>
       </div>
     </motion.div>

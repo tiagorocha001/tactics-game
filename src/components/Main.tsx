@@ -1,7 +1,13 @@
 import { useState, useCallback } from 'react';
 import { generateMap } from '../data/cenario/sampleBoard';
 // Types
-import { Action, Turn, type UnitProps, type GridItem, type ArmyProps } from '../data/types';
+import {
+  Action,
+  Turn,
+  type UnitProps,
+  type GridItem,
+  type ArmyProps,
+} from '../data/types';
 // Initial state
 import { initialArmyState } from '../data/initialArmyState';
 import { initialBaseState } from '../data/initialBaseState';
@@ -18,7 +24,7 @@ interface GameState {
   action: Action;
   turn: Turn;
   armies: (UnitProps & ArmyProps)[][];
-  unitSelected: UnitProps | UnitProps & ArmyProps | null;
+  unitSelected: UnitProps | (UnitProps & ArmyProps) | null;
   bases: UnitProps[][];
   openedArmyMenu: boolean;
 }
@@ -39,15 +45,31 @@ export const Main = () => {
 
   // Helper function to update specific properties of the state
   const updateGameState = useCallback((updates: Partial<GameState>) => {
-    setGameState(prevState => ({ ...prevState, ...updates }));
+    setGameState((prevState) => ({ ...prevState, ...updates }));
   }, []);
 
   // Specific update functions
-  const setMap = useCallback((map: GridItem[]) => updateGameState({ map }), [updateGameState]);
-  const setAction = useCallback((action: Action) => updateGameState({ action }), [updateGameState]);
-  const setTurn = useCallback((turn: Turn) => updateGameState({ turn }), [updateGameState]);
-  const setArmies = useCallback((armies: (UnitProps & ArmyProps)[][]) => updateGameState({ armies }), [updateGameState]);
-  const setUnitSelected = useCallback((unitSelected: UnitProps | UnitProps & ArmyProps | null) => updateGameState({ unitSelected }), [updateGameState]);
+  const setMap = useCallback(
+    (map: GridItem[]) => updateGameState({ map }),
+    [updateGameState]
+  );
+  const setAction = useCallback(
+    (action: Action) => updateGameState({ action }),
+    [updateGameState]
+  );
+  const setTurn = useCallback(
+    (turn: Turn) => updateGameState({ turn }),
+    [updateGameState]
+  );
+  const setArmies = useCallback(
+    (armies: (UnitProps & ArmyProps)[][]) => updateGameState({ armies }),
+    [updateGameState]
+  );
+  const setUnitSelected = useCallback(
+    (unitSelected: UnitProps | (UnitProps & ArmyProps) | null) =>
+      updateGameState({ unitSelected }),
+    [updateGameState]
+  );
 
   console.log('gameState', gameState);
 
@@ -56,9 +78,15 @@ export const Main = () => {
   // usePreventPageReload() // Prevent page refresh *** uncomment latter
 
   return (
-    <div className='main'>
+    <div className="main">
       <Header turn={gameState.turn} setTurn={setTurn} />
-      <UnitMenu action={gameState.action} setAction={setAction} armySelect={gameState.unitSelected} armies={gameState.armies} />
+      <UnitMenu
+        action={gameState.action}
+        setAction={setAction}
+        armySelect={gameState.unitSelected}
+        armies={gameState.armies}
+        setArmies={setArmies}
+      />
       <Map
         map={gameState.map}
         setMap={setMap}

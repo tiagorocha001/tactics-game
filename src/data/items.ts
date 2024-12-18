@@ -1,4 +1,4 @@
-import { Item, ItemType } from './types';
+import { type Item, type ItemType } from './types';
 
 export const items: Record<ItemType, Item[]> = {
   potion: [
@@ -9,6 +9,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Cure',
       effectValue: 1,
+      mode: 'use',
     },
     {
       type: 'potion',
@@ -17,6 +18,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Cure',
       effectValue: 2,
+      mode: 'use',
     },
     {
       type: 'potion',
@@ -25,6 +27,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Revive',
       effectValue: 3,
+      mode: 'use',
     },
     {
       type: 'potion',
@@ -33,6 +36,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Cure',
       effectValue: 4,
+      mode: 'use',
     },
     {
       type: 'potion',
@@ -41,6 +45,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Antidote',
       effectValue: 1,
+      mode: 'use',
     },
   ],
   armor: [
@@ -51,6 +56,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Increase Defense',
       effectValue: 1,
+      mode: 'equip',
     },
     {
       type: 'armor',
@@ -59,6 +65,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Defense',
       effectValue: 2,
+      mode: 'equip',
     },
     {
       type: 'armor',
@@ -67,6 +74,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Defense',
       effectValue: 3,
+      mode: 'equip',
     },
     {
       type: 'armor',
@@ -75,6 +83,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Increase Defense',
       effectValue: 4,
+      mode: 'equip',
     },
     {
       type: 'armor',
@@ -83,6 +92,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Defense',
       effectValue: 2,
+      mode: 'equip',
     },
   ],
   weapon: [
@@ -93,6 +103,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Increase Attack',
       effectValue: 1,
+      mode: 'equip',
     },
     {
       type: 'weapon',
@@ -101,6 +112,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Attack',
       effectValue: 2,
+      mode: 'equip',
     },
     {
       type: 'weapon',
@@ -109,6 +121,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Attack',
       effectValue: 3,
+      mode: 'equip',
     },
     {
       type: 'weapon',
@@ -117,6 +130,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Increase Attack',
       effectValue: 4,
+      mode: 'equip',
     },
     {
       type: 'weapon',
@@ -125,6 +139,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Attack',
       effectValue: 3,
+      mode: 'equip',
     },
   ],
   talisman: [
@@ -135,6 +150,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Attack',
       effectValue: 2,
+      mode: 'equip',
     },
     {
       type: 'talisman',
@@ -143,6 +159,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Defense',
       effectValue: 2,
+      mode: 'equip',
     },
     {
       type: 'talisman',
@@ -151,6 +168,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Movement',
       effectValue: 3,
+      mode: 'equip',
     },
     {
       type: 'talisman',
@@ -159,6 +177,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Resistant to Magic',
       effectValue: 4,
+      mode: 'equip',
     },
     {
       type: 'talisman',
@@ -167,6 +186,7 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Defense',
       effectValue: 2,
+      mode: 'equip',
     },
   ],
 };
