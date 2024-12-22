@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { type LegacyRef } from 'react';
 import { motion } from 'framer-motion';
 import styles from './styles.module.css';
 import { Action, type UnitProps } from '../../data/types';
@@ -6,10 +6,10 @@ import { Action, type UnitProps } from '../../data/types';
 interface Props {
   setAction: (action: Action) => void;
   armySelect: UnitProps | null;
-  ref: HTMLDivElement;
+  ref: LegacyRef<HTMLDivElement> | undefined;
 }
 
-export const Options = forwardRef<HTMLDivElement, Props>(({ setAction, armySelect }, ref) => {
+export const Options = (({ setAction, armySelect, ref } : Props) => {
   const isMovementPossible = armySelect?.movePoints ? armySelect?.movePoints > 0 : false;
 
   return (

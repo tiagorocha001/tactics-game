@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { generateMap } from '../data/cenario/sampleBoard';
 // Types
 import {
@@ -44,32 +44,18 @@ export const Main = () => {
   });
 
   // Helper function to update specific properties of the state
-  const updateGameState = useCallback((updates: Partial<GameState>) => {
-    setGameState((prevState) => ({ ...prevState, ...updates }));
-  }, []);
+  const updateGameState = (updates: Partial<GameState>) => setGameState((prevState) => ({ ...prevState, ...updates }));
 
   // Specific update functions
-  const setMap = useCallback(
-    (map: GridItem[]) => updateGameState({ map }),
-    [updateGameState]
-  );
-  const setAction = useCallback(
-    (action: Action) => updateGameState({ action }),
-    [updateGameState]
-  );
-  const setTurn = useCallback(
-    (turn: Turn) => updateGameState({ turn }),
-    [updateGameState]
-  );
-  const setArmies = useCallback(
-    (armies: (UnitProps & ArmyProps)[][]) => updateGameState({ armies }),
-    [updateGameState]
-  );
-  const setUnitSelected = useCallback(
-    (unitSelected: UnitProps | (UnitProps & ArmyProps) | null) =>
-      updateGameState({ unitSelected }),
-    [updateGameState]
-  );
+  const setMap = (map: GridItem[]) => updateGameState({ map });
+
+  const setAction = (action: Action) => updateGameState({ action });
+
+  const setTurn = (turn: Turn) => updateGameState({ turn });
+
+  const setArmies = (armies: (UnitProps & ArmyProps)[][]) => updateGameState({ armies });
+
+  const setUnitSelected = (unitSelected: UnitProps | (UnitProps & ArmyProps) | null) => updateGameState({ unitSelected })
 
   console.log('gameState', gameState);
 

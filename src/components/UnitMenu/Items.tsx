@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { forwardRef } from 'react';
+import { useState, type LegacyRef } from 'react';
 import { motion } from 'framer-motion';
 import swordIcon from '../../assets/menu/sword.png';
 import {
@@ -16,11 +15,11 @@ export interface Props {
   armySelect: UnitProps | UnitProps & ArmyProps | null;
   armies: (UnitProps & ArmyProps)[][];
   setArmies: (armies: (UnitProps & ArmyProps)[][]) => void;
-  ref: HTMLDivElement;
+  ref: LegacyRef<HTMLDivElement> | undefined;
 }
 
-export const Items = forwardRef<HTMLDivElement, Props>(
-  ({ armySelect, setArmies, armies }, ref) => {
+export const Items = (
+  ({ armySelect, setArmies, armies, ref }: Props) => {
     const [selectedCategory, setSelectedCategory] =
       useState<ItemType>('potion');
 

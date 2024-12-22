@@ -1,14 +1,14 @@
-import { forwardRef } from 'react';
+import { type LegacyRef } from 'react';
 import { motion } from 'framer-motion';
 import { type UnitProps, type ArmyProps, type ArmyType, armyAttackBonuses } from '../../data/types';
 import styles from './styles.module.css';
 
 export interface Props {
   armySelect: UnitProps | UnitProps & ArmyProps | null;
-  ref: HTMLDivElement;
+  ref: LegacyRef<HTMLDivElement> | undefined;
 }
 
-export const Stats = forwardRef<HTMLDivElement, Props>(({ armySelect }, ref) => {
+export const Stats = (({ armySelect, ref } : Props) => {
   return (
     <motion.div
       ref={ref}
