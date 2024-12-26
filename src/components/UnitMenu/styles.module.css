@@ -122,6 +122,30 @@
   }
 }
 
+.itemListEntryActive {
+  border: solid 1px #555;
+  margin-bottom: 12px;
+  padding: 12px;
+  transition: 0.5s;
+  display: flex;
+  gap: 10px;
+  background-color: #000;
+
+  &:hover {
+    background-color: #000;
+    cursor: pointer;
+  }
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
+
+  div {
+    width: 100%;
+  }
+}
+
 .itemListNameBar {
   display: flex;
   justify-content: space-between;

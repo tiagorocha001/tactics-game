@@ -51,6 +51,7 @@ export const Army = ({
   x,
   index,
   items,
+  itemInUse,
   // Local state props
   setUnitSelected,
   unitSelected,
@@ -90,7 +91,8 @@ export const Army = ({
       y,
       x,
       index,
-      items
+      items,
+      itemInUse
     });
     setAction(Action.openedMenu);
   }

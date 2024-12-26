@@ -31,6 +31,12 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[]
         x: x0,
         index: 0,
         items: structuredClone(items),
+        itemInUse: {
+          potion: undefined,
+          armor: undefined,
+          weapon: undefined,
+          talisman: undefined
+        }
       },
       {
         attack: ArmyAttackPoints[1],
@@ -51,6 +57,12 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[]
         x: 1,
         index: 0,
         items: structuredClone(items),
+        itemInUse: {
+          potion: undefined,
+          armor: undefined,
+          weapon: undefined,
+          talisman: undefined
+        }
       }
     ],
     [
@@ -73,6 +85,12 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[]
         x: x1,
         index: 0,
         items: structuredClone(items),
+        itemInUse: {
+          potion: undefined,
+          armor: undefined,
+          weapon: undefined,
+          talisman: undefined
+        }
       },
     ],
   ];

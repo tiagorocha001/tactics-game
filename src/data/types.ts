@@ -50,6 +50,7 @@ export interface ArmyProps extends UnitProps {
   movePointsRef: ArmyMove;
   experiencePoints: number;
   items: Record<ItemType, Item[]>;
+  itemInUse: Record<ItemType, Item | undefined>;
 }
 
 // Action
@@ -119,8 +120,6 @@ type ItemTalismanEffect =
   | 'Increase Movement'
   | 'Resistant to Magic';
 
-type ItemMode = 'use' | 'equip';
-
 export interface Item {
   type: ItemType;
   name: string;
@@ -132,5 +131,5 @@ export interface Item {
     | ItemWeaponEffect
     | ItemTalismanEffect;
   effectValue: ItemEffectValue;
-  mode: ItemMode;
+  inUse: boolean,
 }
