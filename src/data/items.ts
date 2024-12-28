@@ -9,7 +9,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Cure',
       effectValue: 1,
-      inUse: false,
     },
     {
       type: 'potion',
@@ -18,7 +17,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Cure',
       effectValue: 2,
-      inUse: false,
     },
     {
       type: 'potion',
@@ -27,7 +25,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Revive',
       effectValue: 3,
-      inUse: false,
     },
     {
       type: 'potion',
@@ -36,7 +33,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Cure',
       effectValue: 4,
-      inUse: false,
     },
     {
       type: 'potion',
@@ -45,7 +41,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Antidote',
       effectValue: 1,
-      inUse: false,
     },
   ],
   armor: [
@@ -56,7 +51,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Increase Defense',
       effectValue: 1,
-      inUse: false,
     },
     {
       type: 'armor',
@@ -65,7 +59,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Defense',
       effectValue: 2,
-      inUse: false,
     },
     {
       type: 'armor',
@@ -74,7 +67,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Defense',
       effectValue: 3,
-      inUse: false,
     },
     {
       type: 'armor',
@@ -83,7 +75,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Increase Defense',
       effectValue: 4,
-      inUse: false,
     },
     {
       type: 'armor',
@@ -92,7 +83,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Defense',
       effectValue: 2,
-      inUse: false,
     },
   ],
   weapon: [
@@ -103,7 +93,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 1,
       effects: 'Increase Attack',
       effectValue: 1,
-      inUse: false,
     },
     {
       type: 'weapon',
@@ -112,7 +101,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Attack',
       effectValue: 2,
-      inUse: false,
     },
     {
       type: 'weapon',
@@ -121,7 +109,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Attack',
       effectValue: 3,
-      inUse: false,
     },
     {
       type: 'weapon',
@@ -130,7 +117,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Increase Attack',
       effectValue: 4,
-      inUse: false,
     },
     {
       type: 'weapon',
@@ -139,7 +125,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Attack',
       effectValue: 3,
-      inUse: false,
     },
   ],
   talisman: [
@@ -150,7 +135,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Attack',
       effectValue: 2,
-      inUse: false,
     },
     {
       type: 'talisman',
@@ -159,7 +143,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 2,
       effects: 'Increase Defense',
       effectValue: 2,
-      inUse: false,
     },
     {
       type: 'talisman',
@@ -168,7 +151,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Movement',
       effectValue: 3,
-      inUse: false,
     },
     {
       type: 'talisman',
@@ -177,7 +159,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 4,
       effects: 'Resistant to Magic',
       effectValue: 4,
-      inUse: false,
     },
     {
       type: 'talisman',
@@ -186,7 +167,6 @@ export const items: Record<ItemType, Item[]> = {
       rarity: 3,
       effects: 'Increase Defense',
       effectValue: 2,
-      inUse: false,
     },
   ],
 };

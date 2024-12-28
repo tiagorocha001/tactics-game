@@ -131,5 +131,4 @@ export interface Item {
     | ItemWeaponEffect
     | ItemTalismanEffect;
   effectValue: ItemEffectValue;
-  inUse: boolean,
 }

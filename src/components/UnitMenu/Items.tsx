@@ -34,15 +34,14 @@ export const Items = ({ armySelect, setArmies, armies, ref }: Props) => {
     return `/src/assets/items/${category}/${newName}.gif`;
   };
 
-  const handleItemUse = (itemType: ItemType, item: Item, index: number) => {
+  const handleItemUse = (itemType: ItemType, item: Item) => {
     const newArmyList = [...armies];
+
     for (const armyList of newArmyList) {
       for (const army of armyList) {
         // Assign item in use
         if (army.id === armySelect?.id) {
-          // Assign item in use
-          army.itemInUse[itemType] = army.items[itemType][index].inUse ? undefined : item;
-          army.items[itemType][index].inUse = !army.items[itemType][index].inUse;
+          army.itemInUse[itemType] = army?.itemInUse[itemType]?.name === item.name ? undefined : item;
         }
       }
     }
@@ -89,9 +88,9 @@ export const Items = ({ armySelect, setArmies, armies, ref }: Props) => {
             ].map((item, index) => (
               <div
                 key={index}
-                className={item.inUse ? styles.itemListEntryActive : styles.itemListEntry}
+                className={(armySelect as ArmyProps)?.itemInUse[selectedCategory]?.name === item.name ? styles.itemListEntryActive : styles.itemListEntry}
                 role="button"
-                onClick={() => handleItemUse(item.type, item, index)}
+                onClick={() => handleItemUse(item.type, item)}
               >
                 <img
                   src={handleAssetName(item.name, item.effectValue, item.type)}
