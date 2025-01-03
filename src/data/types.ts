@@ -16,6 +16,10 @@ export type BaseType =
   | 'template'
   | '';
 
+export interface BaseProps extends UnitProps {
+  garrison: string;
+}
+
 // Army
 export type ArmyType = 'knight' | 'lancer' | 'archer' | 'mage' | 'wing';
 export type ArmyAttack = 2 | 3 | 4 | 5;

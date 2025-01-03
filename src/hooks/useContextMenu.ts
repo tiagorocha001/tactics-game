@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { UnitProps } from '../data/types';
+import { type BaseProps, type ArmyProps } from '../data/types';
 
-export const useContextMenu = (setArmySelect: (unitSelected: UnitProps | null) => void) => {
+export const useContextMenu = (setArmySelect: (unitSelected: BaseProps | ArmyProps | null) => void) => {
     useEffect(() => {
       const handleContextMenu = (e: { preventDefault: () => void }) => {
         e.preventDefault();

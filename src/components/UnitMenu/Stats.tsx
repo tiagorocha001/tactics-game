@@ -1,10 +1,10 @@
 import { type LegacyRef } from 'react';
 import { motion } from 'framer-motion';
-import { type UnitProps, type ArmyProps, type ArmyType, armyAttackBonuses } from '../../data/types';
+import { type BaseProps, type ArmyProps, type ArmyType, armyAttackBonuses } from '../../data/types';
 import styles from './styles.module.css';
 
 export interface Props {
-  armySelect: UnitProps | UnitProps & ArmyProps | null;
+  armySelect: BaseProps | ArmyProps | null;
   ref: LegacyRef<HTMLDivElement> | undefined;
 }
 

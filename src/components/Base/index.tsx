@@ -1,12 +1,12 @@
 import { convertToPercentage } from '../../utils';
 // Types
 import { Action } from '../../data/types';
-import type { UnitProps } from '../../data/types';
+import type { BaseProps } from '../../data/types';
 // Style
 import styles from './styles.module.css';
 
-interface Props extends UnitProps {
-  setUnitSelected: (unitSelected: UnitProps | null) => void;
+interface Props extends BaseProps {
+  setUnitSelected: (unitSelected: BaseProps | null) => void;
   setAction: (action: Action) => void;
 }
 
@@ -22,6 +22,7 @@ export const Base = ({
   y,
   x,
   index,
+  garrison,
   setUnitSelected,
   setAction
 }: Props) => {
@@ -39,6 +40,7 @@ export const Base = ({
       y,
       x,
       index,
+      garrison
     });
     setAction(Action.openedMenu);
   }

@@ -7,16 +7,16 @@ import { COREVALUES } from '../../data/consts';
 import type { Dispatch, SetStateAction} from 'react';
 import type { PathActive } from '../Map';
 import { Action } from '../../data/types';
-import type { UnitProps, ArmyProps } from '../../data/types';
+import type { BaseProps, ArmyProps } from '../../data/types';
 import type { GridItem } from '../../data/types';
 // Style
 import styles from './styles.module.css';
 
 const blockSize = COREVALUES.combatMap.blockSize;
 
-interface Props extends UnitProps, ArmyProps {
-  setUnitSelected: (unitSelected: UnitProps & ArmyProps) => void;
-  unitSelected: UnitProps | UnitProps & ArmyProps | null;
+interface Props extends ArmyProps {
+  setUnitSelected: (unitSelected: ArmyProps) => void;
+  unitSelected: BaseProps | ArmyProps | null;
   setMap: (map: GridItem[]) => void;
   pathFinal: PathActive[];
   armyLocationIdIndex: {

@@ -4,7 +4,7 @@ import type { GridItem, ArmyProps } from '../../data/types';
 import { calculateDistance } from '../../utils';
 import { Army } from '../Army';
 import { Base } from '../Base';
-import type { UnitProps } from '../../data/types';
+import type { BaseProps } from '../../data/types';
 import { MapRange } from './MapRange';
 import { Action } from '../../data/types';
 import styles from './styles.module.css';
@@ -12,11 +12,11 @@ import styles from './styles.module.css';
 interface Props {
   map: GridItem[];
   setMap: (map: GridItem[]) => void;
-  armies: (UnitProps & ArmyProps)[][];
-  setArmies: (armies: (UnitProps & ArmyProps)[][]) => void;
-  unitSelected: UnitProps | UnitProps & ArmyProps | null;
-  setUnitSelected: (unitSelected: UnitProps | UnitProps & ArmyProps | null) => void;
-  bases: UnitProps[][];
+  armies: ArmyProps[][];
+  setArmies: (armies: ArmyProps[][]) => void;
+  unitSelected: BaseProps | ArmyProps | null;
+  setUnitSelected: (unitSelected: BaseProps | ArmyProps | null) => void;
+  bases: BaseProps[][];
   action: Action;
   setAction: (action: Action) => void;
 }
@@ -59,7 +59,7 @@ export const Map = ({
   });
 
   // Place army
-  const findObjectById = (id: string, arrayOfArrays: (UnitProps | UnitProps & ArmyProps)[][]) => {
+  const findObjectById = (id: string, arrayOfArrays: (BaseProps | ArmyProps)[][]) => {
     for (const arr of arrayOfArrays) {
       const foundObject = arr.find((obj) => obj.id === id);
       if (foundObject && foundObject.life > 0) {
@@ -75,7 +75,7 @@ export const Map = ({
     }
     return (
       <Army
-        {...data as UnitProps & ArmyProps}
+        {...data as ArmyProps}
         key={id}
         index={index}
         setUnitSelected={setUnitSelected}
@@ -99,7 +99,7 @@ export const Map = ({
     }
     return (
       <Base
-        {...data}
+        {...data as BaseProps}
         key={id}
         index={index}
         setUnitSelected={setUnitSelected}

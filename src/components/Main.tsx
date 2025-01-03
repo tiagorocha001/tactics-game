@@ -4,7 +4,7 @@ import { generateMap } from '../data/cenario/sampleBoard';
 import {
   Action,
   Turn,
-  type UnitProps,
+  type BaseProps,
   type GridItem,
   type ArmyProps,
 } from '../data/types';
@@ -23,9 +23,9 @@ interface GameState {
   map: GridItem[];
   action: Action;
   turn: Turn;
-  armies: (UnitProps & ArmyProps)[][];
-  unitSelected: UnitProps | (UnitProps & ArmyProps) | null;
-  bases: UnitProps[][];
+  armies: ArmyProps[][];
+  unitSelected: BaseProps | ArmyProps | null;
+  bases: BaseProps[][];
   openedArmyMenu: boolean;
 }
 
@@ -53,9 +53,9 @@ export const Main = () => {
 
   const setTurn = (turn: Turn) => updateGameState({ turn });
 
-  const setArmies = (armies: (UnitProps & ArmyProps)[][]) => updateGameState({ armies });
+  const setArmies = (armies: ArmyProps[][]) => updateGameState({ armies });
 
-  const setUnitSelected = (unitSelected: UnitProps | (UnitProps & ArmyProps) | null) => updateGameState({ unitSelected })
+  const setUnitSelected = (unitSelected: BaseProps | ArmyProps | null) => updateGameState({ unitSelected })
 
   console.log('gameState', gameState);
 

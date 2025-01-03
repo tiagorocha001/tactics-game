@@ -1,4 +1,4 @@
-import type { UnitProps} from '../data/types';
+import type { BaseProps} from '../data/types';
 import { UnitFaction } from '../data/types';
 import { generateId } from '../utils'
 
@@ -9,7 +9,7 @@ export interface InitialPosition {
   x1: number;
 }
 
-export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[][] {
+export function initialBaseState({y0, x0, y1, x1}: InitialPosition): BaseProps[][] {
   return [
     [
       {
@@ -27,6 +27,7 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         x: x0,
         index: 0,
         movePoints: 0,
+        garrison: '',
       }
     ],
     [
@@ -45,6 +46,7 @@ export function initialBaseState({y0, x0, y1, x1}: InitialPosition): UnitProps[]
         x: x1,
         index: 1,
         movePoints: 0,
+        garrison: '',
       },
     ],
   ];

@@ -2,7 +2,6 @@ import { useState, type LegacyRef } from 'react';
 import { motion } from 'framer-motion';
 import swordIcon from '../../assets/menu/sword.png';
 import {
-  type UnitProps,
   type ArmyProps,
   type ItemType,
   type Item,
@@ -12,9 +11,9 @@ import {
 import styles from './styles.module.css';
 
 export interface Props {
-  armySelect: UnitProps | (UnitProps & ArmyProps) | null;
-  armies: (UnitProps & ArmyProps)[][];
-  setArmies: (armies: (UnitProps & ArmyProps)[][]) => void;
+  armySelect: ArmyProps;
+  armies: ArmyProps[][];
+  setArmies: (armies: ArmyProps[][]) => void;
   ref: LegacyRef<HTMLDivElement> | undefined;
 }
 
@@ -22,7 +21,7 @@ export const Items = ({ armySelect, setArmies, armies, ref }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<ItemType>('potion');
 
   const categories = Object.keys(
-    (armySelect as ArmyProps)?.items as Record<ItemType, Item[]>
+    armySelect?.items as Record<ItemType, Item[]>
   );
 
   const handleCategoryClick = (category: ItemType) => {
@@ -62,7 +61,7 @@ export const Items = ({ armySelect, setArmies, armies, ref }: Props) => {
           life: {armySelect?.life} / {armySelect?.lifeRef}
         </div>
         <div>rank: {armySelect?.rank}</div>
-        <div>attack: {(armySelect as ArmyProps)?.attack}</div>
+        <div>attack: {armySelect?.attack}</div>
         <div>
           strong vs: {armyAttackBonuses[armySelect?.type?.subType as ArmyType]}
         </div>
@@ -83,12 +82,12 @@ export const Items = ({ armySelect, setArmies, armies, ref }: Props) => {
 
         {selectedCategory && (
           <div className={styles.itemListRightPanelList}>
-            {((armySelect as ArmyProps)?.items as Record<ItemType, Item[]>)[
+            {(armySelect?.items as Record<ItemType, Item[]>)[
               selectedCategory
             ].map((item, index) => (
               <div
                 key={index}
-                className={(armySelect as ArmyProps)?.itemInUse[selectedCategory]?.name === item.name ? styles.itemListEntryActive : styles.itemListEntry}
+                className={(armySelect)?.itemInUse[selectedCategory]?.name === item.name ? styles.itemListEntryActive : styles.itemListEntry}
                 role="button"
                 onClick={() => handleItemUse(item.type, item)}
               >
