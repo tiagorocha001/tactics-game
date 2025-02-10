@@ -94,7 +94,7 @@ export const Map = ({
 
   const placeBase = (id: string, index: number) => {
     const data = findObjectById(id, bases);
-    if (!data) {
+    if (!data) { 
       return null;
     }
     return (

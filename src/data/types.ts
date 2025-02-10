@@ -53,7 +53,7 @@ export interface ArmyProps extends UnitProps {
   attack: number;
   movePointsRef: ArmyMove;
   experiencePoints: number;
-  items: Record<ItemType, Item[]>;
+  item: Item;
 }
 
 // Action

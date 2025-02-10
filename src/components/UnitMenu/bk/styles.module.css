@@ -1,0 +1,219 @@
+.unitMenu {
+  position: fixed;
+  z-index: 999;
+  background-color: black;
+  border: 3px solid white;
+  padding: 20px;
+  width: 200px;
+  margin-top: 100px;
+  margin-left: 50px;
+
+  button {
+    width: 100%;
+    padding: 10px 6px;
+    border-radius: 0;
+
+    &:hover {
+      background-color: darkgreen;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: darkgreen;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #fff;
+      color: #888;
+    }
+  }
+}
+
+/* ARMY MENU */
+
+.armyList {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  /* height: 80%; TODO */
+  overflow-y: auto;
+  background-color: black;
+  padding: 30px;
+  z-index: 999;
+  display: grid;
+}
+
+.armyListRows {
+  columns: 7;
+  gap: 5px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+/* ITEM MENU */
+
+.itemList {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  /* height: 80%; TODO */
+  overflow-y: auto;
+  background-color: black;
+  padding: 30px;
+  z-index: 999;
+  display: flex;
+  border: 3px solid white;
+}
+
+.itemListLeftPanel {
+  width: 30%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #555;
+  text-align: left;
+  padding: 10px;
+}
+
+.itemListRightPanel {
+  width: 70%;
+  height: 100%;
+  text-align: left;
+  padding: 10px;
+}
+
+.itemListRightPanelTabs {
+  display: flex;
+  gap: 5px;
+}
+
+.itemListRightPanelList {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  background-color: #333;
+  padding: 10px;
+  margin-top: -1px;
+}
+
+.itemListEntry {
+  border: solid 1px #555;
+  margin-bottom: 12px;
+  padding: 12px;
+  transition: 0.5s;
+  display: flex;
+  gap: 10px;
+
+  &:hover {
+    background-color: #000;
+    cursor: pointer;
+  }
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
+
+  div {
+    width: 100%;
+  }
+}
+
+.itemListEntryActive {
+  border: solid 1px #555;
+  margin-bottom: 12px;
+  padding: 12px;
+  transition: 0.5s;
+  display: flex;
+  gap: 10px;
+  background-color: #000;
+
+  &:hover {
+    background-color: #000;
+    cursor: pointer;
+  }
+
+  img {
+    width: 34px;
+    height: 34px;
+  }
+
+  div {
+    width: 100%;
+  }
+}
+
+.itemListNameBar {
+  display: flex;
+  justify-content: space-between;
+
+  div.itemListNameBarNumberLabels {
+    display: flex;
+    gap: 10;
+    justify-content: flex-end
+  }
+}
+
+.itemListRarity {
+  padding: 4px;
+  background-color:midnightblue;
+  text-decoration: none;
+  min-width: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.itemListEffect {
+  padding: 4px;
+  background-color:darkcyan;
+  text-decoration: none;
+  min-width: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.itemTabButton {
+  border-radius: 0;
+  background-color: #000;
+  display: flex;
+  gap: 5px;
+
+  &:disabled {
+    background-color: #333;
+  }
+
+  &:hover {
+    background-color: #444;
+    cursor: pointer;
+  }
+
+  img {
+    width: 18px;
+    height: 18px;
+    filter: invert(100%);
+  }
+}
+
+/* Custom scrollbar styles for WebKit browsers (Chrome, Safari, newer versions of Edge) */
+.itemListRightPanelList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.itemListRightPanelList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.itemListRightPanelList::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.itemListRightPanelList::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
