@@ -5,7 +5,7 @@ export const items: Record<ItemType, Item[]> = {
     {
       type: 'potion',
       name: 'Health Elixir',
-      description: 'Restores a small amount of health',
+      description: 'Cures 1 damage',
       rarity: 1,
       effects: 'Cure',
       effectValue: 1,

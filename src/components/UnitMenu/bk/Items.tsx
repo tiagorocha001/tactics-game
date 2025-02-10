@@ -7,7 +7,7 @@ import {
   type Item,
   type ArmyType,
   armyAttackBonuses,
-} from '../../data/types';
+} from '../../../data/types';
 import styles from './styles.module.css';
 
 export interface Props {

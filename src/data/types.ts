@@ -54,7 +54,6 @@ export interface ArmyProps extends UnitProps {
   movePointsRef: ArmyMove;
   experiencePoints: number;
   items: Record<ItemType, Item[]>;
-  itemInUse: Record<ItemType, Item | undefined>;
 }
 
 // Action
@@ -62,7 +61,6 @@ export enum Action {
   openedMenu = 'openedMenu',
   move = 'move',
   attack = 'attack',
-  item = 'item',
   stats = 'stats',
   armyList = 'army list',
   close = 'close',

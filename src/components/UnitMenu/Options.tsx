@@ -22,7 +22,6 @@ export const Options = (({ setAction, armySelect, ref } : Props) => {
     >
       {Object.values(Action).map((item) => {
         if (item === Action.openedMenu) return null;
-        if (item === Action.item && armySelect?.type.type === 'building') return null;
         if (item === Action.attack && armySelect?.type.type === 'building') return null;
         if (item === Action.move && armySelect?.type.type === 'building') return null;
         return (
