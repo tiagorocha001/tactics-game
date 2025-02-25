@@ -52,7 +52,7 @@ export const Stats = ({ armySelect, ref }: Props) => {
               (armySelect as ArmyProps)?.item.effectValue,
               (armySelect as ArmyProps)?.item.type
             )}
-            title='asd asd'
+            title={(armySelect as ArmyProps)?.item.description}
           />
         </div>
       </div>

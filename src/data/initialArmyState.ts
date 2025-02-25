@@ -1,5 +1,5 @@
 import { items } from './items';
-import { type ArmyProps, ArmyRankMovePoints, ArmyAttackPoints, UnitFaction } from '../data/types';
+import { type ArmyProps, ArmyRankMovePoints, ArmyAttackPoints, ArmyLifePoints, UnitFaction } from '../data/types';
 import { generateId } from '../utils'
 
 export interface InitialPosition {
@@ -22,8 +22,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[]
           type: 'unit',
           subType: 'knight',
         },
-        life: 80,
-        lifeRef: 80,
+        life: ArmyLifePoints[1],
+        lifeRef: ArmyLifePoints[1],
         movePoints: ArmyRankMovePoints[1],
         movePointsRef: ArmyRankMovePoints[1],
         rank: 1,
@@ -42,8 +42,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[]
           type: 'unit',
           subType: 'knight',
         },
-        life: 80,
-        lifeRef: 80,
+        life: ArmyLifePoints[1],
+        lifeRef: ArmyLifePoints[1],
         movePoints: ArmyRankMovePoints[1],
         movePointsRef: ArmyRankMovePoints[1],
         rank: 1,
@@ -64,8 +64,8 @@ export function initialArmyState({y0, x0, y1, x1}: InitialPosition): ArmyProps[]
           type: 'unit',
           subType: 'knight',
         },
-        life: 80,
-        lifeRef: 80,
+        life: ArmyLifePoints[1],
+        lifeRef: ArmyLifePoints[1],
         movePoints: ArmyRankMovePoints[4],
         movePointsRef: ArmyRankMovePoints[4],
         rank: 1,

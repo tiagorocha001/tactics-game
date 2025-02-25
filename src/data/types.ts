@@ -49,6 +49,13 @@ export const ArmyAttackPoints: Record<ArmyRank, ArmyAttack> = {
   4: 5,
 };
 
+export const ArmyLifePoints: Record<ArmyRank, ArmyAttack> = {
+  1: 2,
+  2: 3,
+  3: 4,
+  4: 5,
+};
+
 export interface ArmyProps extends UnitProps {
   attack: number;
   movePointsRef: ArmyMove;
