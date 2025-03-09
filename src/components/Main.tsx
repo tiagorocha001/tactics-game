@@ -44,7 +44,8 @@ export const Main = () => {
   });
 
   // Helper function to update specific properties of the state
-  const updateGameState = (updates: Partial<GameState>) => setGameState((prevState) => ({ ...prevState, ...updates }));
+  const updateGameState = (updates: Partial<GameState>) =>
+    setGameState((prevState) => ({ ...prevState, ...updates }));
 
   // Specific update functions
   const setMap = (map: GridItem[]) => updateGameState({ map });
@@ -55,7 +56,8 @@ export const Main = () => {
 
   const setArmies = (armies: ArmyProps[][]) => updateGameState({ armies });
 
-  const setUnitSelected = (unitSelected: BaseProps | ArmyProps | null) => updateGameState({ unitSelected })
+  const setUnitSelected = (unitSelected: BaseProps | ArmyProps | null) =>
+    updateGameState({ unitSelected });
 
   console.log('gameState', gameState);
 
@@ -65,6 +67,12 @@ export const Main = () => {
 
   return (
     <div className="main">
+      {gameState.action === Action.openedMenu ||
+      gameState.action === Action.stats ? (
+        <div className="overlay visible"></div>
+      ) : (
+        <div className="overlay"></div>
+      )}
       <Header turn={gameState.turn} setTurn={setTurn} />
       <UnitMenu
         action={gameState.action}
