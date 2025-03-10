@@ -13,6 +13,7 @@ import { initialArmyState } from '../data/initialArmyState';
 import { initialBaseState } from '../data/initialBaseState';
 // Components
 import { Map } from './Map';
+import { PanContainer } from './Map/PanContainer';
 import { Header } from './layout/Header';
 import { UnitMenu } from './UnitMenu';
 // Hooks
@@ -44,14 +45,12 @@ export const Main = () => {
   });
 
   const gameStateAction = {
-    setMap: (map : GridItem[]) => setGameState((prev) => ({ ...prev, map })),
-    setAction: (action : Action) => setGameState((prev) => ({ ...prev, action })),
+    setMap: (map: GridItem[]) => setGameState((prev) => ({ ...prev, map })),
+    setAction: (action: Action) => setGameState((prev) => ({ ...prev, action })),
     setTurn: (turn: Turn) => setGameState((prev) => ({ ...prev, turn })),
     setArmies: (armies: ArmyProps[][]) => setGameState((prev) => ({ ...prev, armies })),
     setUnitSelected: (unitSelected: BaseProps | ArmyProps | null) => setGameState((prev) => ({ ...prev, unitSelected })),
   }
-
-  // Specific update functions
 
   console.log('gameState', gameState);
 
@@ -59,10 +58,13 @@ export const Main = () => {
   useContextMenu(gameStateAction.setUnitSelected); // Disable right click context menu
   // usePreventPageReload() // Prevent page refresh *** uncomment latter
 
+  // Check if panning should be disabled (when menus are open)
+  const isPanningDisabled = gameState.action === Action.openedMenu || 
+                            gameState.action === Action.stats;
+
   return (
     <div className="main">
-      {gameState.action === Action.openedMenu ||
-      gameState.action === Action.stats ? (
+      {isPanningDisabled ? (
         <div className="overlay visible"></div>
       ) : (
         <div className="overlay"></div>
@@ -75,17 +77,22 @@ export const Main = () => {
         armies={gameState.armies}
         setArmies={gameStateAction.setArmies}
       />
-      <Map
-        map={gameState.map}
-        setMap={gameStateAction.setMap}
-        armies={gameState.armies}
-        setArmies={gameStateAction.setArmies}
-        unitSelected={gameState.unitSelected}
-        setUnitSelected={gameStateAction.setUnitSelected}
-        bases={gameState.bases}
-        action={gameState.action}
-        setAction={gameStateAction.setAction}
-      />
+      <PanContainer 
+        disabled={isPanningDisabled}
+        containerStyle={{ height: 'calc(100vh - 60px)' }}
+      >
+        <Map
+          map={gameState.map}
+          setMap={gameStateAction.setMap}
+          armies={gameState.armies}
+          setArmies={gameStateAction.setArmies}
+          unitSelected={gameState.unitSelected}
+          setUnitSelected={gameStateAction.setUnitSelected}
+          bases={gameState.bases}
+          action={gameState.action}
+          setAction={gameStateAction.setAction}
+        />
+      </PanContainer>
     </div>
   );
 };
