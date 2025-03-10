@@ -254,7 +254,7 @@ export const Map = ({
   console.log('armySelect: ', unitSelected);
 
   return (
-    <div className={styles[`main-container`]}>
+    <div className={styles.mainContainer}>
       <div
         style={{
           position: 'absolute',
