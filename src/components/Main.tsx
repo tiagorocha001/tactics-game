@@ -43,26 +43,20 @@ export const Main = () => {
     openedArmyMenu: false,
   });
 
-  // Helper function to update specific properties of the state
-  const updateGameState = (updates: Partial<GameState>) =>
-    setGameState((prevState) => ({ ...prevState, ...updates }));
+  const gameStateAction = {
+    setMap: (map : GridItem[]) => setGameState((prev) => ({ ...prev, map })),
+    setAction: (action : Action) => setGameState((prev) => ({ ...prev, action })),
+    setTurn: (turn: Turn) => setGameState((prev) => ({ ...prev, turn })),
+    setArmies: (armies: ArmyProps[][]) => setGameState((prev) => ({ ...prev, armies })),
+    setUnitSelected: (unitSelected: BaseProps | ArmyProps | null) => setGameState((prev) => ({ ...prev, unitSelected })),
+  }
 
   // Specific update functions
-  const setMap = (map: GridItem[]) => updateGameState({ map });
-
-  const setAction = (action: Action) => updateGameState({ action });
-
-  const setTurn = (turn: Turn) => updateGameState({ turn });
-
-  const setArmies = (armies: ArmyProps[][]) => updateGameState({ armies });
-
-  const setUnitSelected = (unitSelected: BaseProps | ArmyProps | null) =>
-    updateGameState({ unitSelected });
 
   console.log('gameState', gameState);
 
   // Hooks
-  useContextMenu(setUnitSelected); // Disable right click context menu
+  useContextMenu(gameStateAction.setUnitSelected); // Disable right click context menu
   // usePreventPageReload() // Prevent page refresh *** uncomment latter
 
   return (
@@ -73,24 +67,24 @@ export const Main = () => {
       ) : (
         <div className="overlay"></div>
       )}
-      <Header turn={gameState.turn} setTurn={setTurn} />
+      <Header turn={gameState.turn} setTurn={gameStateAction.setTurn} />
       <UnitMenu
         action={gameState.action}
-        setAction={setAction}
+        setAction={gameStateAction.setAction}
         armySelect={gameState.unitSelected}
         armies={gameState.armies}
-        setArmies={setArmies}
+        setArmies={gameStateAction.setArmies}
       />
       <Map
         map={gameState.map}
-        setMap={setMap}
+        setMap={gameStateAction.setMap}
         armies={gameState.armies}
-        setArmies={setArmies}
+        setArmies={gameStateAction.setArmies}
         unitSelected={gameState.unitSelected}
-        setUnitSelected={setUnitSelected}
+        setUnitSelected={gameStateAction.setUnitSelected}
         bases={gameState.bases}
         action={gameState.action}
-        setAction={setAction}
+        setAction={gameStateAction.setAction}
       />
     </div>
   );
