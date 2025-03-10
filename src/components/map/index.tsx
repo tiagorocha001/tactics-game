@@ -257,10 +257,11 @@ export const Map = ({
     <div className={styles.mainContainer}>
       <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           width: '170px',
           marginLeft: '-420px',
           textAlign: 'left',
+          zIndex: 999,
         }}
       >
         <b>Army Select:</b> {JSON.stringify(unitSelected)} <br />

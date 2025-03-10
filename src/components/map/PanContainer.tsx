@@ -29,34 +29,64 @@ export const PanContainer: React.FC<PanContainerProps> = ({
   const [startPan, setStartPan] = useState<PanPosition>({ x: 0, y: 0 });
   const [position, setPosition] = useState<PanPosition>({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Use ref to track if mouse is down to prevent "stuck" panning state
+  const isMouseDownRef = useRef(false);
 
-  // Panning event handlers
+  // Global mouse event handlers to ensure we capture events even when they happen outside the component
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      if (isPanning) {
+        setIsPanning(false);
+      }
+      isMouseDownRef.current = false;
+    };
+    
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isPanning && isMouseDownRef.current) {
+        const newX = e.clientX - startPan.x;
+        const newY = e.clientY - startPan.y;
+        setPosition({ x: newX, y: newY });
+      } else if (isPanning && !isMouseDownRef.current) {
+        // If mouse isn't down but we're still in panning state, fix it
+        setIsPanning(false);
+      }
+    };
+
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    window.addEventListener('mousemove', handleGlobalMouseMove);
+    
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      window.removeEventListener('mousemove', handleGlobalMouseMove);
+    };
+  }, [isPanning, startPan]);
+
+  // Component-specific event handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     if (disabled) return;
     
+    // Prevent panning if right click
+    if (e.button !== 0) return;
+    
+    isMouseDownRef.current = true;
     setIsPanning(true);
     setStartPan({ x: e.clientX - position.x, y: e.clientY - position.y });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isPanning) return;
     
-    const newX = e.clientX - startPan.x;
-    const newY = e.clientY - startPan.y;
-    setPosition({ x: newX, y: newY });
-  };
-
-  const handleMouseUp = () => {
-    setIsPanning(false);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPanning(false);
+    // Prevent text selection during panning
+    e.preventDefault();
   };
 
   // Reset pan position
   const resetPosition = () => {
     setPosition({ x: 0, y: 0 });
+  };
+
+  // Handle additional clicks that might happen when the state is stuck
+  const handleClick = () => {
+    if (isPanning && !isMouseDownRef.current) {
+      setIsPanning(false);
+    }
   };
 
   // Handle keyboard navigation
@@ -80,6 +110,13 @@ export const PanContainer: React.FC<PanContainerProps> = ({
         case 'Home':
           resetPosition();
           break;
+        case 'Escape':
+          // Escape key as additional way to cancel panning if it gets stuck
+          if (isPanning) {
+            setIsPanning(false);
+            isMouseDownRef.current = false;
+          }
+          break;
         default:
           break;
       }
@@ -87,22 +124,21 @@ export const PanContainer: React.FC<PanContainerProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [enableKeyboardControls, disabled, keyboardPanAmount]);
+  }, [enableKeyboardControls, disabled, keyboardPanAmount, isPanning]);
 
   return (
     <div
       ref={containerRef}
       className={`pan-container ${className}`}
       onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       style={{
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
         height: '100%',
         cursor: disabled ? 'default' : isPanning ? 'grabbing' : 'grab',
+        userSelect: 'none', // Prevent text selection
         ...containerStyle,
       }}
     >
