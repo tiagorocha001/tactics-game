@@ -29,9 +29,40 @@ export const PanContainer: React.FC<PanContainerProps> = ({
   const [startPan, setStartPan] = useState<PanPosition>({ x: 0, y: 0 });
   const [position, setPosition] = useState<PanPosition>({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   
   // Use ref to track if mouse is down to prevent "stuck" panning state
   const isMouseDownRef = useRef(false);
+
+  // Function to calculate maximum panning boundaries
+  const calculateBoundaries = () => {
+    if (!containerRef.current || !contentRef.current) return { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+    
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const contentRect = contentRef.current.getBoundingClientRect();
+    
+    // Calculate how far the content can be moved in each direction
+    const minX = containerRect.width - contentRect.width;
+    const maxX = 0;
+    const minY = containerRect.height - contentRect.height;
+    const maxY = 0;
+    
+    return {
+      minX: Math.min(0, minX), // Negative value if content is wider than container
+      maxX: Math.max(0, maxX), // Always 0 or positive
+      minY: Math.min(0, minY), // Negative value if content is taller than container
+      maxY: Math.max(0, maxY), // Always 0 or positive
+    };
+  };
+
+  // Apply boundaries to a position
+  const applyBoundaries = (pos: PanPosition) => {
+    const { minX, maxX, minY, maxY } = calculateBoundaries();
+    return {
+      x: Math.min(maxX, Math.max(minX, pos.x)),
+      y: Math.min(maxY, Math.max(minY, pos.y)),
+    };
+  };
 
   // Global mouse event handlers to ensure we capture events even when they happen outside the component
   useEffect(() => {
@@ -46,7 +77,10 @@ export const PanContainer: React.FC<PanContainerProps> = ({
       if (isPanning && isMouseDownRef.current) {
         const newX = e.clientX - startPan.x;
         const newY = e.clientY - startPan.y;
-        setPosition({ x: newX, y: newY });
+        
+        // Apply boundaries before setting the position
+        const boundedPosition = applyBoundaries({ x: newX, y: newY });
+        setPosition(boundedPosition);
       } else if (isPanning && !isMouseDownRef.current) {
         // If mouse isn't down but we're still in panning state, fix it
         setIsPanning(false);
@@ -61,6 +95,26 @@ export const PanContainer: React.FC<PanContainerProps> = ({
       window.removeEventListener('mousemove', handleGlobalMouseMove);
     };
   }, [isPanning, startPan]);
+
+  // Recalculate boundaries when the content size changes
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      // Ensure position is within boundaries after resize
+      setPosition(prev => applyBoundaries(prev));
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+    
+    if (contentRef.current) {
+      resizeObserver.observe(contentRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   // Component-specific event handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -96,16 +150,28 @@ export const PanContainer: React.FC<PanContainerProps> = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'ArrowUp':
-          setPosition(prev => ({ ...prev, y: prev.y + keyboardPanAmount }));
+          setPosition(prev => {
+            const newPos = { ...prev, y: prev.y + keyboardPanAmount };
+            return applyBoundaries(newPos);
+          });
           break;
         case 'ArrowDown':
-          setPosition(prev => ({ ...prev, y: prev.y - keyboardPanAmount }));
+          setPosition(prev => {
+            const newPos = { ...prev, y: prev.y - keyboardPanAmount };
+            return applyBoundaries(newPos);
+          });
           break;
         case 'ArrowLeft':
-          setPosition(prev => ({ ...prev, x: prev.x + keyboardPanAmount }));
+          setPosition(prev => {
+            const newPos = { ...prev, x: prev.x + keyboardPanAmount };
+            return applyBoundaries(newPos);
+          });
           break;
         case 'ArrowRight':
-          setPosition(prev => ({ ...prev, x: prev.x - keyboardPanAmount }));
+          setPosition(prev => {
+            const newPos = { ...prev, x: prev.x - keyboardPanAmount };
+            return applyBoundaries(newPos);
+          });
           break;
         case 'Home':
           resetPosition();
@@ -143,6 +209,7 @@ export const PanContainer: React.FC<PanContainerProps> = ({
       }}
     >
       <div
+        ref={contentRef}
         className="pan-content"
         style={{
           position: 'absolute',
