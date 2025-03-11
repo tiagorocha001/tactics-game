@@ -35,6 +35,83 @@
 
 body {
   font-family: 'RetroGaming';
+  height: 100%;
+  width: 100%;
+}
+
+body::before {
+  content: "";
+  font-family: 'RetroGaming';
+  background-image: url('../src/assets/black-texture.webp');
+  background-size: cover;
+  background-attachment: scroll;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,0,128,0.3), rgba(0,128,255,0.3));
+  z-index: -1;
+  animation: colorPulse 20s infinite ease-in-out;
+  mix-blend-mode: overlay;
+}
+
+@keyframes colorPulse {
+  0% {
+    background: linear-gradient(45deg, rgba(255,0,128,0.3), rgba(0,128,255,0.3));
+    opacity: 0.4;
+  }
+  10% {
+    background: linear-gradient(45deg, rgba(200,50,150,0.3), rgba(20,120,230,0.3));
+    opacity: 0.45;
+  }
+  20% {
+    background: linear-gradient(45deg, rgba(150,100,180,0.3), rgba(50,100,200,0.3));
+    opacity: 0.5;
+  }
+  30% {
+    background: linear-gradient(45deg, rgba(100,150,200,0.3), rgba(80,80,180,0.3));
+    opacity: 0.55;
+  }
+  40% {
+    background: linear-gradient(45deg, rgba(50,200,150,0.3), rgba(100,50,170,0.3));
+    opacity: 0.6;
+  }
+  50% {
+    background: linear-gradient(45deg, rgba(0,255,128,0.3), rgba(128,0,255,0.3));
+    opacity: 0.65;
+  }
+  60% {
+    background: linear-gradient(45deg, rgba(50,230,100,0.3), rgba(150,20,230,0.3));
+    opacity: 0.6;
+  }
+  70% {
+    background: linear-gradient(45deg, rgba(100,200,80,0.3), rgba(180,50,200,0.3));
+    opacity: 0.55;
+  }
+  80% {
+    background: linear-gradient(45deg, rgba(150,170,50,0.3), rgba(200,80,170,0.3));
+    opacity: 0.5;
+  }
+  90% {
+    background: linear-gradient(45deg, rgba(200,130,30,0.3), rgba(230,110,130,0.3));
+    opacity: 0.45;
+  }
+  100% {
+    background: linear-gradient(45deg, rgba(255,0,128,0.3), rgba(0,128,255,0.3));
+    opacity: 0.4;
+  }
 }
 
 a {
