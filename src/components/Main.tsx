@@ -70,6 +70,19 @@ export const Main = () => {
         <div className="overlay"></div>
       )}
       <Header turn={gameState.turn} setTurn={gameStateAction.setTurn} />
+      <div
+        style={{
+          position: 'fixed',
+          width: '370px',
+          marginLeft: '-420px',
+          textAlign: 'left',
+          zIndex: 999,
+          overflowWrap: 'break-word'
+        }}
+      >
+        <b>Army Select:</b> {JSON.stringify(gameState.unitSelected)} <br />
+        <b>armySelect:</b> {JSON.stringify(gameState.unitSelected)}
+      </div>
       <UnitMenu
         action={gameState.action}
         setAction={gameStateAction.setAction}

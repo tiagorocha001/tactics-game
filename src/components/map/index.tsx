@@ -255,21 +255,6 @@ export const Map = ({
 
   return (
     <div className={styles.mainContainer}>
-      <div
-        style={{
-          position: 'fixed',
-          width: '170px',
-          marginLeft: '-420px',
-          textAlign: 'left',
-          zIndex: 999,
-        }}
-      >
-        <b>Army Select:</b> {JSON.stringify(unitSelected)} <br />
-        <b>pathActive:</b> {JSON.stringify(pathActive)} <br />
-        <b>path:</b> {JSON.stringify(path)} <br />
-        <b>pathFinal:</b> {JSON.stringify(pathFinal)} <br />
-        <b>armySelect:</b> {JSON.stringify(unitSelected)}
-      </div>
       {/* Army range display */}
       {unitSelected && action === Action.move && (
         <MapRange
