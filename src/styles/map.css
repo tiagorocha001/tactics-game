@@ -53,6 +53,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  border: 1px solid rgb(0, 0, 0, 0.5);
 }
 
 .range-block {
@@ -62,6 +63,7 @@
   z-index: 10;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid rgb(0, 0, 0, 0.5);
 
   /* Initial size */
   transform: scale(1);
